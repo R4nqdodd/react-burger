@@ -1,0 +1,45 @@
+.changeable_items::-webkit-scrollbar {
+  width: 8px;
+}
+
+.changeable_items::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+}
+
+.changeable_items::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  width: 584px;
+}
+
+.changeable_items {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 464px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px
+}
+
+.total {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+}
