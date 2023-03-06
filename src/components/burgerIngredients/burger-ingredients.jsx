@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import {
   Tab
@@ -48,7 +49,7 @@ export default function BurgerIngredients({ ingredient, modal, setModal }) {
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
             {ingredient.map((item) => {
                 if(item.type === 'sauce'){
-                  return (<BurgerIngredient ingredient={item} modal={modal} setModal={setModal}/>)
+                  return (<BurgerIngredient key={item._id} ingredient={item} modal={modal} setModal={setModal}/>)
                 }
               }
               )}
@@ -61,7 +62,7 @@ export default function BurgerIngredients({ ingredient, modal, setModal }) {
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
             {ingredient.map((item) => {
                 if(item.type === 'main'){
-                  return (<BurgerIngredient ingredient={item} modal={modal} setModal={setModal}/>)
+                  return (<BurgerIngredient key={item._id} ingredient={item} modal={modal} setModal={setModal}/>)
                 }
               }
               )}
@@ -71,4 +72,10 @@ export default function BurgerIngredients({ ingredient, modal, setModal }) {
       </section>
     </section >
   );
+}
+
+BurgerIngredients.propTypes = {
+  ingredient: PropTypes.array,
+  modal: PropTypes.object,
+  setModal: PropTypes.func
 }

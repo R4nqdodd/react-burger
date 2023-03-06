@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 import {
   CloseIcon
@@ -30,4 +31,9 @@ export default function Modal ({children, handleCloseModal}) {
       </button>
     </div>
   );
+}
+
+Modal.propTypes = {
+  children: PropTypes.element,
+  handleCloseModal: PropTypes.func
 }

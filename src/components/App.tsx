@@ -31,6 +31,9 @@ function App() {
       .then(data => {
         setIngredients({ ...ingredients, ingredient: data.data })
       })
+      .catch(e => {
+        console.log(`Ошибка ${e.status}`);
+      })
   }
 
   React.useEffect(() => {

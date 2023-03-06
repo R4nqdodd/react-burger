@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import {
   ConstructorElement,
@@ -35,7 +36,7 @@ export default function BurgerConstructor({ ingredient, modal, setModal }) {
               ingredient.map((item, index) => {
                 if (!(item.type === 'bun')) {
                   return (
-                    <li className={`${styles.item} pr-2`}>
+                    <li className={`${styles.item} pr-2`} key={item._id}>
                       <DragIcon type="primary" />
                       <ConstructorElement
                         text={item.name}
@@ -67,4 +68,10 @@ export default function BurgerConstructor({ ingredient, modal, setModal }) {
       </div>
     </section>
   );
+}
+
+BurgerConstructor.propTypes = {
+  ingredient: PropTypes.array,
+  modal: PropTypes.object,
+  setModal: PropTypes.func
 }

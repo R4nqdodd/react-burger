@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
 
 export default function IngredientDetails({ modal }) {
@@ -50,4 +51,8 @@ export default function IngredientDetails({ modal }) {
       </ul>
     </>
   );
+}
+
+IngredientDetails.propTypes = {
+  modal: PropTypes.object
 }

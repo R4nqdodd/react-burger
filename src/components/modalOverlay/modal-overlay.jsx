@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import styles from './modal-overlay.module.css';
 
@@ -11,7 +12,7 @@ export default function ModalOverlay ({ modal, setModal }) {
 
   const modalRoot = document.getElementById("modal-root");
   
-  function handleCloseModal (e) {
+  function handleCloseModal () {
     setModal({
       ...modal,
       isOpen: false
@@ -25,4 +26,9 @@ export default function ModalOverlay ({ modal, setModal }) {
       </Modal>
     </div>
   ), modalRoot);
+}
+
+ModalOverlay.propTypes = {
+  modal: PropTypes.object,
+  setModal: PropTypes.func
 }

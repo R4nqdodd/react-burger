@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
 import {
   Counter,
@@ -33,4 +34,10 @@ export default function BurgerIngredient({ ingredient, modal, setModal }) {
       </li>
     </>
   );
+}
+
+BurgerIngredient.propTypes = {
+  ingredient: PropTypes.object,
+  modal: PropTypes.object,
+  setModal: PropTypes.func
 }
