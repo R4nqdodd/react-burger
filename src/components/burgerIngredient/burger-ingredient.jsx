@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './burger-ingredient.module.css';
 import {
   Counter,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function BurgerIngredient({ ingredient }) {
+export default function BurgerIngredient({ ingredient, modal, setModal }) {
+
+  function setModalType () {
+    setModal({
+      ...modal,
+      type: 'ingredientDetails',
+      isOpen: true,
+      ingredient: ingredient
+    });
+
+
+  }
+
   return (
     <>
-      <li className={`${styles.item} mr-6`}>
+      <li className={`${styles.item} mr-6`} onClick={setModalType}>
         <img className={`${styles.image} pl-4 pr-4 pb-1`} src={ingredient.image} alt='ALT' />
         <div className='pt-1 pb-1' style={{ display: 'flex' }}>
           <CurrencyIcon type="primary" />

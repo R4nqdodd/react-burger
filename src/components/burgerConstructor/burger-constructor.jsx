@@ -7,7 +7,16 @@ import {
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function BurgerConstructor({ ingredient }) {
+export default function BurgerConstructor({ ingredient, modal, setModal }) {
+
+  function setModalType () {
+    setModal({
+      ...modal,
+      type: 'orderDetails',
+      isOpen: true
+    });
+  }
+
   return (
     <section className='pl-4'>
       <ul className={`${styles.items} mt-25`}>
@@ -52,7 +61,7 @@ export default function BurgerConstructor({ ingredient }) {
       </ul>
       <div className={`${styles.total} mt-10 pr-4`}>
         <p className="text text_type_digits-medium mr-10">610<CurrencyIcon type="primary" /></p>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button htmlType="button" type="primary" size="medium" onClick={setModalType}>
           Оформить заказ
         </Button>
       </div>

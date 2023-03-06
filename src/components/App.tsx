@@ -3,7 +3,6 @@ import './App.css';
 import AppHeader from './appHeader/app-header';
 import BurgerIngredients from './burgerIngredients/burger-ingredients';
 import BurgerConstructor from './burgerConstructor/burger-constructor';
-import Modal from './modal/modal';
 import ModalOverlay from './modalOverlay/modal-overlay';
 
 function App() {
@@ -11,6 +10,12 @@ function App() {
   const [ingredients, setIngredients] = React.useState({
     ingredient: []
   })
+
+  const [modal, setModal] = React.useState({
+    type: '',
+    isOpen: false,
+    ingredient: []
+  });
 
   const burgerIngredients = 'https://norma.nomoreparties.space/api/ingredients';
 
@@ -30,19 +35,16 @@ function App() {
 
   React.useEffect(() => {
     getIngredients();
-  }, [])
-
-  
-  console.log(ingredients.ingredient);
+  }, []);
 
   const app = (
     <>
       <AppHeader />
       <main className='main'>
-        <BurgerIngredients ingredient={ingredients.ingredient} />
-        <BurgerConstructor ingredient={ingredients.ingredient} />
+        <BurgerIngredients ingredient={ingredients.ingredient} modal={modal} setModal={setModal} />
+        <BurgerConstructor ingredient={ingredients.ingredient} modal={modal} setModal={setModal} />
       </main>
-      <ModalOverlay />
+      <ModalOverlay modal={modal} setModal={setModal} />
     </>
   );
 

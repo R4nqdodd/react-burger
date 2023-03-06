@@ -6,7 +6,7 @@ import {
 import BurgerIngredient from '../burgerIngredient/burger-ingredient';
 
 
-export default function BurgerIngredients({ ingredient }) {
+export default function BurgerIngredients({ ingredient, modal, setModal }) {
 
   const [current, setCurrent] = React.useState('Булки');
 
@@ -35,7 +35,7 @@ export default function BurgerIngredients({ ingredient }) {
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
               {ingredient.map((item) => {
                 if(item.type === 'bun'){
-                 return (<BurgerIngredient ingredient={item} />)
+                 return (<BurgerIngredient key={item._id} ingredient={item} modal={modal} setModal={setModal}/>)
                 }
               }
               )}
@@ -48,7 +48,7 @@ export default function BurgerIngredients({ ingredient }) {
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
             {ingredient.map((item) => {
                 if(item.type === 'sauce'){
-                 return (<BurgerIngredient ingredient={item} />)
+                  return (<BurgerIngredient ingredient={item} modal={modal} setModal={setModal}/>)
                 }
               }
               )}
@@ -61,7 +61,7 @@ export default function BurgerIngredients({ ingredient }) {
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
             {ingredient.map((item) => {
                 if(item.type === 'main'){
-                 return (<BurgerIngredient ingredient={item} />)
+                  return (<BurgerIngredient ingredient={item} modal={modal} setModal={setModal}/>)
                 }
               }
               )}

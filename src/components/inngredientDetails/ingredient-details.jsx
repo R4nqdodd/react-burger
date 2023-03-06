@@ -1,15 +1,18 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
 
-export default function IngredientDetails() {
+export default function IngredientDetails({ modal }) {
+
+  const ingredient = modal.ingredient;
+
   return (
     <>
       <h2 className="text text_type_main-large ml-10 mt-10 mr-10" style={{ alignSelf: 'start' }}>
         Детали ингредиента
       </h2>
-      <img src='https://code.s3.yandex.net/react/code/bun-02-large.png' alt='Краторная булка' />
+      <img src={ingredient.image_large} alt={ingredient.name} />
       <p className="text text_type_main-medium mt-4">
-        Краторная булка N-200i
+        {ingredient.name}
       </p>
       <ul className={`${styles.ingredient_info} mt-8 mb-15`}>
         <li className={`${styles.ingredient_info_item}`}>
@@ -17,7 +20,7 @@ export default function IngredientDetails() {
             Калории, ккал
           </h3>
           <p className="text text_type_main-default text_color_inactive">
-            123
+            {ingredient.calories}
           </p>
         </li>
         <li className={`${styles.ingredient_info_item}`}>
@@ -25,7 +28,7 @@ export default function IngredientDetails() {
             Белки, г
           </h3>
           <p className="text text_type_main-default text_color_inactive">
-            123
+            {ingredient.proteins}
           </p>
         </li>
         <li className={`${styles.ingredient_info_item}`}>
@@ -33,7 +36,7 @@ export default function IngredientDetails() {
             Жиры, г
           </h3>
           <p className="text text_type_main-default text_color_inactive">
-            123
+            {ingredient.fat}
           </p>
         </li>
         <li className={`${styles.ingredient_info_item}`}>
@@ -41,7 +44,7 @@ export default function IngredientDetails() {
             Углеводы, г
           </h3>
           <p className="text text_type_main-default text_color_inactive">
-            123
+            {ingredient.carbohydrates}
           </p>
         </li>
       </ul>
