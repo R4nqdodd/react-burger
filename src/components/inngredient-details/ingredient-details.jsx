@@ -8,7 +8,7 @@ export default function IngredientDetails({ modal }) {
 
   return (
     <>
-      <h2 className="text text_type_main-large ml-10 mt-10 mr-10" style={{ alignSelf: 'start' }}>
+      <h2 className={`${styles.ingredient_info_title} text text_type_main-large ml-10 mt-10 mr-10`}>
         Детали ингредиента
       </h2>
       <img src={ingredient.image_large} alt={ingredient.name} />

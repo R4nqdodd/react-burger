@@ -1,9 +1,12 @@
 import React from 'react';
-import './App.css';
-import AppHeader from './appHeader/app-header';
-import BurgerIngredients from './burgerIngredients/burger-ingredients';
-import BurgerConstructor from './burgerConstructor/burger-constructor';
-import ModalOverlay from './modalOverlay/modal-overlay';
+import styles from './app.module.css';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import Modal from '../modal/modal';
+
+import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../inngredient-details/ingredient-details';
 
 function App() {
 
@@ -43,11 +46,13 @@ function App() {
   const app = (
     <>
       <AppHeader />
-      <main className='main'>
+      <main className={styles.main}>
         <BurgerIngredients ingredient={ingredients.ingredient} modal={modal} setModal={setModal} />
         <BurgerConstructor ingredient={ingredients.ingredient} modal={modal} setModal={setModal} />
       </main>
-      <ModalOverlay modal={modal} setModal={setModal} />
+      <Modal modal={modal} setModal={setModal}>
+        { modal.type === 'ingredientDetails' ? <IngredientDetails modal={modal}/> : <OrderDetails /> }
+      </Modal>
     </>
   );
 

@@ -4,7 +4,7 @@ import styles from './burger-ingredients.module.css';
 import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerIngredient from '../burgerIngredient/burger-ingredient';
+import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
 
 export default function BurgerIngredients({ ingredient, modal, setModal }) {
