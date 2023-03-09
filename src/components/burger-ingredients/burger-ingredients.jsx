@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import {
@@ -7,9 +8,12 @@ import {
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
 
-export default function BurgerIngredients({ ingredient, modal, setModal }) {
+export default function BurgerIngredients({ modal, setModal }) {
 
-  const [current, setCurrent] = React.useState('Булки');
+  const [current, setCurrent] = useState('Булки');
+  
+
+  const ingredients = useSelector(store => store.burgerIngredients.ingredients);
 
   return (
     <section className={`${styles.burger_ingredients} mr-10`}>
@@ -34,7 +38,7 @@ export default function BurgerIngredients({ ingredient, modal, setModal }) {
               Булки
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-              {ingredient.map((item) => {
+              {ingredients.map((item) => {
                 if(item.type === 'bun'){
                  return (<BurgerIngredient key={item._id} ingredient={item} modal={modal} setModal={setModal}/>)
                 }
@@ -47,7 +51,7 @@ export default function BurgerIngredients({ ingredient, modal, setModal }) {
               Соусы
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-            {ingredient.map((item) => {
+            {ingredients.map((item) => {
                 if(item.type === 'sauce'){
                   return (<BurgerIngredient key={item._id} ingredient={item} modal={modal} setModal={setModal}/>)
                 }
@@ -60,7 +64,7 @@ export default function BurgerIngredients({ ingredient, modal, setModal }) {
               Начинки
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-            {ingredient.map((item) => {
+            {ingredients.map((item) => {
                 if(item.type === 'main'){
                   return (<BurgerIngredient key={item._id} ingredient={item} modal={modal} setModal={setModal}/>)
                 }
