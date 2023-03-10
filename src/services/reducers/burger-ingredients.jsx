@@ -3,7 +3,7 @@ import {
   GET_BURGER_INGREDIENTS_SUCCESS,
   GET_BURGER_INGREDIENTS_REQUEST,
   INCREASE_COUNTER,
-  DECREASE_COUNTER
+  DECREASE_COUNTER,
 } from '../actions/burger-ingredients';
 
 const burgerIngredientsInitialState = {
@@ -11,8 +11,6 @@ const burgerIngredientsInitialState = {
   ingredientsRequest: false,
   ingredientsFailed: false
 }
-
-
 
 export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, action) => {
   switch (action.type) {
@@ -42,7 +40,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
         ...state,
         ingredients: [...state.ingredients].map(item => {
           if (item._id === action.id._id){
-            item.count++;
+            item.count += action.count;
           }
           return item
         })
@@ -53,7 +51,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
         ...state,
         ingredients: [...state.ingredients].map(item => {
           if (item._id === action.id){
-            item.count = item.count - 1;
+            item.count -= action.count;
           }
           return item
         })

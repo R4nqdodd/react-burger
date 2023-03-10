@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
@@ -13,25 +13,21 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { useDrop } from 'react-dnd';
 
-import { DELETE_CONSTRUCTOR_ELEMENT, GET_CONSTRUCTOR_ELEMENT } from '../../services/actions/burger-constructor';
-import { INCREASE_COUNTER } from '../../services/actions/burger-ingredients';
+import { GET_CONSTRUCTOR_ELEMENT, GET_CONSTRUCTOR_BUN } from '../../services/actions/burger-constructor';
+import { DECREASE_COUNTER, INCREASE_COUNTER } from '../../services/actions/burger-ingredients';
+import { sentOrderNumber } from '../../services/actions/order';
+import { OPEN_MODAL, SET_MODAL_TYPE } from '../../services/actions/modal';
 
-export default function BurgerConstructor({ ingredient, modal, setModal }) {
+export default function BurgerConstructor() {
 
   const temporaryIngredients = useSelector(store => store.burgerIngredients.ingredients)
 
-  const ingredients = useSelector(store => store.constructor.ingredients)
-
-  console.log(ingredients)
+  const ingredients = useSelector(store => store.constructor.ingredients);
+  const bun = useSelector(store => store.constructor.bun);
 
   const dispatch = useDispatch();
 
   function setModalType() {
-    setModal({
-      ...modal,
-      type: 'orderDetails',
-      isOpen: true
-    });
   }
 
   useEffect(() => {
@@ -44,70 +40,105 @@ export default function BurgerConstructor({ ingredient, modal, setModal }) {
   const [, constructorDrop] = useDrop({
     accept: 'ingredients',
     drop(itemId) {
-      const newIngredient = temporaryIngredients.find(item => item._id === itemId._id)
+      const newIngredient = { ...temporaryIngredients.find(item => item._id === itemId._id) }
 
-      newIngredient.uuid = uuidv4(); 
+      newIngredient.uuid = uuidv4();
 
-    /*  if (newIngredient.type === 'bun' && ingredients.some(item => item.type === 'bun')) {
-        
-      console.log(ingredients.find(item => item.type === 'bun')._id)
+      if (newIngredient.type === 'bun' && bun) {
         dispatch({
-          type: DELETE_CONSTRUCTOR_ELEMENT,
-          id: ingredients.find(item => item.type === 'bun')._id
+          type: DECREASE_COUNTER,
+          id: bun._id,
+          count: 2
         })
         dispatch({
-          type: GET_CONSTRUCTOR_ELEMENT,
-          ingredients: newIngredients
+          type: INCREASE_COUNTER,
+          id: itemId,
+          count: 2
+        })
+        dispatch({
+          type: GET_CONSTRUCTOR_BUN,
+          bun: newIngredient
         });
       } else if (newIngredient.type === 'bun') {
         dispatch({
-          type: GET_CONSTRUCTOR_ELEMENT,
-          ingredients: newIngredients
+          type: INCREASE_COUNTER,
+          id: itemId,
+          count: 2
+        })
+        dispatch({
+          type: GET_CONSTRUCTOR_BUN,
+          bun: newIngredient
         });
-      } else {*/
+      } else {
         dispatch({
           type: GET_CONSTRUCTOR_ELEMENT,
           ingredients: [...ingredients, newIngredient]
         });
         dispatch({
           type: INCREASE_COUNTER,
-          id: itemId
+          id: itemId,
+          count: 1
         })
-    // }
+      }
     }
   });
 
+  const moveIngredient = (dragIndex, hoverIndex) => {
+    const dragIngredient = ingredients[dragIndex];
+    const newIngredients = [...ingredients];
+    newIngredients.splice(dragIndex, 1);
+    newIngredients.splice(hoverIndex, 0, dragIngredient);
+
+    dispatch({
+      type: GET_CONSTRUCTOR_ELEMENT,
+      ingredients: newIngredients
+    })
+    
+  }
+
+  const [, sortDropRef] = useDrop({
+    accept: 'sort',
+  })
+
   const getUnchangeableItems = (isTop) => {
-    if (ingredients) {
-      if (ingredients.some(item => item.type === 'bun')) {
-        const unchangebleItem = ingredients.find(item => item.type === 'bun')
-        if (isTop) {
-          return (
-            <li className={`${styles.item} mb-4 ml-8 pr-4`}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`${unchangebleItem.name} (Верх)`}
-                price={unchangebleItem.price}
-                thumbnail={unchangebleItem.image}
-              />
-            </li>
-          )
-        } else {
-          return (
-            <li className={`${styles.item} mt-4 ml-8 pr-4`}>
-              <ConstructorElement
-                type="bottom"
-                isLocked={true}
-                text={`${unchangebleItem.name} (Низ)`}
-                price={unchangebleItem.price}
-                thumbnail={unchangebleItem.image}
-              />
-            </li>
-          )
-        }
-      }
+    if (bun) {
+      return (
+        <li className={`${styles.item} ${isTop ? 'mb-4' : 'mt-4'} ml-8 pr-4`}>
+          <ConstructorElement
+            type={isTop ? 'top' : 'bottom'}
+            isLocked={true}
+            text={`${bun.name} ${isTop ? '(Верх)' : '(Низ)'}`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </li>
+      )
     }
+  }
+
+  const totalPrice = useMemo(() => {
+    if (bun) {
+      const bunsTotal = bun.price * 2;
+      if (ingredients && ingredients.length > 0) {
+        const ingredientsTotal = ingredients.reduce((prev, item) => {
+          return prev + item.price
+        }, 0);
+        return ingredientsTotal + bunsTotal;
+      }
+      return bunsTotal
+    }
+  }, [ingredients, bun]);
+
+  const handleOrder = () => {
+    const ingredientsId = [...ingredients].map(item => item._id);
+    dispatch({
+      type: SET_MODAL_TYPE,
+      modalType: 'orderDetails'
+    })
+    dispatch({
+      type: OPEN_MODAL
+    })
+    dispatch(sentOrderNumber([ bun._id, ...ingredientsId]));
   }
 
   return (
@@ -115,21 +146,11 @@ export default function BurgerConstructor({ ingredient, modal, setModal }) {
       <ul className={`${styles.items} mt-25`}>
         {getUnchangeableItems(true)}
         <li>
-          <ul className={styles.changeable_items} >
+          <ul className={styles.changeable_items} ref={sortDropRef}>
             {ingredients &&
               ingredients.map((item, index) => {
                 if (!(item.type === 'bun')) {
-                {/*  return (
-                    <li className={`${styles.item} pr-2`} key={index}>
-                      <DragIcon type="primary" />
-                      <ConstructorElement
-                        text={item.name}
-                        price={item.price}
-                        thumbnail={item.image}
-                      />
-                    </li>
-                );*/}
-                return <BurgerConstructorElement key={index} {...item} index={index}/>
+                  return <BurgerConstructorElement key={item.uuid} {...item} moveIngredient={moveIngredient} index={index} />
                 }
               })
             }
@@ -137,18 +158,15 @@ export default function BurgerConstructor({ ingredient, modal, setModal }) {
         </li>
         {getUnchangeableItems(false)}
       </ul>
-      <div className={`${styles.total} mt-10 pr-4`}>
-        <p className="text text_type_digits-medium mr-10">610<CurrencyIcon type="primary" /></p>
-        <Button htmlType="button" type="primary" size="medium" onClick={setModalType}>
-          Оформить заказ
-        </Button>
-      </div>
+      {bun ?
+        <div className={`${styles.total} mt-10 pr-4`}>
+          <p className="text text_type_digits-medium mr-10">{totalPrice}<CurrencyIcon type="primary" /></p>
+          <Button htmlType="button" type="primary" size="medium" onClick={handleOrder}>
+            Оформить заказ
+          </Button>
+        </div>
+        : null
+      }
     </section>
   );
-}
-
-BurgerConstructor.propTypes = {
-  ingredient: PropTypes.array,
-  modal: PropTypes.object,
-  setModal: PropTypes.func
 }

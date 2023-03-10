@@ -2,12 +2,15 @@ import React from 'react';
 import styles from './order-details.module.css';
 
 import graphics from '../../images/graphics.svg'
+import { useSelector } from 'react-redux';
 
 export default function OrderDetails() {
 
+  const orderNumber = useSelector(store => store.order.order.number);
+
   return (
     <>
-      <p className={`${styles.order_number} text text_type_digits-large mt-30`}>035436</p>
+      <p className={`${styles.order_number} text text_type_digits-large mt-30`}>{orderNumber}</p>
       <p className="text text_type_main-medium mt-8">
         Идентификатор заказа
       </p>

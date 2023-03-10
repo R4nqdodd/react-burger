@@ -9,8 +9,9 @@ import {
 import { useDrag } from 'react-dnd';
 
 import { SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { OPEN_MODAL, SET_MODAL_TYPE } from '../../services/actions/modal';
 
-export default function BurgerIngredient({ ingredient, modal, setModal }) {
+export default function BurgerIngredient({ ingredient }) {
 
   const { _id } = ingredient;
 
@@ -21,19 +22,20 @@ export default function BurgerIngredient({ ingredient, modal, setModal }) {
       type: SET_CURRENT_INGREDIENT,
       current: ingredient
     })
-    setModal({
-      ...modal,
-      type: 'ingredientDetails',
-      isOpen: true,
-      ingredient: ingredient
-    });
+    dispatch({
+      type: SET_MODAL_TYPE,
+      modalType: 'ingredientDetails'
+    })
+    dispatch({
+      type: OPEN_MODAL
+    })
   }
 
-  const [{ opacity, isDrop }, ingredientRef] = useDrag({
+  const [{ opacity }, ingredientRef] = useDrag({
     type: 'ingredients',
-    item: { _id },
+    item: {_id},
     collect: monitor => ({
-      opacity: monitor.isDragging() ? 0.4 : 1
+      opacity: monitor.isDragging() ? 0.4 : 1,
     })
   });
 
@@ -54,6 +56,4 @@ export default function BurgerIngredient({ ingredient, modal, setModal }) {
 
 BurgerIngredient.propTypes = {
   ingredient: PropTypes.object,
-  modal: PropTypes.object,
-  setModal: PropTypes.func
 }

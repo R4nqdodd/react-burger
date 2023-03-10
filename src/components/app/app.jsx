@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -14,18 +14,12 @@ import { getBurgerIngredients } from '../../services/actions/burger-ingredients'
 
 function App() {
 
-  const [modal, setModal] = useState({
-    type: '',
-    isOpen: false,
-    ingredient: []
-  });
-
-  const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+  const modal = useSelector(store => store.modal);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getBurgerIngredients())
+    dispatch(getBurgerIngredients());
   }, [dispatch])
 
   const app = (
@@ -33,11 +27,11 @@ function App() {
       <AppHeader />
       <DndProvider backend={HTML5Backend}>
         <main className={styles.main}>
-          <BurgerIngredients modal={modal} setModal={setModal} />
-          <BurgerConstructor ingredient={ingredients} modal={modal} setModal={setModal}/>
+          <BurgerIngredients />
+          <BurgerConstructor />
         </main>
-        <Modal modal={modal} setModal={setModal}>
-          {modal.type === 'ingredientDetails' ? <IngredientDetails modal={modal} /> : <OrderDetails />}
+        <Modal>
+          {modal.modalType === 'ingredientDetails' ? <IngredientDetails /> : <OrderDetails />}
         </Modal>
       </DndProvider>
     </>

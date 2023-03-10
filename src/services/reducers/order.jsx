@@ -1,15 +1,39 @@
-import { GET_ORDER_NUMBER } from '../actions/order';
+import {
+  ORDER_REQUEST,
+  ORDER_SUCCESS,
+  ORDER_FAILED
+} from '../actions/order';
 
 const orderInitialState = {
-  orderNumber: ''
+  name: '',
+  order: { number: 0 },
+
+  orderRequest: false,
+  orderFailed: false
 }
 
 export const newOrderReducer = (state = orderInitialState, action) => {
-  switch(action.type) {
-    case GET_ORDER_NUMBER: {
+  switch (action.type) {
+    case ORDER_REQUEST: {
       return {
         ...state,
-        orderNumber: '111111'
+        orderRequest: true
+      }
+    }
+    case ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderRequest: false,
+        orderFailed: false,
+        name: action.name,
+        order: { number: action.order.number }
+      }
+    }
+    case ORDER_FAILED: {
+      return {
+        ...state,
+        orderRequest: false,
+        orderFailed: true
       }
     }
     default: {

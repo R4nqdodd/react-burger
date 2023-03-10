@@ -7,10 +7,10 @@ export const DECREASE_COUNTER = 'DECREASE_COUNTER';
 const burgerIngredients = 'https://norma.nomoreparties.space/api/ingredients';
 const getIngredientsApi = () => {
   return fetch(burgerIngredients)
-          .then(res => res.json());
+    .then(res => res.json());
 }
 
-export function getBurgerIngredients () {
+export function getBurgerIngredients() {
   return function (dispatch) {
     dispatch({
       type: GET_BURGER_INGREDIENTS_REQUEST
@@ -38,27 +38,3 @@ export function getBurgerIngredients () {
       });
   }
 }
-/*
-export function getFeed() {
-  return function (dispatch) {
-    dispatch({
-      type: GET_FEED
-    })
-    fetch('/feed').then(res => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_FEED_SUCCESS,
-          feed: res.data
-        })
-      } else {
-        dispatch({
-          type: GET_FEED_FAILED
-        })
-      }
-    }).catch(err => {
-      dispatch({
-        type: GET_FEED_FAILED
-      })
-    })
-  }
-} */
