@@ -1,13 +1,12 @@
 import {
   GET_CONSTRUCTOR_ELEMENT,
   DELETE_CONSTRUCTOR_ELEMENT,
-  GET_CONSTRUCTOR_BUN
+  GET_CONSTRUCTOR_BUN,
+  RESET_CONSTRUCTOR
 } from '../actions/burger-constructor';
 
 const burgerConstractorInitialState = {
-  bun: {
-    price: 0
-  },
+  bun: {},
   ingredients: []
 }
 
@@ -29,6 +28,13 @@ export const ingredientsConstructorReducer = (state = burgerConstractorInitialSt
       return {
         ...state,
         ingredients: [...state.ingredients].filter(item => item.uuid !== action.uuid)
+      }
+    }
+    case RESET_CONSTRUCTOR: {
+      return {
+        ...state,
+        bun: null,
+        ingredients: []
       }
     }
     default: {

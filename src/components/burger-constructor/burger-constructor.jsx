@@ -1,6 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorElement } from '../burger-constructor-element/burger-constructor-element';
 import {
@@ -16,7 +15,6 @@ import { useDrop } from 'react-dnd';
 import { GET_CONSTRUCTOR_ELEMENT, GET_CONSTRUCTOR_BUN } from '../../services/actions/burger-constructor';
 import { DECREASE_COUNTER, INCREASE_COUNTER } from '../../services/actions/burger-ingredients';
 import { sentOrderNumber } from '../../services/actions/order';
-import { OPEN_MODAL, SET_MODAL_TYPE } from '../../services/actions/modal';
 
 export default function BurgerConstructor() {
 
@@ -26,9 +24,6 @@ export default function BurgerConstructor() {
   const bun = useSelector(store => store.constructor.bun);
 
   const dispatch = useDispatch();
-
-  function setModalType() {
-  }
 
   useEffect(() => {
     dispatch({
@@ -131,13 +126,6 @@ export default function BurgerConstructor() {
 
   const handleOrder = () => {
     const ingredientsId = [...ingredients].map(item => item._id);
-    dispatch({
-      type: SET_MODAL_TYPE,
-      modalType: 'orderDetails'
-    })
-    dispatch({
-      type: OPEN_MODAL
-    })
     dispatch(sentOrderNumber([ bun._id, ...ingredientsId]));
   }
 

@@ -1,32 +1,27 @@
+import { request } from "../../components/utils/utils";
+import { RESET_CONSTRUCTOR } from "./burger-constructor";
+import { RESET_COUNTER } from "./burger-ingredients";
+
 export const ORDER_REQUEST = 'ORDER_NUMBER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_NUMBER_SUCCESS';
 export const ORDER_FAILED = 'ORDER_NUMBER_FAILED';
+export const ORDER_RESET = 'ORDER_RESET';
 
-const order = 'https://norma.nomoreparties.space/api/orders'
-const getOrderApi = (ingredients) => {
-  return fetch(
-    order,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        ingredients
-      })
-    }
-  )
-    .then(res => res.json());
-}
+const getOrder = (ingredientsId) => request('/orders', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({
+    ingredients: ingredientsId
+  })
+})
 
 export function sentOrderNumber(ingredientsId) {
   return function (dispatch) {
     dispatch({
       type: ORDER_REQUEST
     })
-    getOrderApi(ingredientsId)
+    getOrder(ingredientsId)
       .then(data => {
-        if (data && data.success) {
           dispatch({
             type: ORDER_SUCCESS,
             name: data.name,
@@ -34,14 +29,19 @@ export function sentOrderNumber(ingredientsId) {
               number: data.order.number
             }
           })
-        } else {
           dispatch({
-            type: ORDER_FAILED
+            type: RESET_CONSTRUCTOR
           })
-        }
+          dispatch({
+            type: RESET_COUNTER
+          })
+
       })
       .catch(err => {
-        console.log(`Ошибка: ${err.status}`)
+        dispatch({
+          type: ORDER_FAILED
+        })
+        console.log(`Ошибка: ${err.status}`);
       })
   }
 }

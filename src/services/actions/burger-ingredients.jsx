@@ -1,40 +1,34 @@
+import { request } from "../../components/utils/utils";
+
 export const GET_BURGER_INGREDIENTS_REQUEST = 'GET_BURGER_INGREDIENT_REQUEST';
 export const GET_BURGER_INGREDIENTS_SUCCESS = 'GET_BURGER_INGREDIENTS_SUCCESS';
 export const GET_BURGER_INGREDIENTS_FAILED = 'GET_BURGER_INGREDIENTS_FAILED';
 export const INCREASE_COUNTER = 'INCREASE_COUNTER';
 export const DECREASE_COUNTER = 'DECREASE_COUNTER';
+export const RESET_COUNTER = 'RESET_COUNTER'
 
-const burgerIngredients = 'https://norma.nomoreparties.space/api/ingredients';
-const getIngredientsApi = () => {
-  return fetch(burgerIngredients)
-    .then(res => res.json());
-}
+const getIngredients = () => request('/ingredients');
 
 export function getBurgerIngredients() {
   return function (dispatch) {
     dispatch({
       type: GET_BURGER_INGREDIENTS_REQUEST
     })
-    getIngredientsApi()
+    getIngredients()
       .then(data => {
-        if (data && data.success) {
-          const ingredients = data.data.map(item => {
-            item.count = 0; return item;
-          })
-          dispatch({
-            type: GET_BURGER_INGREDIENTS_SUCCESS,
-            ingredients: ingredients
-          })
-        } else {
-          dispatch({
-            type: GET_BURGER_INGREDIENTS_FAILED
-          })
-        }
+        const ingredients = data.data.map(item => {
+          item.count = 0; return item;
+        })
+        dispatch({
+          type: GET_BURGER_INGREDIENTS_SUCCESS,
+          ingredients: ingredients
+        })
       })
       .catch(err => {
         dispatch({
           type: GET_BURGER_INGREDIENTS_FAILED
         })
+        console.log(`Ошибка: ${err.status}`);
       });
   }
 }

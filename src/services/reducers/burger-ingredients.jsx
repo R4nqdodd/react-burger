@@ -4,6 +4,7 @@ import {
   GET_BURGER_INGREDIENTS_REQUEST,
   INCREASE_COUNTER,
   DECREASE_COUNTER,
+  RESET_COUNTER
 } from '../actions/burger-ingredients';
 
 const burgerIngredientsInitialState = {
@@ -39,7 +40,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       return {
         ...state,
         ingredients: [...state.ingredients].map(item => {
-          if (item._id === action.id._id){
+          if (item._id === action.id._id) {
             item.count += action.count;
           }
           return item
@@ -50,9 +51,19 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       return {
         ...state,
         ingredients: [...state.ingredients].map(item => {
-          if (item._id === action.id){
+          if (item._id === action.id) {
             item.count -= action.count;
           }
+          return item
+        })
+      }
+    }
+    case RESET_COUNTER: {
+      return {
+        ...state,
+        ingredients: [...state.ingredients].map(item => {
+          item.count = 0;
+
           return item
         })
       }

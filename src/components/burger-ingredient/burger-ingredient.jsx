@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
 import {
@@ -9,7 +9,6 @@ import {
 import { useDrag } from 'react-dnd';
 
 import { SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
-import { OPEN_MODAL, SET_MODAL_TYPE } from '../../services/actions/modal';
 
 export default function BurgerIngredient({ ingredient }) {
 
@@ -21,13 +20,6 @@ export default function BurgerIngredient({ ingredient }) {
     dispatch({
       type: SET_CURRENT_INGREDIENT,
       current: ingredient
-    })
-    dispatch({
-      type: SET_MODAL_TYPE,
-      modalType: 'ingredientDetails'
-    })
-    dispatch({
-      type: OPEN_MODAL
     })
   }
 

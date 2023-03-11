@@ -7,8 +7,8 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import {
   CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CLOSE_MODAL } from '../../services/actions/modal';
 import { DELETE_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { ORDER_RESET } from '../../services/actions/order';
 
 export default function Modal({ children }) {
   const modalRoot = document.getElementById("modal-root");
@@ -24,12 +24,30 @@ export default function Modal({ children }) {
 
   function handleCloseModal() {
     dispatch({
-      type: CLOSE_MODAL,
-    })
-    dispatch({
       type: DELETE_CURRENT_INGREDIENT
     })
+    dispatch({
+      type: ORDER_RESET
+    })
   }
+
+  const modalLoading = () => {
+    if (ingredientsRequset || orderRequest) {
+      return (<div className={styles.modal}> <p className="text text_type_main-large">Загрузка...</p> </div>)
+    } else if (ingredientsFailed || orderFailed) {
+      return (ingredientsFailed || orderFailed)
+    } else {
+      return (
+        <div className={styles.modal} onClick={handleStopPropagation}>
+          {children}
+          <button type='button' aria-label='закрыть' className={`${styles.close_button} mt-15 mr-10`}>
+            <CloseIcon type="primary" onClick={handleCloseModal} />
+          </button>
+        </div>
+      )
+    }
+  }
+
 
   useEffect(() => {
     function handleCloseESC(e) {
@@ -44,18 +62,7 @@ export default function Modal({ children }) {
 
   return ReactDOM.createPortal((
     <ModalOverlay handleCloseModal={handleCloseModal} >
-      {ingredientsRequset || orderRequest
-      ? <div className={styles.modal}> <p className="text text_type_main-large">Загрузка...</p> </div>
-      : ingredientsFailed || orderFailed 
-      ? <div className={styles.modal}> <p className="text text_type_main-large">ОШИБКА!!!</p> </div>
-      :
-        <div className={styles.modal} onClick={handleStopPropagation}>
-          {children}
-          <button type='button' aria-label='закрыть' className={`${styles.close_button} mt-15 mr-10`}>
-            <CloseIcon type="primary" onClick={handleCloseModal} />
-          </button>
-        </div>
-        }
+      {modalLoading()}
     </ModalOverlay>
   ), modalRoot);
 }

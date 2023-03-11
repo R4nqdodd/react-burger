@@ -4,7 +4,7 @@ import {
 } from '../actions/current-ingredient';
 
 const currentIngredientInitialState = {
-  current: {}
+  current: null
 }
 
 export const currentIngredientReducer = (state = currentIngredientInitialState, action) => {
@@ -18,7 +18,7 @@ export const currentIngredientReducer = (state = currentIngredientInitialState, 
     case DELETE_CURRENT_INGREDIENT: {
       return {
         ...state,
-        current: {}
+        current: null
       }
     }
     default: {

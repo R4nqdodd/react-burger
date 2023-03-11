@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useInView } from 'react-hook-inview';
 import styles from './burger-ingredients.module.css';
 import {

@@ -13,8 +13,8 @@ import IngredientDetails from '../inngredient-details/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 
 function App() {
-
-  const modal = useSelector(store => store.modal);
+  
+  const currentIngredient = useSelector(store => store.currentIngredient.current)
 
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ function App() {
           <BurgerConstructor />
         </main>
         <Modal>
-          {modal.modalType === 'ingredientDetails' ? <IngredientDetails /> : <OrderDetails />}
+          {currentIngredient ? <IngredientDetails /> : <OrderDetails />}
         </Modal>
       </DndProvider>
     </>

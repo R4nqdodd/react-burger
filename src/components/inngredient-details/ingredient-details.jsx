@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
 
 export default function IngredientDetails() {
