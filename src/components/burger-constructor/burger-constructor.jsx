@@ -14,7 +14,9 @@ import { useDrop } from 'react-dnd';
 
 import { GET_CONSTRUCTOR_ELEMENT, GET_CONSTRUCTOR_BUN } from '../../services/actions/burger-constructor';
 import { DECREASE_COUNTER, INCREASE_COUNTER } from '../../services/actions/burger-ingredients';
-import { sentOrderNumber } from '../../services/actions/order';
+import { ORDER_RESET, sentOrderNumber } from '../../services/actions/order';
+import { SET_MODAL } from '../../services/actions/modal';
+import OrderDetails from '../order-details/order-details';
 
 export default function BurgerConstructor() {
 
@@ -126,6 +128,11 @@ export default function BurgerConstructor() {
 
   const handleOrder = () => {
     const ingredientsId = [...ingredients].map(item => item._id);
+    dispatch({
+      type: SET_MODAL,
+      currentModal: <OrderDetails />,
+      resetActionType: ORDER_RESET
+    })
     dispatch(sentOrderNumber([ bun._id, ...ingredientsId]));
   }
 

@@ -73,7 +73,7 @@ export function BurgerConstructorElement({ name, _id, uuid, image, price, moveIn
   sortRef(sortDropRef(ref));
 
   return (
-    <li className={`${styles.item} pr-2`} ref={ref} style={{ opacity }}>
+    <li className={`${styles.item} ml-2`} ref={ref} style={{ opacity }}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={name}

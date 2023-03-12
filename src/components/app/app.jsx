@@ -8,13 +8,11 @@ import Modal from '../modal/modal';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../inngredient-details/ingredient-details';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 
 function App() {
   
-  const currentIngredient = useSelector(store => store.currentIngredient.current)
+  const {currentModal} = useSelector(store => store.modal);
 
   const dispatch = useDispatch();
 
@@ -31,7 +29,7 @@ function App() {
           <BurgerConstructor />
         </main>
         <Modal>
-          {currentIngredient ? <IngredientDetails /> : <OrderDetails />}
+          {currentModal}
         </Modal>
       </DndProvider>
     </>

@@ -8,7 +8,9 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 
-import { SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
+import { SET_MODAL } from '../../services/actions/modal';
+import IngredientDetails from '../inngredient-details/ingredient-details';
 
 export default function BurgerIngredient({ ingredient }) {
 
@@ -20,6 +22,11 @@ export default function BurgerIngredient({ ingredient }) {
     dispatch({
       type: SET_CURRENT_INGREDIENT,
       current: ingredient
+    })
+    dispatch({
+      type: SET_MODAL,
+      currentModal: <IngredientDetails />,
+      resetActionType: DELETE_CURRENT_INGREDIENT
     })
   }
 

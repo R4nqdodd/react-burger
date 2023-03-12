@@ -5,12 +5,10 @@ import { useSelector } from 'react-redux';
 
 export default function ModalOverlay ({ children, handleCloseModal }) {
 
-  const { ingredientsRequest } = useSelector(store => store.burgerIngredients);
-  const currentIngredient = useSelector(store => store.currentIngredient.current);
-  const { orderRequest, order } = useSelector(store => store.order);
+  const { isRequest, currentModal } = useSelector(store => store.modal);
 
   const openModal = () => {
-     if (currentIngredient || order.number || orderRequest) {
+     if (isRequest || currentModal) {
       return styles.modal_overlay_open;
     } else {
       return '';

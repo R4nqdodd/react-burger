@@ -7,14 +7,12 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import {
   CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DELETE_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
-import { ORDER_RESET } from '../../services/actions/order';
+import { RESET_MODAL } from '../../services/actions/modal';
 
 export default function Modal({ children }) {
   const modalRoot = document.getElementById("modal-root");
 
-  const { ingredientsRequset, ingredientsFailed } = useSelector(store => store.burgerIngredients)
-  const { orderRequest, orderFailed } = useSelector(store => store.order);
+  const { isRequest, isFailed, resetActionType } = useSelector(store => store.modal);
 
   const dispatch = useDispatch();
 
@@ -24,18 +22,18 @@ export default function Modal({ children }) {
 
   function handleCloseModal() {
     dispatch({
-      type: DELETE_CURRENT_INGREDIENT
+      type: resetActionType
     })
     dispatch({
-      type: ORDER_RESET
+      type: RESET_MODAL
     })
   }
 
   const modalLoading = () => {
-    if (ingredientsRequset || orderRequest) {
+    if (isRequest) {
       return (<div className={styles.modal}> <p className="text text_type_main-large">Загрузка...</p> </div>)
-    } else if (ingredientsFailed || orderFailed) {
-      return (ingredientsFailed || orderFailed)
+    } else if (isFailed) {
+      return (<div className={styles.modal}> <p className="text text_type_main-large">Ошибка!!!</p> </div>)
     } else {
       return (
         <div className={styles.modal} onClick={handleStopPropagation}>

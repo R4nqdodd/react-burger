@@ -1,6 +1,7 @@
 import { request } from "../../components/utils/utils";
 import { RESET_CONSTRUCTOR } from "./burger-constructor";
 import { RESET_COUNTER } from "./burger-ingredients";
+import { IS_FAILED, IS_REQUEST, IS_SUCCESS} from "./modal";
 
 export const ORDER_REQUEST = 'ORDER_NUMBER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_NUMBER_SUCCESS';
@@ -20,6 +21,9 @@ export function sentOrderNumber(ingredientsId) {
     dispatch({
       type: ORDER_REQUEST
     })
+    dispatch({
+      type: IS_REQUEST
+    })
     getOrder(ingredientsId)
       .then(data => {
           dispatch({
@@ -28,6 +32,9 @@ export function sentOrderNumber(ingredientsId) {
             order: {
               number: data.order.number
             }
+          })
+          dispatch({
+            type: IS_SUCCESS
           })
           dispatch({
             type: RESET_CONSTRUCTOR
@@ -40,6 +47,9 @@ export function sentOrderNumber(ingredientsId) {
       .catch(err => {
         dispatch({
           type: ORDER_FAILED
+        })
+        dispatch({
+          type: IS_FAILED
         })
         console.log(`Ошибка: ${err.status}`);
       })
