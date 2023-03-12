@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
-export default function IngredientDetails({ modal }) {
+export default function IngredientDetails() {
 
-  const ingredient = modal.ingredient;
+  const ingredient = useSelector(store => store.currentIngredient.current);
 
   return (
     <>
@@ -51,8 +51,4 @@ export default function IngredientDetails({ modal }) {
       </ul>
     </>
   );
-}
-
-IngredientDetails.propTypes = {
-  modal: PropTypes.object
 }

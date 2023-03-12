@@ -1,20 +1,28 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import styles from './modal-overlay.module.css';
+import { useSelector } from 'react-redux';
 
-export default function ModalOverlay ({ modal, children, handleCloseModal }) {
+export default function ModalOverlay ({ children, handleCloseModal }) {
 
-  const modalRoot = document.getElementById("modal-root");
+  const { isRequest, currentModal } = useSelector(store => store.modal);
 
-  return ReactDOM.createPortal((
-    <div className={`${styles.modal_overlay} ${modal.isOpen && styles.modal_overlay_open}`} onClick={handleCloseModal}>
+  const openModal = () => {
+     if (isRequest || currentModal) {
+      return styles.modal_overlay_open;
+    } else {
+      return '';
+    }
+  }
+
+  return (
+    <div className={`${styles.modal_overlay} ${openModal()}`} onClick={handleCloseModal}>
       {children}
     </div>
-  ), modalRoot);
+  );
 }
 
 ModalOverlay.propTypes = {
-  modal: PropTypes.object,
-  setModal: PropTypes.func
+  children: PropTypes.element,
+  handleCloseModal: PropTypes.func
 }
