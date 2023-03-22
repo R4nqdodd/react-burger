@@ -1,19 +1,17 @@
-import React, { useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorElement } from '../burger-constructor-element/burger-constructor-element';
 import {
   ConstructorElement,
   CurrencyIcon,
-  Button,
-  DragIcon
+  Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useDrop } from 'react-dnd';
 
-import { GET_CONSTRUCTOR_ELEMENT, GET_CONSTRUCTOR_BUN } from '../../services/actions/burger-constructor';
-import { DECREASE_COUNTER, INCREASE_COUNTER } from '../../services/actions/burger-ingredients';
+import { getConstructorIngredient, addIngredientToConstructor } from '../../services/actions/burger-constructor';
 import { ORDER_RESET, sentOrderNumber } from '../../services/actions/order';
 import { SET_MODAL } from '../../services/actions/modal';
 import OrderDetails from '../order-details/order-details';
@@ -28,55 +26,18 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({
-      type: GET_CONSTRUCTOR_ELEMENT,
-      ingredients: []
-    })
+    dispatch(getConstructorIngredient([]))
   }, [dispatch])
 
   const [, constructorDrop] = useDrop({
     accept: 'ingredients',
     drop(itemId) {
       const newIngredient = { ...temporaryIngredients.find(item => item._id === itemId._id) }
-
       newIngredient.uuid = uuidv4();
 
-      if (newIngredient.type === 'bun' && bun) {
-        dispatch({
-          type: DECREASE_COUNTER,
-          id: bun._id,
-          count: 2
-        })
-        dispatch({
-          type: INCREASE_COUNTER,
-          id: itemId,
-          count: 2
-        })
-        dispatch({
-          type: GET_CONSTRUCTOR_BUN,
-          bun: newIngredient
-        });
-      } else if (newIngredient.type === 'bun') {
-        dispatch({
-          type: INCREASE_COUNTER,
-          id: itemId,
-          count: 2
-        })
-        dispatch({
-          type: GET_CONSTRUCTOR_BUN,
-          bun: newIngredient
-        });
-      } else {
-        dispatch({
-          type: GET_CONSTRUCTOR_ELEMENT,
-          ingredients: [...ingredients, newIngredient]
-        });
-        dispatch({
-          type: INCREASE_COUNTER,
-          id: itemId,
-          count: 1
-        })
-      }
+      const newIngredients = [...ingredients, newIngredient]
+
+      dispatch(addIngredientToConstructor(newIngredient, bun, itemId, newIngredients));
     }
   });
 
@@ -86,10 +47,7 @@ export default function BurgerConstructor() {
     newIngredients.splice(dragIndex, 1);
     newIngredients.splice(hoverIndex, 0, dragIngredient);
 
-    dispatch({
-      type: GET_CONSTRUCTOR_ELEMENT,
-      ingredients: newIngredients
-    })
+    dispatch(getConstructorIngredient(newIngredients))
     
   }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-hook-inview';
 import styles from './burger-ingredients.module.css';
@@ -26,7 +26,10 @@ export default function BurgerIngredients() {
     } else if (mainInView){
       setCurrent('Начинки')
     }
-  },[bunInView,sauceInView,mainInView])
+
+    console.log(bunRef.current)
+  },[bunInView,sauceInView,mainInView]);
+
   return (
     <section className={`${styles.burger_ingredients} mr-10`}>
       <h1 className="text text_type_main-large mt-10">

@@ -1,5 +1,5 @@
 import {
-  GET_CONSTRUCTOR_ELEMENT,
+  GET_CONSTRUCTOR_INGREDIENT,
   DELETE_CONSTRUCTOR_ELEMENT,
   GET_CONSTRUCTOR_BUN,
   RESET_CONSTRUCTOR
@@ -18,7 +18,7 @@ export const ingredientsConstructorReducer = (state = burgerConstractorInitialSt
         bun: action.bun
       }
     }
-    case GET_CONSTRUCTOR_ELEMENT: {
+    case GET_CONSTRUCTOR_INGREDIENT: {
       return {
         ...state,
         ingredients: action.ingredients
