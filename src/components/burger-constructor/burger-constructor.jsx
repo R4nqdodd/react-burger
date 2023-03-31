@@ -15,6 +15,7 @@ import { getConstructorIngredient, addIngredientToConstructor } from '../../serv
 import { ORDER_RESET, sentOrderNumber } from '../../services/actions/order';
 import { SET_MODAL } from '../../services/actions/modal';
 import OrderDetails from '../order-details/order-details';
+import { useNavigate } from 'react-router-dom';
 
 export default function BurgerConstructor() {
 
@@ -22,6 +23,10 @@ export default function BurgerConstructor() {
 
   const ingredients = useSelector(store => store.constructor.ingredients);
   const bun = useSelector(store => store.constructor.bun);
+
+  const userData = useSelector(store => store.auth);
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -85,13 +90,17 @@ export default function BurgerConstructor() {
   }, [ingredients, bun]);
 
   const handleOrder = () => {
-    const ingredientsId = [...ingredients].map(item => item._id);
-    dispatch({
-      type: SET_MODAL,
-      currentModal: <OrderDetails />,
-      resetActionType: ORDER_RESET
-    })
-    dispatch(sentOrderNumber([ bun._id, ...ingredientsId]));
+    if(!userData.user) {
+      navigate('/login');
+    } else {
+      const ingredientsId = [...ingredients].map(item => item._id);
+      dispatch({
+        type: SET_MODAL,
+        currentModal: <OrderDetails />,
+        resetActionType: ORDER_RESET
+      })
+      dispatch(sentOrderNumber([ bun._id, ...ingredientsId]));
+    }
   }
 
   return (

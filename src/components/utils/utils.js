@@ -1,23 +1,33 @@
-const baseUrl = 'https://norma.nomoreparties.space/api';
-
-const checkResponse = (res) => {
-  if (res.ok) {
-    return res.json();
+export function setCookie(name, value, props) {
+  props = props || {};
+  let exp = props.expires;
+  if (typeof exp == 'number' && exp) {
+    const d = new Date();
+    d.setTime(d.getTime() + exp * 1000);
+    exp = props.expires = d;
   }
-
-  return Promise.reject(`Ошибка: ${res.status}`);
+  if (exp && exp.toUTCString) {
+    props.expires = exp.toUTCString();
+  }
+  value = encodeURIComponent(value);
+  let updatedCookie = name + '=' + value;
+  for (const propName in props) {
+    updatedCookie += '; ' + propName;
+    const propValue = props[propName];
+    if (propValue !== true) {
+      updatedCookie += '=' + propValue;
+    }
+  }
+  document.cookie = updatedCookie;
 }
 
-const checkSuccess = (res) => {
-  if (res && res.success) {
-    return res;
-  }
-
-  return Promise.reject(`Ответ не success: ${res}`);
+export function getCookie(name) {
+  const matches = document.cookie.match(
+    new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export const request = (endpoint, options) => {
-  return fetch(baseUrl + endpoint, options)
-    .then(checkResponse)
-    .then(checkSuccess)
+export function deleteCookie(name) {
+  setCookie(name, null, { expires: -1 });
 }

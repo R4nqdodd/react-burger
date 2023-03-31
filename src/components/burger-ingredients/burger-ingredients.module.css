@@ -39,3 +39,13 @@
   flex-wrap: wrap;
   row-gap: 32px;
 }
+
+.ingredient_link {
+  text-decoration: none;
+  color: white;
+  margin-right: 24px;
+}
+
+.ingredient_link:nth-child(2n) {
+  margin-right: 0;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
 import {
@@ -15,6 +15,7 @@ import IngredientDetails from '../inngredient-details/ingredient-details';
 export default function BurgerIngredient({ ingredient }) {
 
   const { _id } = ingredient;
+  const ingr = useSelector(store => store.currentIngredient.current);
 
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ export default function BurgerIngredient({ ingredient }) {
     })
     dispatch({
       type: SET_MODAL,
-      currentModal: <IngredientDetails />,
+      currentModal: <IngredientDetails ingredient={ingredient} />,
       resetActionType: DELETE_CURRENT_INGREDIENT
     })
   }
@@ -39,7 +40,7 @@ export default function BurgerIngredient({ ingredient }) {
   });
 
   return (
-    <li className={`${styles.item} mr-6`} onClick={openModal} ref={ingredientRef} style={{ opacity }}>
+    <li className={`${styles.item}`} onClick={openModal} ref={ingredientRef} style={{ opacity }}>
       <img className={`${styles.image} pl-4 pr-4 pb-1`} src={ingredient.image} alt={ingredient.name} />
       <div className={`${styles.item_price} pt-1 pb-1`}>
         <CurrencyIcon type="primary" />

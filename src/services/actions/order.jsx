@@ -1,4 +1,4 @@
-import { request } from "../../components/utils/utils";
+import { request } from "../../components/utils/api";
 import { RESET_CONSTRUCTOR } from "./burger-constructor";
 import { RESET_COUNTER } from "./burger-ingredients";
 import { IS_FAILED, IS_REQUEST, IS_SUCCESS} from "./modal";

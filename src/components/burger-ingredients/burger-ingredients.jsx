@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-hook-inview';
 import styles from './burger-ingredients.module.css';
@@ -6,13 +6,18 @@ import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 
 export default function BurgerIngredients() {
 
+  const location = useLocation();
+
   const [bunRef, bunInView] = useInView();
   const [sauceRef, sauceInView] = useInView();
   const [mainRef, mainInView] = useInView();
+
+  const id = useParams();
 
   const [current, setCurrent] = useState('Булки');
 
@@ -23,12 +28,10 @@ export default function BurgerIngredients() {
       setCurrent('Булки')
     } else if (sauceInView) {
       setCurrent('Соусы')
-    } else if (mainInView){
+    } else if (mainInView) {
       setCurrent('Начинки')
     }
-
-    console.log(bunRef.current)
-  },[bunInView,sauceInView,mainInView]);
+  }, [bunInView, sauceInView, mainInView]);
 
   return (
     <section className={`${styles.burger_ingredients} mr-10`}>
@@ -54,8 +57,12 @@ export default function BurgerIngredients() {
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
               {ingredients.map((item) => {
-                if(item.type === 'bun'){
-                 return (<BurgerIngredient key={item._id} ingredient={item}/>)
+                if (item.type === 'bun') {
+                  return (
+                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location }}>
+                      <BurgerIngredient ingredient={item} />
+                    </Link>
+                  )
                 }
               }
               )}
@@ -66,9 +73,13 @@ export default function BurgerIngredients() {
               Соусы
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-            {ingredients.map((item) => {
-                if(item.type === 'sauce'){
-                  return (<BurgerIngredient key={item._id} ingredient={item}/>)
+              {ingredients.map((item) => {
+                if (item.type === 'sauce') {
+                  return (
+                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location }}>
+                      <BurgerIngredient key={item._id} ingredient={item} />
+                    </Link>
+                  )
                 }
               }
               )}
@@ -79,9 +90,13 @@ export default function BurgerIngredients() {
               Начинки
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-            {ingredients.map((item) => {
-                if(item.type === 'main'){
-                  return (<BurgerIngredient key={item._id} ingredient={item}/>)
+              {ingredients.map((item) => {
+                if (item.type === 'main') {
+                  return (
+                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location }}>
+                      <BurgerIngredient key={item._id} ingredient={item} />
+                    </Link>
+                  )
                 }
               }
               )}

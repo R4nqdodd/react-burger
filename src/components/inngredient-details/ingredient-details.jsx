@@ -2,9 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
-export default function IngredientDetails() {
+export default function IngredientDetails({ingredient}) {
 
-  const ingredient = useSelector(store => store.currentIngredient.current);
 
   return (
     <>

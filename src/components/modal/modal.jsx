@@ -8,6 +8,7 @@ import {
   CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { RESET_MODAL } from '../../services/actions/modal';
+import { useNavigate } from 'react-router-dom';
 
 export default function Modal({ children }) {
   const modalRoot = document.getElementById("modal-root");
@@ -15,6 +16,8 @@ export default function Modal({ children }) {
   const { isRequest, isFailed, resetActionType } = useSelector(store => store.modal);
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   function handleStopPropagation(e) {
     e.stopPropagation();
@@ -27,6 +30,7 @@ export default function Modal({ children }) {
     dispatch({
       type: RESET_MODAL
     })
+    navigate('/');
   }
 
   const modalLoading = () => {
