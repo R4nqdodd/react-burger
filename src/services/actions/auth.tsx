@@ -1,4 +1,4 @@
-import { request, getProfileInfoRequest } from "../../utils/api";
+import { request, getProfileInfoRequest, updateTokenRequest } from "../../utils/api";
 import { setCookie, deleteCookie, getCookie } from "../../utils/utils";
 
 export const USER_LOGIN = 'USER_LOGIN';
@@ -7,35 +7,9 @@ export const UPDATE_TOKEN = 'UPDATE_TOKEN';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const IS_AUTH = 'IS_AUTH'
 
-export const updateToken = (token) => {
-  return function (dispatch) {
-    request('/auth/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'token': token
-      })
-    })
-      .then(data => {
-        deleteCookie('token');
-        setCookie('token', data.refreshToken);
-      })
-  }
-}
-
-export const getUser = (token) => {
-  return function (dispatch) {
-    request('/auth/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'token': token
-      })
-    })
+export const getUser = (token: string | undefined) => {
+  return function (dispatch: any) {
+    updateTokenRequest(token)
       .then(data => {
         deleteCookie('token');
         setCookie('token', data.refreshToken);
@@ -47,14 +21,13 @@ export const getUser = (token) => {
               name: user.user.name,
               accessToken: data.accessToken
             })
-          })    
+          })
           .finally(() => {
             dispatch({
               type: IS_AUTH
             })
           })
-        console.log(getCookie('token'))
-      })    
+      })
       .catch(() => {
         dispatch({
           type: IS_AUTH

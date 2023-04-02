@@ -8,15 +8,13 @@ export default function ForgotPasswordPage() {
 
   const location = useLocation();
 
-
-
   const { values, handleChange } = useForm({
     email: '',
   })
 
   const navigate = useNavigate();
 
-  const onClickResetPassword = (e) => {
+  const onClickResetPassword = (e: any) => {
     e.preventDefault();
 
     forgotPasswordReset(values)

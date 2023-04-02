@@ -1,9 +1,27 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
 
-export default function IngredientDetails({ingredient}) {
+type TIngredientDetails = {
+  ingredient: {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v: number;
+    count: number;
+    uuid?: string;
+  }
+};
 
+export default function IngredientDetails({ingredient}: TIngredientDetails) {
 
   return (
     <>

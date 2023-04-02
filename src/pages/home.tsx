@@ -1,17 +1,24 @@
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './home.module.css';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
-import Modal from '../components/modal/modal';
+import { Modal } from '../components/modal/modal';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { getBurgerIngredients } from '../services/actions/burger-ingredients';
+type TModalStore = {
+  modal: {
+    isRequest: boolean;
+    isFailed: boolean;
+    currentModal: JSX.Element;
+    resetActionType: string;
+  }
+}
 
 function HomePage() {
 
-  const { currentModal } = useSelector(store => store.modal);
+  const modal = useSelector((store: TModalStore) => store.modal);
 
   const homePage = (
     <>
@@ -22,7 +29,7 @@ function HomePage() {
         </main>
       </DndProvider>
       <Modal>
-        {currentModal}
+        {modal.currentModal}
       </Modal>
     </>
   );

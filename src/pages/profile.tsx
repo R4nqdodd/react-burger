@@ -8,11 +8,21 @@ import { GET_USER_SUCCESS, USER_LOGOUT } from "../services/actions/auth";
 import styles from './profile.module.css';
 import { useForm } from "../hooks/use-form";
 
+type TAuth = {
+  auth: {
+    isAuth: boolean;
+    user: {
+      name: string;
+      email: string;
+      accessToken: string;
+    }
+  }
+}
 
 export default function ProfilePage() {
-  const inputNameRef = useRef();
+  const inputNameRef = useRef<any>();
 
-  const userData = useSelector(store => store.auth.user);
+  const userData = useSelector((store: TAuth) => store.auth.user);
 
   const dispatch = useDispatch();
 
@@ -49,7 +59,7 @@ export default function ProfilePage() {
       })
   }
 
-  const onClickSubmit = (e) => {
+  const onClickSubmit = (e: any) => {
     e.preventDefault();
 
     editProfileInfoRequest(userData.accessToken, values)
@@ -57,7 +67,7 @@ export default function ProfilePage() {
         dispatch({
           type: GET_USER_SUCCESS,
           user: {
-            ...userData.user,
+            ...userData,
             email: data.user.email,
             name: data.user.name
           }

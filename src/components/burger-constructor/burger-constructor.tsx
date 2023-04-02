@@ -17,18 +17,64 @@ import { SET_MODAL } from '../../services/actions/modal';
 import OrderDetails from '../order-details/order-details';
 import { useNavigate } from 'react-router-dom';
 
+type TIngredient = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+  count: number;
+  uuid?: string;
+};
+
+type TTemporaryIngredients<TIngredient> = {
+  burgerIngredients: {
+    ingredients: ReadonlyArray<TIngredient>;
+  };
+};
+
+type TIngredients<TIngredient> = {
+  constructor: {
+    ingredients: ReadonlyArray<TIngredient>;
+  };
+};
+
+type TBun<TIngredient> = {
+  constructor: {
+    bun: TIngredient;
+  };
+};
+
+type TUserData = {
+  auth: {
+    isAuth: boolean;
+    user: {
+      email: string;
+      name: string;
+      accessToken: string;
+    };
+  };
+};
+
 export default function BurgerConstructor() {
 
-  const temporaryIngredients = useSelector(store => store.burgerIngredients.ingredients)
+  const temporaryIngredients = useSelector((store: TTemporaryIngredients<TIngredient>) => store.burgerIngredients.ingredients)
 
-  const ingredients = useSelector(store => store.constructor.ingredients);
-  const bun = useSelector(store => store.constructor.bun);
+  const ingredients = useSelector((store: TIngredients<TIngredient>) => store.constructor.ingredients);
+  const bun = useSelector((store: TBun<TIngredient>) => store.constructor.bun);
 
-  const userData = useSelector(store => store.auth);
+  const userData = useSelector((store: TUserData) => store.auth);
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     dispatch(getConstructorIngredient([]))
@@ -36,31 +82,31 @@ export default function BurgerConstructor() {
 
   const [, constructorDrop] = useDrop({
     accept: 'ingredients',
-    drop(itemId) {
-      const newIngredient = { ...temporaryIngredients.find(item => item._id === itemId._id) }
+    drop(itemId: TIngredient) {
+      const newIngredient: TIngredient = { ...temporaryIngredients.find((item:TIngredient) => item._id === itemId._id) } as TIngredient;
       newIngredient.uuid = uuidv4();
 
-      const newIngredients = [...ingredients, newIngredient]
+      const newIngredients: TIngredient[] = [...ingredients, newIngredient]
 
-      dispatch(addIngredientToConstructor(newIngredient, bun, itemId, newIngredients));
+      dispatch(addIngredientToConstructor(newIngredient, bun, itemId._id, newIngredients));
     }
   });
 
-  const moveIngredient = (dragIndex, hoverIndex) => {
-    const dragIngredient = ingredients[dragIndex];
-    const newIngredients = [...ingredients];
+  const moveIngredient = (dragIndex: number, hoverIndex: number) => {
+    const dragIngredient: TIngredient = ingredients[dragIndex];
+    const newIngredients: TIngredient[] = [...ingredients];
     newIngredients.splice(dragIndex, 1);
     newIngredients.splice(hoverIndex, 0, dragIngredient);
 
     dispatch(getConstructorIngredient(newIngredients))
-    
+
   }
 
   const [, sortDropRef] = useDrop({
     accept: 'sort',
   })
 
-  const getUnchangeableItems = (isTop) => {
+  const getUnchangeableItems = (isTop: boolean) => {
     if (bun) {
       return (
         <li className={`${styles.item} ${isTop ? 'mb-4' : 'mt-4'} ml-8 pr-4`}>
@@ -78,9 +124,9 @@ export default function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     if (bun) {
-      const bunsTotal = bun.price * 2;
+      const bunsTotal: number = bun.price * 2;
       if (ingredients && ingredients.length > 0) {
-        const ingredientsTotal = ingredients.reduce((prev, item) => {
+        const ingredientsTotal = ingredients.reduce((prev: number, item: TIngredient) => {
           return prev + item.price
         }, 0);
         return ingredientsTotal + bunsTotal;
@@ -90,16 +136,16 @@ export default function BurgerConstructor() {
   }, [ingredients, bun]);
 
   const handleOrder = () => {
-    if(!userData.user) {
+    if (!userData.user) {
       navigate('/login');
     } else {
-      const ingredientsId = [...ingredients].map(item => item._id);
+      const ingredientsId: string[] = [...ingredients].map(item => item._id);
       dispatch({
         type: SET_MODAL,
         currentModal: <OrderDetails />,
         resetActionType: ORDER_RESET
       })
-      dispatch(sentOrderNumber([ bun._id, ...ingredientsId]));
+      dispatch(sentOrderNumber([bun._id, ...ingredientsId]));
     }
   }
 
@@ -110,7 +156,7 @@ export default function BurgerConstructor() {
         <li>
           <ul className={styles.changeable_items} ref={sortDropRef}>
             {ingredients &&
-              ingredients.map((item, index) => {
+              ingredients.map((item: TIngredient, index: number) => {
                 if (!(item.type === 'bun')) {
                   return <BurgerConstructorElement key={item.uuid} {...item} moveIngredient={moveIngredient} index={index} />
                 }

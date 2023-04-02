@@ -8,6 +8,31 @@ import {
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
+type TIngredient = {
+  _id: string;
+  name: string;
+  type: string;
+  proteins: number;
+  fat: number;
+  carbohydrates: number;
+  calories: number;
+  price: number;
+  image: string;
+  image_mobile: string;
+  image_large: string;
+  __v: number;
+  count: number;
+  uuid?: string;
+};
+
+type TIngredientStore<TIngredient> = {
+  burgerIngredients: {
+    ingredients: ReadonlyArray<TIngredient>;
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean;
+  };
+};
+
 
 export default function BurgerIngredients() {
 
@@ -17,11 +42,9 @@ export default function BurgerIngredients() {
   const [sauceRef, sauceInView] = useInView();
   const [mainRef, mainInView] = useInView();
 
-  const id = useParams();
-
   const [current, setCurrent] = useState('Булки');
 
-  const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+  const ingredients = useSelector((store: TIngredientStore<TIngredient>) => store.burgerIngredients.ingredients);
 
   useEffect(() => {
     if (bunInView) {
@@ -56,7 +79,7 @@ export default function BurgerIngredients() {
               Булки
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-              {ingredients.map((item) => {
+              {ingredients.map((item: TIngredient) => {
                 if (item.type === 'bun') {
                   return (
                     <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
@@ -73,7 +96,7 @@ export default function BurgerIngredients() {
               Соусы
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-              {ingredients.map((item) => {
+              {ingredients.map((item: TIngredient) => {
                 if (item.type === 'sauce') {
                   return (
                     <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
@@ -90,7 +113,7 @@ export default function BurgerIngredients() {
               Начинки
             </h2>
             <ul className={`${styles.burger_ingredients_list} mt-6 ml-4`}>
-              {ingredients.map((item) => {
+              {ingredients.map((item: TIngredient) => {
                 if (item.type === 'main') {
                   return (
                     <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>

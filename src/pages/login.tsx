@@ -17,7 +17,7 @@ export default function LoginPage() {
     password: ''
   });
 
-  let pathname;
+  let pathname: string;
 
   if (location.state) {
     pathname = location.state.from.pathname
@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   const dispatch = useDispatch();
 
-  const onClickLogin = (e) => {
+  const onClickLogin = (e: any) => {
     e.preventDefault();
 
     loginRequest(values)

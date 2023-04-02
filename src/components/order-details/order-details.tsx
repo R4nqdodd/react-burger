@@ -4,9 +4,17 @@ import styles from './order-details.module.css';
 import graphics from '../../images/graphics.svg'
 import { useSelector } from 'react-redux';
 
+type TOrderNumber = {
+  order: {
+    order: {
+      number: number
+    }
+  }
+}
+
 export default function OrderDetails() {
 
-  const orderNumber = useSelector(store => store.order.order.number);
+  const orderNumber = useSelector((store: TOrderNumber) => store.order.order.number);
 
   return (
     <>

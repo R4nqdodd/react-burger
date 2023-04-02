@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
 import {
   Counter,
@@ -12,7 +11,26 @@ import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../service
 import { SET_MODAL } from '../../services/actions/modal';
 import IngredientDetails from '../inngredient-details/ingredient-details';
 
-export default function BurgerIngredient({ ingredient }) {
+type TIngredient = {
+  ingredient: {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v: number;
+    count: number;
+    uuid?: string;
+  }
+};
+
+export default function BurgerIngredient({ ingredient }: TIngredient) {
 
   const { _id } = ingredient;
 
@@ -51,8 +69,4 @@ export default function BurgerIngredient({ ingredient }) {
        { ingredient.count !== 0 && <Counter count={ingredient.count} size="default" extraClass="m-1" />}
     </li>
   );
-}
-
-BurgerIngredient.propTypes = {
-  ingredient: PropTypes.object,
 }

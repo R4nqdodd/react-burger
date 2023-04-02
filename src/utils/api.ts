@@ -1,6 +1,6 @@
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res) => {
+const checkResponse = (res: any) => {
   if (res.ok) {
     return res.json();
   }
@@ -8,7 +8,7 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-const checkSuccess = (res) => {
+const checkSuccess = (res: any) => {
   if (res && res.success) {
     return res;
   }
@@ -16,13 +16,13 @@ const checkSuccess = (res) => {
   return Promise.reject(`Ответ не success: ${res}`);
 }
 
-export const request = (endpoint, options) => {
+export const request = async (endpoint: string, options: object) => {
   return fetch(baseUrl + endpoint, options)
     .then(checkResponse)
     .then(checkSuccess)
 }
 
-export const registrationRequest = async (form) => {
+export const registrationRequest = async (form: any) => {
   return await request('/auth/register', {
     method: 'POST',
     headers: {
@@ -32,7 +32,7 @@ export const registrationRequest = async (form) => {
   })
 }
 
-export const loginRequest = async (form) => {
+export const loginRequest = async (form: any) => {
   return await request('/auth/login', {
     method: 'POST',
     headers: {
@@ -42,7 +42,7 @@ export const loginRequest = async (form) => {
   })
 }
 
-export const logoutRequest = async (token) => {
+export const logoutRequest = async (token: string | undefined) => {
   return await request('/auth/logout', {
     method: 'POST',
     headers: {
@@ -54,7 +54,7 @@ export const logoutRequest = async (token) => {
   })
 }
 
-export const getProfileInfoRequest = async (token) => {
+export const getProfileInfoRequest = async (token: string) => {
   return await request('/auth/user', {
     method: 'GET',
     headers: {
@@ -64,7 +64,7 @@ export const getProfileInfoRequest = async (token) => {
   })
 }
 
-export const forgotPasswordReset = async (form) => {
+export const forgotPasswordReset = async (form: any) => {
   return await request('/password-reset', {
     method: 'POST',
     headers: {
@@ -74,7 +74,7 @@ export const forgotPasswordReset = async (form) => {
   })
 }
 
-export const resetPasswordRequest = async (from) => {
+export const resetPasswordRequest = async (from: any) => {
   return await request('/password-reset/reset', {
     method: 'POST',
     headers: {
@@ -84,7 +84,7 @@ export const resetPasswordRequest = async (from) => {
   })
 }
 
-export const updateTokenRequest = async (token) => {
+export const updateTokenRequest = async (token: string | undefined) => {
   return await request('/auth/token', {
     method: 'POST',
     headers: {
@@ -96,7 +96,7 @@ export const updateTokenRequest = async (token) => {
   })
 }
 
-export const editProfileInfoRequest = async (token, form) => {
+export const editProfileInfoRequest = async (token: string, form: any) => {
   return await request('/auth/user', {
     method: 'PATCH',
     headers: {

@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
     token: ''
   })
 
-  const onClickSubmit = (e) => {
+  const onClickSubmit = (e: any) => {
     e.preventDefault();
 
     resetPasswordRequest(values)

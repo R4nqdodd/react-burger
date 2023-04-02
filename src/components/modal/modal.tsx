@@ -1,26 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './modal.module.css';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import {
   CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { RESET_MODAL } from '../../services/actions/modal';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function Modal({ children }) {
-  const modalRoot = document.getElementById("modal-root");
+type TModal = {
+  children: JSX.Element;
+}
 
-  const { isRequest, isFailed, resetActionType } = useSelector(store => store.modal);
+type TModalStore = {
+  modal: {
+    isRequest: boolean;
+    isFailed: boolean;
+    currentModal: JSX.Element | null;
+    resetActionType: string;
+  }
+}
+
+export const Modal: FC<TModal> = ({ children }) => {
+  const modalRoot = document.getElementById("modal-root") as HTMLElement;
+
+  const { isRequest, isFailed, resetActionType } = useSelector((store: TModalStore) => store.modal);
 
   const location = useLocation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function handleStopPropagation(e) {
+  function handleStopPropagation(e: any) {
+    console.log(e)
     e.stopPropagation();
   }
 
@@ -55,7 +69,7 @@ export default function Modal({ children }) {
 
 
   useEffect(() => {
-    function handleCloseESC(e) {
+    function handleCloseESC(e: any) {
       if (e.key === 'Escape') {
         handleCloseModal();
       }
@@ -70,8 +84,4 @@ export default function Modal({ children }) {
       {modalLoading()}
     </ModalOverlay>
   ), modalRoot);
-}
-
-Modal.propTypes = {
-  children: PropTypes.element,
 }

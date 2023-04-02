@@ -32,12 +32,14 @@ export const modalReducer = (state = modalInitialState, action) => {
     }
     case SET_MODAL: {
       return {
+        ...state,
         currentModal: action.currentModal,
         resetActionType: action.resetActionType
       }
     }
     case RESET_MODAL: {
       return {
+        ...state,
         currentModal: null,
         resetActionType: ''
       }

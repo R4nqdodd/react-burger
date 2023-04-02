@@ -12,7 +12,7 @@ export default function RegisterPage() {
 
   const location = useLocation();
 
-  let pathname;
+  let pathname: string;
 
   if (location.state) {
     pathname = location.state.from.pathname
@@ -34,7 +34,7 @@ export default function RegisterPage() {
     navigate('/login');
   }
 
-  const onSubmitRegister = (e) => {
+  const onSubmitRegister = (e: any) => {
     e.preventDefault();
 
     registrationRequest(values)
@@ -45,7 +45,8 @@ export default function RegisterPage() {
           name: data.user.name,
           accessToken: data.accessToken
         });
-        setCookie('token', data.refreshToken);
+        const token = data.refreshToken;
+        setCookie('token', token);
       })
       .then(() => { 
         navigate(pathname);
