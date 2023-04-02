@@ -1,4 +1,4 @@
-import { request } from "../../components/utils/api";
+import { request } from "../../utils/api";
 
 export const GET_BURGER_INGREDIENTS_REQUEST = 'GET_BURGER_INGREDIENT_REQUEST';
 export const GET_BURGER_INGREDIENTS_SUCCESS = 'GET_BURGER_INGREDIENTS_SUCCESS';

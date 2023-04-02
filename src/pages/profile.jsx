@@ -2,10 +2,11 @@ import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-de
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { editProfileInfoRequest, logoutRequest } from "../components/utils/api";
-import { deleteCookie, getCookie } from "../components/utils/utils";
+import { editProfileInfoRequest, logoutRequest } from "../utils/api";
+import { deleteCookie, getCookie } from "../utils/utils";
 import { GET_USER_SUCCESS, USER_LOGOUT } from "../services/actions/auth";
 import styles from './profile.module.css';
+import { useForm } from "../hooks/use-form";
 
 
 export default function ProfilePage() {
@@ -19,7 +20,7 @@ export default function ProfilePage() {
 
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const [value, setValue] = useState({
+  const { values, handleChange, setValues } = useForm({
     name: userData.name,
     email: userData.email,
     password: ''
@@ -34,13 +35,6 @@ export default function ProfilePage() {
     setIsDisabled(true);
   }
 
-  const onChange = (e) => {
-    setValue({
-      ...value,
-      [e.target.name]: e.target.value
-    })
-  }
-
   const onClickLogoutButton = () => {
     logoutRequest(getCookie('token'))
       .then(() => {
@@ -50,12 +44,15 @@ export default function ProfilePage() {
         })
         navigate('/login');
       })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   const onClickSubmit = (e) => {
     e.preventDefault();
 
-    editProfileInfoRequest(userData.accessToken, value)
+    editProfileInfoRequest(userData.accessToken, values)
       .then(data => {
         dispatch({
           type: GET_USER_SUCCESS,
@@ -69,16 +66,17 @@ export default function ProfilePage() {
   }
 
   const onReset = () => {
-    setValue({
+    setValues({
       email: userData.email,
-      name: userData.name
+      name: userData.name,
+      password: ''
     })
   }
 
   const buttons = (
     <>
-      <Button htmlType="reset" type="secondary" size="medium" extraClass="mt-6" onClick={onReset}>Отмена</Button>
-      <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6" onClick={onClickSubmit}>Сохранить</Button>
+      <Button htmlType="reset" type="secondary" size="medium" extraClass="mt-6">Отмена</Button>
+      <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">Сохранить</Button>
     </>
   )
   return (
@@ -105,31 +103,31 @@ export default function ProfilePage() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onClickSubmit} onReset={onReset}>
         <Input
           type="text"
-          value={value.name}
+          value={values.name}
           placeholder={'Имя'}
           icon={'EditIcon'}
           onIconClick={onIconClickName}
           disabled={isDisabled}
-          onChange={onChange}
+          onChange={handleChange}
           onBlur={onBlurName}
           ref={inputNameRef}
           extraClass={'mb-6'}
           name={'name'}
         />
         <EmailInput
-          value={value.email}
+          value={values.email}
           placeholder={'Логин'}
           isIcon={true}
-          onChange={onChange}
+          onChange={handleChange}
           extraClass={'mb-6'}
           name={'email'}
         />
         <PasswordInput
-          value={value.password}
-          onChange={onChange}
+          value={values.password}
+          onChange={handleChange}
           icon={'EditIcon'}
           name={'password'}
         />

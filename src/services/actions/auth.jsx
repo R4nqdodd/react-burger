@@ -1,5 +1,5 @@
-import { request, getProfileInfoRequest } from "../../components/utils/api";
-import { setCookie, deleteCookie, getCookie } from "../../components/utils/utils";
+import { request, getProfileInfoRequest } from "../../utils/api";
+import { setCookie, deleteCookie, getCookie } from "../../utils/utils";
 
 export const USER_LOGIN = 'USER_LOGIN';
 export const USER_LOGOUT = 'USER_LOGOUT';

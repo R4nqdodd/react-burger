@@ -1,52 +1,53 @@
-import { useState } from 'react';
-import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
-import { request } from '../components/utils/api';
-import { useNavigate } from 'react-router-dom';
+import { forgotPasswordReset } from '../utils/api';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useForm } from '../hooks/use-form';
 
 export default function ForgotPasswordPage() {
-  const [value, setValue] = useState('');
+
+  const location = useLocation();
+
+
+
+  const { values, handleChange } = useForm({
+    email: '',
+  })
 
   const navigate = useNavigate();
-
-  const onChangeEmail = (e) => {
-    setValue(e.target.value);
-  }
 
   const onClickResetPassword = (e) => {
     e.preventDefault();
 
-    request('/password-reset', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: value
-      })
-    })
+    forgotPasswordReset(values)
     .then(() => {
-      navigate('/reset-password')
+      navigate('/reset-password', { state: location })
+    })
+    .catch((err) => {
+      console.log(err)
     })
   }
 
+  const onLoginClick = () => {
+    navigate('/login');
+  }
+
   return (
-    <form className={`${styles.form}`}>
+    <form className={`${styles.form}`} onSubmit={onClickResetPassword}>
       <h2 className={`text text_type_main-medium mb-6`}>Восстановление пароля</h2>
       <EmailInput
         name={'email'}
         isIcon={false}
         extraClass="mb-6"
         placeholder="Укажите e-mail"
-        onChange={onChangeEmail}
-        value={value}
+        onChange={handleChange}
+        value={values.email}
       />
       <Button
         htmlType="submit"
         type="primary"
         size="medium"
         extraClass="mb-20"
-        onClick={onClickResetPassword}
         >
         Восстановить
       </Button>
@@ -56,7 +57,9 @@ export default function ForgotPasswordPage() {
           htmlType="button"
           type="secondary"
           size="medium"
-          extraClass={`${styles.secondary_button}`}>
+          extraClass={`${styles.secondary_button}`}
+          onClick={onLoginClick}
+          >
           Войти
         </Button>
       </p>

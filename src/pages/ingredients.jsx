@@ -1,30 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './ingredients.module.css';
 import IngredientDetails from '../components/inngredient-details/ingredient-details';
-import { useLocation } from 'react-router-dom';
-import { getBurgerIngredients } from '../services/actions/burger-ingredients';
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function IngredientsPage() {
 
   const dispatch = useDispatch();
 
-  
-
-  useEffect(() => {
-    dispatch(getBurgerIngredients);
-  }, [dispatch])
-
   const ingredients = useSelector(store => store.burgerIngredients.ingredients);
 
-  const location = useLocation();
+  const { id } = useParams();
 
-  const { pathname } = location;
-
-  const path = pathname.split('/ingredients/')[1]
-  console.log(path)
-
-  const ingredient = ingredients.find((item) => item._id === path);
+  const ingredient = ingredients.find((item) => item._id === id);
 
   const content = (
     !!ingredient ? <IngredientDetails ingredient={ingredient} /> : <h1>Загрузка...</h1>

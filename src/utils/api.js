@@ -1,5 +1,3 @@
-import { getCookie } from "./utils";
-
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
 const checkResponse = (res) => {
@@ -63,6 +61,16 @@ export const getProfileInfoRequest = async (token) => {
       'Content-Type': 'application/json',
       'authorization': token
     }
+  })
+}
+
+export const forgotPasswordReset = async (form) => {
+  return await request('/password-reset', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(form)
   })
 }
 

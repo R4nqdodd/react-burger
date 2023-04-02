@@ -32,9 +32,9 @@ export default function AppHeader() {
 
           </li>
           <li className={styles.logo}>
-            <a href='#'>
+            <Link to='/'>
               <Logo />
-            </a>
+            </Link>
           </li>
           <li>
             <Link to={'/profile'} className={`${styles.personal_account_login} pr-5 pl-5 pt-4 pb-4`}>

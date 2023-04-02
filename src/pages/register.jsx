@@ -1,30 +1,34 @@
 import { useState } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from './form.module.css';
-import { registrationRequest, request } from '../components/utils/api';
+import { registrationRequest } from '../utils/api';
 import { useDispatch } from 'react-redux';
 import { USER_LOGIN } from '../services/actions/auth';
-import { setCookie } from '../components/utils/utils';
+import { setCookie } from '../utils/utils';
+import { useForm } from '../hooks/use-form';
 
 export default function RegisterPage() {
+
+  const location = useLocation();
+
+  let pathname;
+
+  if (location.state) {
+    pathname = location.state.from.pathname
+  } else {
+    pathname = '/'
+  }
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const [registrationData, setData] = useState({
+  const { values, handleChange } = useForm({
     name: '',
     email: '',
     password: ''
-  });
-
-  const onChange = (e) => {
-    setData({
-      ...registrationData,
-      [e.target.name]: e.target.value
-    });
-  }
+  })
 
   const onClickLoginButton = () => {
     navigate('/login');
@@ -33,7 +37,7 @@ export default function RegisterPage() {
   const onSubmitRegister = (e) => {
     e.preventDefault();
 
-    registrationRequest(registrationData)
+    registrationRequest(values)
       .then((data) => {
         dispatch({
           type: USER_LOGIN,
@@ -42,32 +46,37 @@ export default function RegisterPage() {
           accessToken: data.accessToken
         });
         setCookie('token', data.refreshToken);
-        navigate('/');
+      })
+      .then(() => { 
+        navigate(pathname);
+      })
+      .catch((err) => {
+        console.log(err)
       });
   }
 
   return (
-    <form className={`${styles.form}`}>
+    <form className={`${styles.form}`} onSubmit={onSubmitRegister}>
       <h2 className={`text text_type_main-medium mb-6`}>Регистрация</h2>
       <Input
         type="text"
         placeholder="Имя"
         extraClass="mb-6"
-        onChange={onChange}
-        value={registrationData.name}
+        onChange={handleChange}
+        value={values.name}
         name={'name'}
       />
       <EmailInput
         name={'email'}
         isIcon={false}
         extraClass="mb-6"
-        onChange={onChange}
-        value={registrationData.email}
+        onChange={handleChange}
+        value={values.email}
       />
       <PasswordInput
         extraClass={'mb-6'}
-        onChange={onChange}
-        value={registrationData.password}
+        onChange={handleChange}
+        value={values.password}
         name={'password'}
       />
       <Button
@@ -75,7 +84,6 @@ export default function RegisterPage() {
         type="primary"
         size="medium"
         extraClass="mb-20"
-        onClick={onSubmitRegister}
       >
         Зарегистрироваться
       </Button>

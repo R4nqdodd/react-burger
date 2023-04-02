@@ -15,7 +15,6 @@ import IngredientDetails from '../inngredient-details/ingredient-details';
 export default function BurgerIngredient({ ingredient }) {
 
   const { _id } = ingredient;
-  const ingr = useSelector(store => store.currentIngredient.current);
 
   const dispatch = useDispatch();
 

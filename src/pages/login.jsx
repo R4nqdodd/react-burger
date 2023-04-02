@@ -1,42 +1,52 @@
 import { useState } from "react";
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from './form.module.css';
-import { loginRequest } from "../components/utils/api";
+import { loginRequest } from "../utils/api";
 import { USER_LOGIN } from "../services/actions/auth";
 import { useDispatch } from "react-redux";
-import { setCookie } from '../components/utils/utils';
+import { setCookie } from '../utils/utils';
+import { useForm } from "../hooks/use-form";
 
 export default function LoginPage() {
+
+  const location = useLocation();
+
+  const { values, handleChange } = useForm({
+    email: '',
+    password: ''
+  });
+
+  let pathname;
+
+  if (location.state) {
+    pathname = location.state.from.pathname
+  } else {
+    pathname = '/'
+  }
 
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const [loginData, setData] = useState({
-    email: '',
-    password: ''
-  });
-
-  const onChange = e => {
-    setData({ ...loginData,
-      [e.target.name]: e.target.value})
-  }
-
   const onClickLogin = (e) => {
     e.preventDefault();
 
-    loginRequest(loginData)
+    loginRequest(values)
       .then(data => {
         dispatch({
           type: USER_LOGIN,
           email: data.user.email,
           name: data.user.name,
           accessToken: data.accessToken
-        })
-
-        setCookie('token', data.refreshToken)
-        navigate('/')
+        });
+        setCookie('token', data.refreshToken);
+      })
+      .then(() => {
+        navigate(pathname);
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 
@@ -49,28 +59,27 @@ export default function LoginPage() {
   }
 
   return (
-    <form className={`${styles.form}`}>
+    <form className={`${styles.form}`} onSubmit={onClickLogin}>
       <h2 className={`text text_type_main-medium mb-6`}>Вход</h2>
       <EmailInput
         name={'email'}
         isIcon={false}
         extraClass={`mb-6`}
-        value={loginData.email}
-        onChange={onChange}
+        value={values.email}
+        onChange={handleChange}
       />
       <PasswordInput
         extraClass={'mb-6'}
-        value={loginData.password}
-        onChange={onChange} 
+        value={values.password}
+        onChange={handleChange}
         name={'password'}
-        />
+      />
       <Button
         htmlType="submit"
         type="primary"
         size="medium"
         extraClass="mb-20"
-        onClick={onClickLogin}
-        >
+      >
         Войти
       </Button>
       <p className="text text_type_main-default text_color_inactive">
@@ -92,7 +101,7 @@ export default function LoginPage() {
           size="medium"
           extraClass={`${styles.secondary_button}`}
           onClick={forgotPasswordButtonHandle}
-          >
+        >
           Восстановить пароль
         </Button>
       </p>

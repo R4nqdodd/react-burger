@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-hook-inview';
 import styles from './burger-ingredients.module.css';
@@ -59,7 +59,7 @@ export default function BurgerIngredients() {
               {ingredients.map((item) => {
                 if (item.type === 'bun') {
                   return (
-                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location }}>
+                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
                       <BurgerIngredient ingredient={item} />
                     </Link>
                   )
@@ -76,7 +76,7 @@ export default function BurgerIngredients() {
               {ingredients.map((item) => {
                 if (item.type === 'sauce') {
                   return (
-                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location }}>
+                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
                       <BurgerIngredient key={item._id} ingredient={item} />
                     </Link>
                   )
@@ -93,7 +93,7 @@ export default function BurgerIngredients() {
               {ingredients.map((item) => {
                 if (item.type === 'main') {
                   return (
-                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location }}>
+                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
                       <BurgerIngredient key={item._id} ingredient={item} />
                     </Link>
                   )
