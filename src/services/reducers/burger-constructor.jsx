@@ -6,7 +6,7 @@ import {
 } from '../actions/burger-constructor';
 
 const burgerConstractorInitialState = {
-  bun: {},
+  bun: null,
   ingredients: []
 }
 

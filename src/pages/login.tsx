@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent } from "react";
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from './form.module.css';
@@ -29,7 +29,7 @@ export default function LoginPage() {
 
   const dispatch = useDispatch();
 
-  const onClickLogin = (e: any) => {
+  const onClickLogin = (e: FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
 
     loginRequest(values)

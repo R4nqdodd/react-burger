@@ -6,33 +6,17 @@ import {
   Tab
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-type TIngredient = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number;
-  uuid?: string;
-};
+import { TIngredient } from '../../utils/types';
 
-type TIngredientStore<TIngredient> = {
+type TBurgerIngredients<TIngredient> = {
   burgerIngredients: {
     ingredients: ReadonlyArray<TIngredient>;
     ingredientsRequest: boolean;
     ingredientsFailed: boolean;
   };
 };
-
 
 export default function BurgerIngredients() {
 
@@ -44,7 +28,7 @@ export default function BurgerIngredients() {
 
   const [current, setCurrent] = useState('Булки');
 
-  const ingredients = useSelector((store: TIngredientStore<TIngredient>) => store.burgerIngredients.ingredients);
+  const ingredients = useSelector((store: TBurgerIngredients<TIngredient>) => store.burgerIngredients.ingredients);
 
   useEffect(() => {
     if (bunInView) {

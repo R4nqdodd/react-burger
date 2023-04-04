@@ -9,22 +9,7 @@ import {
 import { DELETE_CONSTRUCTOR_ELEMENT } from '../../services/actions/burger-constructor';
 import { DECREASE_COUNTER } from '../../services/actions/burger-ingredients';
 
-type TIngredient = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number;
-  uuid?: string;
-};
+import { TIngredient } from '../../utils/types';
 
 type TBurgerConstructorElement = TIngredient & {
   moveIngredient: Function;
@@ -64,7 +49,6 @@ export function BurgerConstructorElement({ name, _id, uuid, image, price, moveIn
       const hoverMiddleY: number = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset: any = monitor.getClientOffset();
-      console.log(clientOffset);
       const hoverClientY: number = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {

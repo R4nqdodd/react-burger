@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
 import { request, resetPasswordRequest } from '../utils/api';
@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
     token: ''
   })
 
-  const onClickSubmit = (e: any) => {
+  const onClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     resetPasswordRequest(values)

@@ -1,6 +1,7 @@
+import { TForm } from './types';
 const baseUrl = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res: any) => {
+const checkResponse = (res: Response) => {
   if (res.ok) {
     return res.json();
   }
@@ -16,13 +17,13 @@ const checkSuccess = (res: any) => {
   return Promise.reject(`Ответ не success: ${res}`);
 }
 
-export const request = async (endpoint: string, options: object) => {
+export const request = async (endpoint: string, options: RequestInit) => {
   return fetch(baseUrl + endpoint, options)
     .then(checkResponse)
     .then(checkSuccess)
 }
 
-export const registrationRequest = async (form: any) => {
+export const registrationRequest = async (form: TForm) => {
   return await request('/auth/register', {
     method: 'POST',
     headers: {
@@ -32,7 +33,7 @@ export const registrationRequest = async (form: any) => {
   })
 }
 
-export const loginRequest = async (form: any) => {
+export const loginRequest = async (form: TForm) => {
   return await request('/auth/login', {
     method: 'POST',
     headers: {
@@ -64,7 +65,7 @@ export const getProfileInfoRequest = async (token: string) => {
   })
 }
 
-export const forgotPasswordReset = async (form: any) => {
+export const forgotPasswordReset = async (form: TForm) => {
   return await request('/password-reset', {
     method: 'POST',
     headers: {
@@ -74,7 +75,7 @@ export const forgotPasswordReset = async (form: any) => {
   })
 }
 
-export const resetPasswordRequest = async (from: any) => {
+export const resetPasswordRequest = async (from: TForm) => {
   return await request('/password-reset/reset', {
     method: 'POST',
     headers: {
@@ -96,7 +97,7 @@ export const updateTokenRequest = async (token: string | undefined) => {
   })
 }
 
-export const editProfileInfoRequest = async (token: string, form: any) => {
+export const editProfileInfoRequest = async (token: string, form: TForm) => {
   return await request('/auth/user', {
     method: 'PATCH',
     headers: {

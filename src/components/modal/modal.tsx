@@ -1,4 +1,4 @@
-import React, { useEffect, FC } from 'react';
+import React, { useEffect, FC, KeyboardEvent, MouseEvent, SyntheticEvent } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -10,17 +10,10 @@ import {
 import { RESET_MODAL } from '../../services/actions/modal';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { TModalStore } from '../../utils/types';
+
 type TModal = {
   children: JSX.Element;
-}
-
-type TModalStore = {
-  modal: {
-    isRequest: boolean;
-    isFailed: boolean;
-    currentModal: JSX.Element | null;
-    resetActionType: string;
-  }
 }
 
 export const Modal: FC<TModal> = ({ children }) => {
@@ -33,7 +26,7 @@ export const Modal: FC<TModal> = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  function handleStopPropagation(e: any) {
+  function handleStopPropagation(e: MouseEvent<Element, Event>) {
     console.log(e)
     e.stopPropagation();
   }

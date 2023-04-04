@@ -3,22 +3,7 @@ import styles from './ingredients.module.css';
 import IngredientDetails from '../components/inngredient-details/ingredient-details';
 import { useParams } from 'react-router-dom';
 
-type TIngredient = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number;
-  uuid?: string;
-};
+import { TIngredient } from '../utils/types';
 
 type TIngredients<TIngredient> = {
   burgerIngredients: {

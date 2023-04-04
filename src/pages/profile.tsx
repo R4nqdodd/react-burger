@@ -1,5 +1,5 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { editProfileInfoRequest, logoutRequest } from "../utils/api";
@@ -8,21 +8,12 @@ import { GET_USER_SUCCESS, USER_LOGOUT } from "../services/actions/auth";
 import styles from './profile.module.css';
 import { useForm } from "../hooks/use-form";
 
-type TAuth = {
-  auth: {
-    isAuth: boolean;
-    user: {
-      name: string;
-      email: string;
-      accessToken: string;
-    }
-  }
-}
+import { TUserData } from "../utils/types";
 
 export default function ProfilePage() {
   const inputNameRef = useRef<any>();
 
-  const userData = useSelector((store: TAuth) => store.auth.user);
+  const userData = useSelector((store: TUserData) => store.auth.user);
 
   const dispatch = useDispatch();
 
@@ -38,7 +29,7 @@ export default function ProfilePage() {
 
   const onIconClickName = () => {
     setIsDisabled(false);
-    setTimeout(() => inputNameRef.current.focus(), 0)
+    setTimeout(() => inputNameRef.current.focus(), 0);
   }
 
   const onBlurName = () => {
@@ -59,7 +50,7 @@ export default function ProfilePage() {
       })
   }
 
-  const onClickSubmit = (e: any) => {
+  const onClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     editProfileInfoRequest(userData.accessToken, values)
@@ -141,7 +132,7 @@ export default function ProfilePage() {
           icon={'EditIcon'}
           name={'password'}
         />
-        { buttons }
+        {buttons}
 
       </form>
     </section>

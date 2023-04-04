@@ -17,22 +17,7 @@ import { SET_MODAL } from '../../services/actions/modal';
 import OrderDetails from '../order-details/order-details';
 import { useNavigate } from 'react-router-dom';
 
-type TIngredient = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-  count: number;
-  uuid?: string;
-};
+import { TIngredient, TUserData } from '../../utils/types';
 
 type TTemporaryIngredients<TIngredient> = {
   burgerIngredients: {
@@ -40,26 +25,10 @@ type TTemporaryIngredients<TIngredient> = {
   };
 };
 
-type TIngredients<TIngredient> = {
+type TConstructor<TIngredient> = {
   constructor: {
     ingredients: ReadonlyArray<TIngredient>;
-  };
-};
-
-type TBun<TIngredient> = {
-  constructor: {
     bun: TIngredient;
-  };
-};
-
-type TUserData = {
-  auth: {
-    isAuth: boolean;
-    user: {
-      email: string;
-      name: string;
-      accessToken: string;
-    };
   };
 };
 
@@ -67,8 +36,7 @@ export default function BurgerConstructor() {
 
   const temporaryIngredients = useSelector((store: TTemporaryIngredients<TIngredient>) => store.burgerIngredients.ingredients)
 
-  const ingredients = useSelector((store: TIngredients<TIngredient>) => store.constructor.ingredients);
-  const bun = useSelector((store: TBun<TIngredient>) => store.constructor.bun);
+  const { ingredients, bun } = useSelector((store: TConstructor<TIngredient>) => store.constructor);
 
   const userData = useSelector((store: TUserData) => store.auth);
 
@@ -82,13 +50,13 @@ export default function BurgerConstructor() {
 
   const [, constructorDrop] = useDrop({
     accept: 'ingredients',
-    drop(itemId: TIngredient) {
-      const newIngredient: TIngredient = { ...temporaryIngredients.find((item:TIngredient) => item._id === itemId._id) } as TIngredient;
+    drop(DragItem: TIngredient) {
+      const newIngredient = { ...temporaryIngredients.find((item: TIngredient) => item._id === DragItem._id) } as TIngredient;
       newIngredient.uuid = uuidv4();
 
-      const newIngredients: TIngredient[] = [...ingredients, newIngredient]
+      const newIngredients: TIngredient[] = [...ingredients, newIngredient];
 
-      dispatch(addIngredientToConstructor(newIngredient, bun, itemId._id, newIngredients));
+      dispatch(addIngredientToConstructor(newIngredient, bun, DragItem, newIngredients));
     }
   });
 

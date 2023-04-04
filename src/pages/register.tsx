@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from './form.module.css';
@@ -34,7 +34,7 @@ export default function RegisterPage() {
     navigate('/login');
   }
 
-  const onSubmitRegister = (e: any) => {
+  const onSubmitRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     registrationRequest(values)

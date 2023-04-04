@@ -2,14 +2,7 @@ import React, {FC} from 'react';
 import styles from './modal-overlay.module.css';
 import { useSelector } from 'react-redux';
 
-type TModalStore = {
-  modal: {
-    isRequest: boolean;
-    isFailed: boolean;
-    currentModal: JSX.Element | null;
-    resetActionType: string;
-  }
-}
+import { TModalStore } from '../../utils/types';
 
 type TModalOverlay = {
   children: JSX.Element;

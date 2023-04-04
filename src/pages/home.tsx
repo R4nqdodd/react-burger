@@ -7,14 +7,7 @@ import { Modal } from '../components/modal/modal';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-type TModalStore = {
-  modal: {
-    isRequest: boolean;
-    isFailed: boolean;
-    currentModal: JSX.Element;
-    resetActionType: string;
-  }
-}
+import { TModalStore } from '../utils/types';
 
 function HomePage() {
 

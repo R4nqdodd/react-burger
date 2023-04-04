@@ -8,9 +8,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 
+import { TUserData } from '../../utils/types';
+
 export default function AppHeader() {
 
-  const userData = useSelector(store => store.auth);
+  const userData = useSelector((store: TUserData) => store.auth);
 
   return (
     <header className={styles.header}>

@@ -1,3 +1,4 @@
+import {FormEvent} from 'react'
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
 import { forgotPasswordReset } from '../utils/api';
@@ -14,7 +15,7 @@ export default function ForgotPasswordPage() {
 
   const navigate = useNavigate();
 
-  const onClickResetPassword = (e: any) => {
+  const onClickResetPassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     forgotPasswordReset(values)
