@@ -7,8 +7,8 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 
-import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
-import { SET_MODAL } from '../../services/actions/modal';
+import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/constants/current-ingredient';
+import { SET_MODAL } from '../../services/constants/modal';
 import IngredientDetails from '../inngredient-details/ingredient-details';
 
 import { TIngredient } from '../../utils/types';

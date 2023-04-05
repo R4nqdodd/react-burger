@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { editProfileInfoRequest, logoutRequest } from "../utils/api";
 import { deleteCookie, getCookie } from "../utils/utils";
-import { GET_USER_SUCCESS, USER_LOGOUT } from "../services/actions/auth";
+import { USER_LOGIN, USER_LOGOUT } from "../services/constants/auth";
 import styles from './profile.module.css';
 import { useForm } from "../hooks/use-form";
 
-import { TUserData } from "../utils/types";
+import { TUserData, TUser } from "../utils/types";
 
 export default function ProfilePage() {
   const inputNameRef = useRef<any>();
 
-  const userData = useSelector((store: TUserData) => store.auth.user);
+  const userData = useSelector((store: TUserData<TUser>) => store.auth.user);
 
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ export default function ProfilePage() {
     editProfileInfoRequest(userData.accessToken, values)
       .then(data => {
         dispatch({
-          type: GET_USER_SUCCESS,
+          type: USER_LOGIN,
           user: {
             ...userData,
             email: data.user.email,

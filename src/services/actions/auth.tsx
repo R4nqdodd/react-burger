@@ -1,14 +1,42 @@
 import { request, getProfileInfoRequest, updateTokenRequest } from "../../utils/api";
 import { setCookie, deleteCookie, getCookie } from "../../utils/utils";
+import {
+  USER_LOGIN,
+  USER_LOGOUT,
+  UPDATE_TOKEN,
+  IS_AUTH
+} from "../constants/auth";
+import { TUser } from "../../utils/types";
+import { AppDispatch } from "../types";
 
-export const USER_LOGIN = 'USER_LOGIN';
-export const USER_LOGOUT = 'USER_LOGOUT';
-export const UPDATE_TOKEN = 'UPDATE_TOKEN';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const IS_AUTH = 'IS_AUTH'
+export interface IUserLoginAction {
+  readonly type: typeof USER_LOGIN;
+  readonly email: string;
+  readonly name: string;
+  readonly accessToken: string;
+}
+
+export interface IUserLogoutAction {
+  readonly type: typeof USER_LOGOUT;
+}
+
+export interface ITokenUpdateAction {
+  readonly type: typeof UPDATE_TOKEN;
+  readonly accessToken: string;
+}
+
+export interface IIsAuthAction {
+  readonly type: typeof IS_AUTH;
+}
+
+export type TAuthAction =
+  | IUserLoginAction
+  | IUserLogoutAction
+  | ITokenUpdateAction
+  | IIsAuthAction;
 
 export const getUser = (token: string | undefined) => {
-  return function (dispatch: any) {
+  return function (dispatch: AppDispatch) {
     updateTokenRequest(token)
       .then(data => {
         deleteCookie('token');
@@ -16,7 +44,7 @@ export const getUser = (token: string | undefined) => {
         getProfileInfoRequest(data.accessToken)
           .then(user => {
             dispatch({
-              type: GET_USER_SUCCESS,
+              type: USER_LOGIN,
               email: user.user.email,
               name: user.user.name,
               accessToken: data.accessToken

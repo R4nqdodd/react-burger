@@ -3,14 +3,21 @@ import {
   DELETE_CONSTRUCTOR_ELEMENT,
   GET_CONSTRUCTOR_BUN,
   RESET_CONSTRUCTOR
-} from '../actions/burger-constructor';
+} from '../constants/burger-constructor';
+import { TIngredient } from '../../utils/types';
+import { TBurgerConstructorAction } from '../actions/burger-constructor';
 
-const burgerConstractorInitialState = {
+type TBurgerConstructorState = {
+  bun: TIngredient | null;
+  ingredients: ReadonlyArray<TIngredient>;
+};
+
+const burgerConstractorInitialState: TBurgerConstructorState = {
   bun: null,
   ingredients: []
 }
 
-export const ingredientsConstructorReducer = (state = burgerConstractorInitialState, action) => {
+export const ingredientsConstructorReducer = (state = burgerConstractorInitialState, action: TBurgerConstructorAction) => {
   switch(action.type) {
     case GET_CONSTRUCTOR_BUN: {
       return {
@@ -27,7 +34,7 @@ export const ingredientsConstructorReducer = (state = burgerConstractorInitialSt
     case DELETE_CONSTRUCTOR_ELEMENT: {
       return {
         ...state,
-        ingredients: [...state.ingredients].filter(item => item.uuid !== action.uuid)
+        ingredients: [...state.ingredients].filter((item: TIngredient) => item.uuid !== action.uuid)
       }
     }
     case RESET_CONSTRUCTOR: {

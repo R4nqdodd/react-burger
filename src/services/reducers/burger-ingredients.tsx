@@ -5,15 +5,23 @@ import {
   INCREASE_COUNTER,
   DECREASE_COUNTER,
   RESET_COUNTER
-} from '../actions/burger-ingredients';
+} from '../constants/burger-ingredients';
+import { TIngredient } from '../../utils/types';
+import { TBurgerIngredientsAction } from '../actions/burger-ingredients';
 
-const burgerIngredientsInitialState = {
+type TBurgerIngredientsState = {
+  ingredients: ReadonlyArray<TIngredient>;
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+}
+
+const burgerIngredientsInitialState: TBurgerIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false
 }
 
-export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, action) => {
+export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, action: TBurgerIngredientsAction) => {
   switch (action.type) {
     case GET_BURGER_INGREDIENTS_REQUEST: {
       return {
@@ -40,7 +48,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       return {
         ...state,
         ingredients: [...state.ingredients].map(item => {
-          if (item._id === action.id._id) {
+          if (item._id === action.id) {
             item.count += action.count;
           }
           return item

@@ -15,13 +15,14 @@ import { ProtectedRouteElement } from '../protected-route';
 import { Modal } from '../modal/modal';
 import { getBurgerIngredients } from '../../services/actions/burger-ingredients';
 import IngredientDetails from '../inngredient-details/ingredient-details';
-import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
-import { SET_MODAL } from '../../services/actions/modal';
+import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/constants/current-ingredient';
+import { SET_MODAL } from '../../services/constants/modal';
 import NotFoundPage from '../../pages/NotFound';
+import { TModalStore } from '../../utils/types';
 
 function App() {
 
-  const { currentModal } = useSelector((store: any) => store.modal)
+  const { currentModal } = useSelector((store: TModalStore) => store.modal)
   const location = useLocation();
   const background = location.state && location.state.background;
 
@@ -55,6 +56,8 @@ function App() {
         <Route path='/profile' element={<ProtectedRouteElement element={<ProfilePage />} />} />
         <Route path='/profile/orders' element={<ProtectedRouteElement element={<ProfilePage />} />} />
         <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path='/feed' element={<HomePage />} />
+        <Route path='/feed/:id' element={<HomePage />} />
         <Route path='*' element={<NotFoundPage />} />
         <Route path='/ingredients/:id' element={<IngredientsPage />} />
       </Routes>
