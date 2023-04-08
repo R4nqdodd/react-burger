@@ -1,0 +1,50 @@
+.order_list_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.order_list_item_title {
+  display: flex;
+  align-items: center;
+}
+
+.order_list_item_subtitle {
+  width: 320px;
+}
+
+.order_list_item_price {
+  display: flex;
+  align-items: center;
+  padding-right: 24px;
+}
+
+.icon {
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(35deg, #801AB2, #4C4CFF);
+}
+
+.icon::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  background: #131316;
+  border-radius: 34px;
+  z-index: 0;
+}
+
+.image {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  object-position: 50% 50%;
+  object-fit: cover;
+  z-index: 1;
+}

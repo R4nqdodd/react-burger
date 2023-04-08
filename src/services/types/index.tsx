@@ -7,14 +7,16 @@ import { TBurgerIngredientsAction } from '../actions/burger-ingredients';
 import { TCurrentIngredientAction } from '../actions/current-ingredient';
 import { TModalAction } from '../actions/modal';
 import { TOrderAction } from '../actions/order';
+import { TWSAction } from '../actions/ws';
 
-type TApplicationActions =
+export type TApplicationActions =
   | TAuthAction
   | TBurgerConstructorAction
   | TBurgerIngredientsAction
   | TCurrentIngredientAction
   | TModalAction
-  | TOrderAction;
+  | TOrderAction
+  | TWSAction;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
