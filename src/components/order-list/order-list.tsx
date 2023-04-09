@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default function OrderList({ orders, status }: any) {
 
+  console.log(orders)
+
   const getOrders = () => {
     if (orders.length > 0) {
       return orders.map((item: any) => {

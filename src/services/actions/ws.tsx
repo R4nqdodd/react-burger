@@ -4,11 +4,13 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE,
-  WS_SEND_MESSAGE
+  WS_SEND_MESSAGE,
+  WS_CONNECTION_CLOSE
 } from '../constants/ws';
 
 export interface IWSConnectionStartAction {
   readonly type: typeof WS_CONNECTION_START;
+  readonly payload: string;
 }
 
 export interface IWSConnectionSuccessAction {
@@ -33,10 +35,15 @@ export interface IWSSendMessageAction {
   readonly payload: any;
 }
 
+export interface IWSConnectionCloseAction {
+  readonly type: typeof WS_CONNECTION_CLOSE
+}
+
 export type TWSAction =
   | IWSConnectionStartAction
   | IWSConnectionSuccessAction
   | IWSConnectionErrorAction
   | IWSConnectionClosedAction
   | IWSGetMessageAction
-  | IWSSendMessageAction;
+  | IWSSendMessageAction
+  | IWSConnectionCloseAction;

@@ -3,8 +3,7 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
-  WS_GET_MESSAGE,
-  WS_SEND_MESSAGE
+  WS_GET_MESSAGE
 } from '../constants/ws';
 import { TWSAction } from '../actions/ws';
 
@@ -13,7 +12,6 @@ type TinitialState = {
   wsConnected: boolean;
   data: {
     orders: [];
-    success: boolean;
     total: number;
     totalToday: number;
   }
@@ -23,7 +21,6 @@ const initialState: TinitialState = {
   wsConnected: false,
   data: {
     orders: [],
-    success: false,
     total: 0,
     totalToday: 0
   }
@@ -46,7 +43,12 @@ export const wsReducer = (state = initialState, action: TWSAction) => {
     case WS_CONNECTION_CLOSED:
       return {
         ...state,
-        wsConnected: false
+        wsConnected: false,
+        data: {
+          orders: [],
+          total: 0,
+          totalToday: 0
+        }
       };
 
     case WS_GET_MESSAGE:
@@ -54,7 +56,7 @@ export const wsReducer = (state = initialState, action: TWSAction) => {
         ...state,
         data: action.payload
       };
-
+      
     default:
       return state;
   }

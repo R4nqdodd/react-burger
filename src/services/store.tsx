@@ -10,6 +10,6 @@ const composeEnhancers =
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsFeedUrl)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware()));
 
 export const store = createStore(rootReducer, enhancer);
