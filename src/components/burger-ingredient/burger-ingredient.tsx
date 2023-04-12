@@ -7,9 +7,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 
-import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/current-ingredient';
-import { SET_MODAL } from '../../services/actions/modal';
+import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/constants/current-ingredient';
+import { SET_MODAL } from '../../services/constants/modal';
 import IngredientDetails from '../inngredient-details/ingredient-details';
+import Order from '../order/order';
 
 import { TIngredient } from '../../utils/types';
 
@@ -23,18 +24,6 @@ export default function BurgerIngredient({ ingredient }: TBurgerIngredient) {
 
   const dispatch = useDispatch();
 
-  function openModal() {
-    dispatch({
-      type: SET_CURRENT_INGREDIENT,
-      current: ingredient
-    })
-    dispatch({
-      type: SET_MODAL,
-      currentModal: <IngredientDetails ingredient={ingredient} />,
-      resetActionType: DELETE_CURRENT_INGREDIENT
-    })
-  }
-
   const [{ opacity }, ingredientRef] = useDrag({
     type: 'ingredients',
     item: {_id},
@@ -44,7 +33,7 @@ export default function BurgerIngredient({ ingredient }: TBurgerIngredient) {
   });
 
   return (
-    <li className={`${styles.item}`} onClick={openModal} ref={ingredientRef} style={{ opacity }}>
+    <li className={`${styles.item}`} ref={ingredientRef} style={{ opacity }}>
       <img className={`${styles.image} pl-4 pr-4 pb-1`} src={ingredient.image} alt={ingredient.name} />
       <div className={`${styles.item_price} pt-1 pb-1`}>
         <CurrencyIcon type="primary" />

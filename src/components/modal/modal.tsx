@@ -7,7 +7,7 @@ import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import {
   CloseIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RESET_MODAL } from '../../services/actions/modal';
+import { RESET_MODAL } from '../../services/constants/modal';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TModalStore } from '../../utils/types';

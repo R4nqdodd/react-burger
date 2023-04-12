@@ -17,7 +17,7 @@ const checkSuccess = (res: any) => {
   return Promise.reject(`Ответ не success: ${res}`);
 }
 
-export const request = async (endpoint: string, options: RequestInit) => {
+export const request = async (endpoint: string, options?: RequestInit) => {
   return fetch(baseUrl + endpoint, options)
     .then(checkResponse)
     .then(checkSuccess)

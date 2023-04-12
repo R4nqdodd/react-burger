@@ -3,7 +3,7 @@ import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from './form.module.css';
 import { loginRequest } from "../utils/api";
-import { USER_LOGIN } from "../services/actions/auth";
+import { USER_LOGIN } from "../services/constants/auth";
 import { useDispatch } from "react-redux";
 import { setCookie } from '../utils/utils';
 import { useForm } from "../hooks/use-form";

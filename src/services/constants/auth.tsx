@@ -1,0 +1,5 @@
+export const USER_LOGIN: 'USER_LOGIN' = 'USER_LOGIN';
+export const USER_LOGOUT: 'USER_LOGOUT' = 'USER_LOGOUT';
+export const UPDATE_TOKEN: 'UPDATE_TOKEN' = 'UPDATE_TOKEN';
+export const GET_USER: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS';
+export const IS_AUTH: 'IS_AUTH' = 'IS_AUTH';

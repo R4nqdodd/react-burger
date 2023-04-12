@@ -1,12 +1,14 @@
-export type TUserData = {
+export type TUserData<TUser> = {
   auth: {
     isAuth: boolean;
-    user: {
-      email: string;
-      name: string;
-      accessToken: string;
-    };
+    user: TUser;
   };
+};
+
+export type TUser = {
+  email: string;
+  name: string;
+  accessToken: string;
 };
 
 export type TForm = {

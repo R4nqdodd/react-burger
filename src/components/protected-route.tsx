@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { TUserData } from '../utils/types';
+import { TUserData, TUser } from '../utils/types';
 
 type TProtectedRouteElement = {
   element: JSX.Element;
@@ -11,7 +11,7 @@ type TProtectedRouteElement = {
 
 export const ProtectedRouteElement: FC<TProtectedRouteElement> = ({ element, anonymous = false }) => {
 
-  const userData = useSelector((store: TUserData) => store.auth);
+  const userData = useSelector((store: TUserData<TUser>) => store.auth);
 
   const location = useLocation();
   const from = location.state?.from || '/';

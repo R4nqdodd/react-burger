@@ -1,6 +1,15 @@
-import { IS_REQUEST, IS_FAILED, IS_SUCCESS, SET_MODAL, RESET_MODAL } from "../actions/modal";
+import { IS_REQUEST, IS_FAILED, IS_SUCCESS, SET_MODAL, RESET_MODAL } from "../constants/modal";
+import { TModalAction } from "../actions/modal";
 
-const modalInitialState = {
+type TModalState = {
+  isRequest: boolean;
+  isFailed: boolean;
+
+  currentModal: JSX.Element | null;
+  resetActionType: string;
+};
+
+const modalInitialState: TModalState = {
   isRequest: false,
   isFailed: false,
 
@@ -8,7 +17,7 @@ const modalInitialState = {
   resetActionType: ''
 }
 
-export const modalReducer = (state = modalInitialState, action) => {
+export const modalReducer = (state = modalInitialState, action: TModalAction) => {
   switch(action.type) {
     case IS_REQUEST: {
       return {

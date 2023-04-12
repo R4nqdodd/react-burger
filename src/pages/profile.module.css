@@ -1,12 +1,13 @@
 .section {
   display: flex;
   max-width: 1280px;
-  margin: 120px auto 0 auto;
+  margin: 0 auto 0 auto;
 }
 
 .navigation {
   max-width: 320px; 
   margin-left: 20px;
+  margin-top: 120px;
 }
 
 .navigation_menu {
@@ -17,19 +18,18 @@
 
 .navigation_item {
   height: 64px;
-  text-decoration: none;
-}
-
-.navigation_item_active {
-  color: white;
-  text-decoration: none;
-}
-
-.logout_button {
   padding: 0;
   border: 0;
   background-color: transparent;
   cursor: pointer;
+}
+
+.active {
+  color: white;
+}
+
+.inactive {
+  color: #8585AD;
 }
 
 .form {
@@ -37,4 +37,10 @@
   flex-wrap: wrap;
   width: 480px;
   justify-content: end;
+  margin-top: 120px;
+}
+
+.outlet_container {
+  margin-top: 40px;
+  width: 844px;
 }

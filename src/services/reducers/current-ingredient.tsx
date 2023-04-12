@@ -1,13 +1,18 @@
 import {
   SET_CURRENT_INGREDIENT,
   DELETE_CURRENT_INGREDIENT
-} from '../actions/current-ingredient';
+} from '../constants/current-ingredient';
+import { TCurrentIngredientAction } from '../actions/current-ingredient';
 
-const currentIngredientInitialState = {
+type TCurrentIngredientState = {
+  current: JSX.Element | null
+};
+
+const currentIngredientInitialState: TCurrentIngredientState = {
   current: null
 }
 
-export const currentIngredientReducer = (state = currentIngredientInitialState, action) => {
+export const currentIngredientReducer = (state = currentIngredientInitialState, action: TCurrentIngredientAction) => {
   switch(action.type) {
     case SET_CURRENT_INGREDIENT: {
       return {

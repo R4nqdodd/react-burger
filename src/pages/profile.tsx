@@ -1,19 +1,21 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useRef, useState, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { editProfileInfoRequest, logoutRequest } from "../utils/api";
 import { deleteCookie, getCookie } from "../utils/utils";
-import { GET_USER_SUCCESS, USER_LOGOUT } from "../services/actions/auth";
+import { USER_LOGIN, USER_LOGOUT } from "../services/constants/auth";
 import styles from './profile.module.css';
 import { useForm } from "../hooks/use-form";
 
-import { TUserData } from "../utils/types";
+import { TUserData, TUser } from "../utils/types";
 
 export default function ProfilePage() {
   const inputNameRef = useRef<any>();
 
-  const userData = useSelector((store: TUserData) => store.auth.user);
+  const { pathname } = useLocation();
+
+  const userData = useSelector((store: TUserData<TUser>) => store.auth.user);
 
   const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ export default function ProfilePage() {
     name: userData.name,
     email: userData.email,
     password: ''
-  })
+  });
 
   const onIconClickName = () => {
     setIsDisabled(false);
@@ -42,12 +44,12 @@ export default function ProfilePage() {
         deleteCookie('token');
         dispatch({
           type: USER_LOGOUT
-        })
+        });
         navigate('/login');
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   const onClickSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -56,46 +58,55 @@ export default function ProfilePage() {
     editProfileInfoRequest(userData.accessToken, values)
       .then(data => {
         dispatch({
-          type: GET_USER_SUCCESS,
+          type: USER_LOGIN,
           user: {
             ...userData,
             email: data.user.email,
             name: data.user.name
           }
-        })
-      })
-  }
+        });
+      });
+  };
 
   const onReset = () => {
     setValues({
       email: userData.email,
       name: userData.name,
       password: ''
-    })
-  }
+    });
+  };
+
+  const onClickProfileButton = () => {
+    navigate('/profile');
+  };
+
+  const onClickOrdersButton = () => {
+    navigate('/profile/orders');
+  };
 
   const buttons = (
     <>
       <Button htmlType="reset" type="secondary" size="medium" extraClass="mt-6">Отмена</Button>
       <Button htmlType="submit" type="primary" size="medium" extraClass="mt-6">Сохранить</Button>
     </>
-  )
+  );
+
   return (
     <section className={styles.section}>
       <nav className={`${styles.navigation} mr-15`}>
         <ul className={styles.navigation_menu}>
           <li className={`${styles.navigation_item}`}>
-            <Link className={`${styles.navigation_item_active} text text_type_main-medium`} to='/profile'>
+            <button className={`${styles.navigation_item} ${pathname === '/profile' && styles.active} text text_type_main-medium text_color_inactive`} type='button' onClick={onClickProfileButton}>
               Профиль
-            </Link>
+            </button>
           </li>
-          <li className={`${styles.navigation_item} text text_type_main-medium text_color_inactive`}>
-            <Link className={`${styles.navigation_item} text text_type_main-medium text_color_inactive`} to='orders'>
+          <li className={`${styles.navigation_item}`}>
+            <button className={`${styles.navigation_item} ${pathname === '/profile/orders' && styles.active} text text_type_main-medium text_color_inactive`} type='button' onClick={onClickOrdersButton}>
               История заказов
-            </Link>
+            </button>
           </li>
           <li className={`${styles.navigation_item} text text_type_main-medium text_color_inactive`} >
-            <button className={`${styles.logout_button} text text_type_main-medium text_color_inactive`} type='button' onClick={onClickLogoutButton}>
+            <button className={`${styles.navigation_item} text text_type_main-medium text_color_inactive`} type='button' onClick={onClickLogoutButton}>
               Выход
             </button>
           </li>
@@ -104,37 +115,44 @@ export default function ProfilePage() {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <form className={styles.form} onSubmit={onClickSubmit} onReset={onReset}>
-        <Input
-          type="text"
-          value={values.name}
-          placeholder={'Имя'}
-          icon={'EditIcon'}
-          onIconClick={onIconClickName}
-          disabled={isDisabled}
-          onChange={handleChange}
-          onBlur={onBlurName}
-          ref={inputNameRef}
-          extraClass={'mb-6'}
-          name={'name'}
-        />
-        <EmailInput
-          value={values.email}
-          placeholder={'Логин'}
-          isIcon={true}
-          onChange={handleChange}
-          extraClass={'mb-6'}
-          name={'email'}
-        />
-        <PasswordInput
-          value={values.password}
-          onChange={handleChange}
-          icon={'EditIcon'}
-          name={'password'}
-        />
-        {buttons}
+      {pathname === '/profile'
+        ?
+        <form className={styles.form} onSubmit={onClickSubmit} onReset={onReset}>
+          <Input
+            type="text"
+            value={values.name}
+            placeholder={'Имя'}
+            icon={'EditIcon'}
+            onIconClick={onIconClickName}
+            disabled={isDisabled}
+            onChange={handleChange}
+            onBlur={onBlurName}
+            ref={inputNameRef}
+            extraClass={'mb-6'}
+            name={'name'}
+          />
+          <EmailInput
+            value={values.email}
+            placeholder={'Логин'}
+            isIcon={true}
+            onChange={handleChange}
+            extraClass={'mb-6'}
+            name={'email'}
+          />
+          <PasswordInput
+            value={values.password}
+            onChange={handleChange}
+            icon={'EditIcon'}
+            name={'password'}
+          />
+          {buttons}
 
-      </form>
+        </form>
+        :
+        <div className={styles.outlet_container}>
+          <Outlet />
+        </div>
+      }
     </section>
   );
 }

@@ -6,8 +6,8 @@ import {
   ConstructorElement,
   DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DELETE_CONSTRUCTOR_ELEMENT } from '../../services/actions/burger-constructor';
-import { DECREASE_COUNTER } from '../../services/actions/burger-ingredients';
+import { DELETE_CONSTRUCTOR_ELEMENT } from '../../services/constants/burger-constructor';
+import { DECREASE_COUNTER } from '../../services/constants/burger-ingredients';
 
 import { TIngredient } from '../../utils/types';
 

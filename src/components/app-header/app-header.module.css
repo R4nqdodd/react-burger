@@ -27,6 +27,9 @@
   justify-items: start;
   text-decoration: none;
   color: #F2F2F3;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
 }
 
 .logo {
@@ -42,5 +45,8 @@
 .personal_account_login {
   display: flex;
   text-decoration: none;
-  color: #F2F2F3
+  color: #F2F2F3;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
 }

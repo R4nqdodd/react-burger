@@ -12,12 +12,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDrop } from 'react-dnd';
 
 import { getConstructorIngredient, addIngredientToConstructor } from '../../services/actions/burger-constructor';
-import { ORDER_RESET, sentOrderNumber } from '../../services/actions/order';
-import { SET_MODAL } from '../../services/actions/modal';
+import { ORDER_RESET } from '../../services/constants/order';
+import { sentOrderNumber } from '../../services/actions/order';
+import { SET_MODAL } from '../../services/constants/modal';
 import OrderDetails from '../order-details/order-details';
 import { useNavigate } from 'react-router-dom';
 
-import { TIngredient, TUserData } from '../../utils/types';
+import { TIngredient, TUserData, TUser } from '../../utils/types';
 
 type TTemporaryIngredients<TIngredient> = {
   burgerIngredients: {
@@ -38,7 +39,7 @@ export default function BurgerConstructor() {
 
   const { ingredients, bun } = useSelector((store: TConstructor<TIngredient>) => store.constructor);
 
-  const userData = useSelector((store: TUserData) => store.auth);
+  const userData = useSelector((store: TUserData<TUser>) => store.auth);
 
   const navigate = useNavigate();
 
