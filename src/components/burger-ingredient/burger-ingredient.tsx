@@ -1,17 +1,9 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styles from './burger-ingredient.module.css';
 import {
   Counter,
   CurrencyIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
-
-import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/constants/current-ingredient';
-import { SET_MODAL } from '../../services/constants/modal';
-import IngredientDetails from '../inngredient-details/ingredient-details';
-import Order from '../order/order';
-
 import { TIngredient } from '../../utils/types';
 
 type TBurgerIngredient = {
@@ -21,8 +13,6 @@ type TBurgerIngredient = {
 export default function BurgerIngredient({ ingredient }: TBurgerIngredient) {
 
   const { _id } = ingredient;
-
-  const dispatch = useDispatch();
 
   const [{ opacity }, ingredientRef] = useDrag({
     type: 'ingredients',

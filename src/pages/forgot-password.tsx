@@ -1,13 +1,17 @@
-import {FormEvent} from 'react'
+import { FormEvent, useEffect } from 'react'
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './form.module.css';
-import { forgotPasswordReset } from '../utils/api';
+import { forgotPasswordRequest } from '../utils/api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from '../hooks/use-form';
+import { useDispatch, useSelector } from '../services/types';
+import { getForgotPassword } from '../services/actions/auth';
 
 export default function ForgotPasswordPage() {
 
   const location = useLocation();
+  const dispatch = useDispatch();
+  const userData = useSelector(store => store.auth);
 
   const { values, handleChange } = useForm({
     email: '',
@@ -18,14 +22,14 @@ export default function ForgotPasswordPage() {
   const onClickResetPassword = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    forgotPasswordReset(values)
-    .then(() => {
-      navigate('/reset-password', { state: location })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    dispatch(getForgotPassword(values));
   }
+
+  useEffect(() => {
+    if (userData.isForgotPassword) {
+      navigate('/reset-password', { state: location })
+    }
+  }, [userData])
 
   const onLoginClick = () => {
     navigate('/login');
@@ -47,7 +51,7 @@ export default function ForgotPasswordPage() {
         type="primary"
         size="medium"
         extraClass="mb-20"
-        >
+      >
         Восстановить
       </Button>
       <p className="text text_type_main-default text_color_inactive">
@@ -58,7 +62,7 @@ export default function ForgotPasswordPage() {
           size="medium"
           extraClass={`${styles.secondary_button}`}
           onClick={onLoginClick}
-          >
+        >
           Войти
         </Button>
       </p>

@@ -1,7 +1,7 @@
 import { Interface } from "readline";
 import { request } from "../../utils/api";
 import { TIngredient } from "../../utils/types";
-import { AppDispatch } from "../types";
+import { TAppDispatch, TAppThunk } from "../types";
 
 import {
   GET_BURGER_INGREDIENTS_REQUEST,
@@ -48,28 +48,34 @@ export type TBurgerIngredientsAction =
   | IDecreaseCounterAction
   | IResetCounterAction;
 
+
+const getIngredientsRequest = (): IGetBurgerIngredientsRequestAction => ({
+  type: GET_BURGER_INGREDIENTS_REQUEST
+})
+
+const getIngredientsSuccess = (ingredients: ReadonlyArray<TIngredient>): IGetBurgerIngredientsSuccessAction => ({
+  type: GET_BURGER_INGREDIENTS_SUCCESS,
+  ingredients: ingredients
+})
+
+const getIngredientsFailed = (): IGetBurgerIngredientsFailedAction => ({
+  type: GET_BURGER_INGREDIENTS_FAILED
+})
+
+
 const getIngredients = () => request('/ingredients');
 
-export function getBurgerIngredients() {
-  return function (dispatch: AppDispatch) {
-    dispatch({
-      type: GET_BURGER_INGREDIENTS_REQUEST
-    })
+export const getBurgerIngredients = (): TAppThunk =>  (dispatch) => {
+    dispatch(getIngredientsRequest())
     getIngredients()
       .then(data => {
         const ingredients = data.data.map((item: TIngredient) => {
           item.count = 0; return item;
         })
-        dispatch({
-          type: GET_BURGER_INGREDIENTS_SUCCESS,
-          ingredients: ingredients
-        })
+        dispatch(getIngredientsSuccess(ingredients))
       })
       .catch(err => {
-        dispatch({
-          type: GET_BURGER_INGREDIENTS_FAILED
-        })
+        dispatch(getIngredientsFailed())
         console.log(`Ошибка: ${err.status}`);
       });
   }
-}

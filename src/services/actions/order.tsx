@@ -8,7 +8,7 @@ import {
   ORDER_FAILED,
   ORDER_RESET
 } from '../constants/order';
-import { AppDispatch } from "../types";
+import { TAppDispatch, TAppThunk } from "../types";
 
 export interface IOrderRequestAction {
   readonly type: typeof ORDER_REQUEST;
@@ -34,23 +34,26 @@ export type TOrderAction =
   | IOrderFailedAction
   | IOrderResetAction;
 
-const getOrder = (ingredientsId: ReadonlyArray<string>) => request('/orders', {
+const getOrder = (ingredientsId: ReadonlyArray<string>, token: string) => request('/orders', {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 
+    'Content-Type': 'application/json',
+    'authorization': token
+  },
   body: JSON.stringify({
     ingredients: ingredientsId
   })
 })
 
-export function sentOrderNumber(ingredientsId: ReadonlyArray<string>) {
-  return function (dispatch: AppDispatch) {
+export function sentOrderNumber(ingredientsId: ReadonlyArray<string>, token: string): TAppThunk {
+  return function (dispatch) {
     dispatch({
       type: ORDER_REQUEST
     })
     dispatch({
       type: IS_REQUEST
     })
-    getOrder(ingredientsId)
+    getOrder(ingredientsId, token)
       .then(data => {
         dispatch({
           type: ORDER_SUCCESS,

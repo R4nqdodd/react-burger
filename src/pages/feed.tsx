@@ -2,15 +2,14 @@ import styles from './feed.module.css';
 import { useEffect } from 'react';
 import OrderList from '../components/order-list/order-list';
 import OrderBoard from '../components/order-board/order-board';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../services/types/index';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/constants/ws';
 
 export default function FeedPage() {
 
   const dispatch = useDispatch();
 
-  const feedData = useSelector((store: any) => store.orders.data);
+  const feedData = useSelector(store => store.orders.data);
 
   useEffect(() => {
     dispatch({

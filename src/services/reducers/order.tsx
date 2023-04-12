@@ -6,7 +6,7 @@ import {
 } from '../constants/order';
 import { TOrderAction } from '../actions/order';
 
-type TOrderState = {
+export type TOrderState = {
   name: string;
   order: {
     number: number;
@@ -28,14 +28,14 @@ export const newOrderReducer = (state = orderInitialState, action: TOrderAction)
     case ORDER_REQUEST: {
       return {
         ...state,
-        orderRequest: true
+        orderRequest: true,
+        orderFailed: false
       }
     }
     case ORDER_SUCCESS: {
       return {
         ...state,
         orderRequest: false,
-        orderFailed: false,
         name: action.name,
         order: { number: action.order.number }
       }
@@ -49,6 +49,9 @@ export const newOrderReducer = (state = orderInitialState, action: TOrderAction)
     }
     case ORDER_RESET: {
       return {
+        ...state,
+        orderRequest: false,
+        orderFailed: false,
         name: '',
         order: { number: 0 }
       }

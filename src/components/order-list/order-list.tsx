@@ -1,11 +1,23 @@
 import styles from './order-list.module.css';
 import OrderListItem from '../order-list-item/order-list-item';
-import { Link } from 'react-router-dom';
 
-export default function OrderList({ orders, status }: any) {
+type TWSOrder = {
+  _id: string;
+  ingredients: ReadonlyArray<string>;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+}
 
-  console.log(orders)
+type TOrderList = {
+  status: boolean;
+  orders: ReadonlyArray<TWSOrder>;
+}
 
+export default function OrderList({ orders, status }: TOrderList) {
+ 
   const getOrders = () => {
     if (orders.length > 0) {
       return orders.map((item: any) => {

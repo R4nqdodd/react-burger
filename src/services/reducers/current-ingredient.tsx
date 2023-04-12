@@ -4,7 +4,7 @@ import {
 } from '../constants/current-ingredient';
 import { TCurrentIngredientAction } from '../actions/current-ingredient';
 
-type TCurrentIngredientState = {
+export type TCurrentIngredientState = {
   current: JSX.Element | null
 };
 

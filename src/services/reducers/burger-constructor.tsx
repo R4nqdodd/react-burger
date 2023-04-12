@@ -7,7 +7,7 @@ import {
 import { TIngredient } from '../../utils/types';
 import { TBurgerConstructorAction } from '../actions/burger-constructor';
 
-type TBurgerConstructorState = {
+export type TBurgerConstructorState = {
   bun: TIngredient | null;
   ingredients: ReadonlyArray<TIngredient>;
 };
@@ -18,6 +18,7 @@ const burgerConstractorInitialState: TBurgerConstructorState = {
 }
 
 export const ingredientsConstructorReducer = (state = burgerConstractorInitialState, action: TBurgerConstructorAction) => {
+  console.log(state)
   switch(action.type) {
     case GET_CONSTRUCTOR_BUN: {
       return {

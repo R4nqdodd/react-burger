@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/index';
 import { useDrag, useDrop } from "react-dnd";
 import styles from './burger-constructor-element.module.css'
 import {

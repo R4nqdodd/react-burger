@@ -9,8 +9,8 @@ import { authReducer } from './auth';
 import { wsReducer } from './ws';
 
 export const rootReducer = combineReducers({
-  constructor: ingredientsConstructorReducer,
   burgerIngredients: burgerIngredientsReducer,
+  constructor: ingredientsConstructorReducer,
   currentIngredient: currentIngredientReducer,
   order: newOrderReducer,
   modal: modalReducer,

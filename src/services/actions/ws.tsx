@@ -47,3 +47,7 @@ export type TWSAction =
   | IWSGetMessageAction
   | IWSSendMessageAction
   | IWSConnectionCloseAction;
+
+  export type TWSActionNames = {
+    [key in TWSAction['type']] : key
+}

@@ -12,7 +12,7 @@ import OrderPage from '../../pages/order';
 import ProfileOrdersPage from '../../pages/profile-orders';
 import { useEffect } from 'react';
 import { getCookie } from '../../utils/utils';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/index';
 import { getUser } from '../../services/actions/auth';
 import { ProtectedRouteElement } from '../protected-route';
 import { Modal } from '../modal/modal';
@@ -21,16 +21,14 @@ import IngredientDetails from '../inngredient-details/ingredient-details';
 import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/constants/current-ingredient';
 import { SET_MODAL } from '../../services/constants/modal';
 import NotFoundPage from '../../pages/NotFound';
-import { TModalStore } from '../../utils/types';
-import { AppDispatch } from '../../services/types';
 import Order from '../order/order';
 
 function App() {
 
-  const { currentModal } = useSelector((store: TModalStore) => store.modal)
+  const { currentModal } = useSelector((store) => store.modal)
   const location = useLocation();
   const background = location.state && location.state.background;
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUser(getCookie('token')));

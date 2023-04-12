@@ -1,5 +1,4 @@
 import {
-  WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
@@ -7,17 +6,27 @@ import {
 } from '../constants/ws';
 import { TWSAction } from '../actions/ws';
 
+type TWSOrder = {
+  _id: string;
+  ingredients: ReadonlyArray<string>;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+}
 
-type TinitialState = {
+
+export type TOrdersState = {
   wsConnected: boolean;
   data: {
-    orders: [];
+    orders: ReadonlyArray<TWSOrder>;
     total: number;
     totalToday: number;
   }
 }
 
-const initialState: TinitialState = {
+const initialState: TOrdersState = {
   wsConnected: false,
   data: {
     orders: [],
@@ -26,7 +35,7 @@ const initialState: TinitialState = {
   }
 };
 
-export const wsReducer = (state = initialState, action: TWSAction) => {
+export const wsReducer = (state = initialState, action: TWSAction): TOrdersState  => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
@@ -54,7 +63,9 @@ export const wsReducer = (state = initialState, action: TWSAction) => {
     case WS_GET_MESSAGE:
       return {
         ...state,
-        data: action.payload
+        data: {
+          ...action.payload
+        }
       };
       
     default:

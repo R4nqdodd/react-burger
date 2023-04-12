@@ -1,25 +1,33 @@
 import styles from './order-list-item.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/types/index';
 import { TIngredient } from '../../utils/types';
 import { Link, useLocation } from 'react-router-dom';
 
-type TBurgerIngredients<TIngredient> = {
-  burgerIngredients: {
-    ingredients: ReadonlyArray<TIngredient>;
-    ingredientsRequest: boolean;
-    ingredientsFailed: boolean;
-  };
-};
+type TWSOrder = {
+  _id: string;
+  ingredients: ReadonlyArray<string>;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+}
 
-export default function OrderListItem({ order, status }: any) {
+type TOrder = {
+  status: boolean;
+  order: TWSOrder;
+}
 
-  const ingredientsStore = useSelector((store: TBurgerIngredients<TIngredient>) => store.burgerIngredients.ingredients);
+
+export default function OrderListItem({ order, status }: TOrder) {
+
+  const ingredientsStore = useSelector(store => store.burgerIngredients.ingredients);
 
   const location = useLocation();
 
-  const ingredients = order.ingredients.map((item: string) => {
-    return ingredientsStore.find((findItem: TIngredient) => {
+  const ingredients = order.ingredients.map((item) => {
+    return ingredientsStore.find((findItem) => {
       return findItem._id === item;
     })
   }) as TIngredient[];
@@ -29,7 +37,7 @@ export default function OrderListItem({ order, status }: any) {
     return item.price;
   })
 
-  const orderPrice = ingredientsPrice.reduce((prev: number, item: number) => {
+  const orderPrice = ingredientsPrice.reduce((prev, item) => {
     return prev + item;
   }, 0)
 
@@ -38,7 +46,7 @@ export default function OrderListItem({ order, status }: any) {
 
   const ingredientIcons = () => {
     if (typeof visibleIngredients !== 'undefined') {
-      return visibleIngredients.map((item: TIngredient, index: number) => {
+      return visibleIngredients.map((item, index) => {
         if (index === 5 && invisibleIngredients.length > 0) {
           return (
             <li key={index} className={styles.order_icon} style={{ left: -20 * index, zIndex: 5 - index }}>

@@ -9,7 +9,7 @@ import {
 import { TIngredient } from '../../utils/types';
 import { TBurgerIngredientsAction } from '../actions/burger-ingredients';
 
-type TBurgerIngredientsState = {
+export type TBurgerIngredientsState = {
   ingredients: ReadonlyArray<TIngredient>;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;

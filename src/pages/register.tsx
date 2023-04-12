@@ -1,16 +1,15 @@
-import { useState, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from './form.module.css';
-import { registrationRequest } from '../utils/api';
-import { useDispatch } from 'react-redux';
-import { USER_LOGIN } from '../services/constants/auth';
-import { setCookie } from '../utils/utils';
 import { useForm } from '../hooks/use-form';
+import { getRegister } from '../services/actions/auth';
+import { useDispatch, useSelector } from '../services/types';
 
 export default function RegisterPage() {
 
   const location = useLocation();
+  const userData = useSelector(store => store.auth);
 
   let pathname: string;
 
@@ -37,23 +36,10 @@ export default function RegisterPage() {
   const onSubmitRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    registrationRequest(values)
-      .then((data) => {
-        dispatch({
-          type: USER_LOGIN,
-          email: data.user.email,
-          name: data.user.name,
-          accessToken: data.accessToken
-        });
-        const token = data.refreshToken;
-        setCookie('token', token);
-      })
-      .then(() => { 
-        navigate(pathname);
-      })
-      .catch((err) => {
-        console.log(err)
-      });
+    dispatch(getRegister(values));
+    if (userData.isLogin) {
+      navigate(pathname);
+    }
   }
 
   return (

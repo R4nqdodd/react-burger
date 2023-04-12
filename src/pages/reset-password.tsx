@@ -4,10 +4,14 @@ import styles from './form.module.css';
 import { request, resetPasswordRequest } from '../utils/api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from '../hooks/use-form';
+import { useDispatch, useSelector } from '../services/types';
+import { getResetPassword } from '../services/actions/auth';
 
 export default function ResetPasswordPage() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector(store => store.auth);
 
   const location = useLocation();
 
@@ -19,14 +23,14 @@ export default function ResetPasswordPage() {
   const onClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    resetPasswordRequest(values)
-      .then(() => {
-        navigate('/login');
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch(getResetPassword(values));
   }
+
+  useEffect(() => {
+    if (userData.isResetPassword) {
+      navigate('/login');
+    }
+  }, [userData])
 
   const onLoginClick = () => {
     navigate('/login');
@@ -36,7 +40,7 @@ export default function ResetPasswordPage() {
     if (location.state) {
       location.state.pathname !== '/forgot-password' && navigate('/')
     } else {
-      navigate('/');  
+      navigate('/');
     }
   }, [])
 

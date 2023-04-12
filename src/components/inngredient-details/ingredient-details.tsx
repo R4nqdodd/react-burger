@@ -1,7 +1,4 @@
-import React, {FC} from 'react';
-import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
-
 import { TIngredient } from '../../utils/types';
 
 type TIngredientDetails = {

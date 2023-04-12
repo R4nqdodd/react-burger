@@ -1,17 +1,8 @@
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import ingr from '../../images/ingredient preview.png';
 import styles from './order.module.css';
 import OrderItem from "../order_item/order_item";
-import { useSelector } from "react-redux";
+import { useSelector } from '../../services/types/index';
 import { TIngredient } from "../../utils/types";
-
-type TBurgerIngredients<TIngredient> = {
-  burgerIngredients: {
-    ingredients: ReadonlyArray<TIngredient>;
-    ingredientsRequest: boolean;
-    ingredientsFailed: boolean;
-  };
-};
 
 type TOrder = {
   currentOrder: {
@@ -27,11 +18,11 @@ type TOrder = {
 
 export default function Order({ currentOrder }: TOrder) {
 
-  const ingredientsStore = useSelector((store: TBurgerIngredients<TIngredient>) => store.burgerIngredients.ingredients);
+  const ingredientsStore = useSelector(store => store.burgerIngredients.ingredients);
 
-  const ingredients = currentOrder.ingredients.map((item: string) => {
+  const ingredients = currentOrder.ingredients.map((item) => {
     return {
-      ...ingredientsStore.find((findItem: TIngredient) => {
+      ...ingredientsStore.find((findItem) => {
         return findItem._id === item;
       })
     }
