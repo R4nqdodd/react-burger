@@ -4,7 +4,7 @@ import OrderList from '../components/order-list/order-list';
 import OrderBoard from '../components/order-board/order-board';
 import { useDispatch, useSelector } from '../services/types/index';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/constants/ws';
-import { WS_BASE_URL } from '../components/app/app';
+import { WS_BASE_URL } from '../utils/utils';
 
 export default function FeedPage() {
 

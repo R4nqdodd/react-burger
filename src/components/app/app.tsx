@@ -23,8 +23,6 @@ import { SET_MODAL } from '../../services/constants/modal';
 import NotFoundPage from '../../pages/NotFound';
 import Order from '../order/order';
 
-export const WS_BASE_URL = 'wss://norma.nomoreparties.space/orders';
-
 function App() {
 
   const { currentModal } = useSelector((store) => store.modal)
