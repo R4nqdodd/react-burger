@@ -1,20 +1,10 @@
-import { TOrdersState, wsReducer } from './ws';
+import { TOrdersState, wsReducer, initialState } from './ws';
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_MESSAGE
 } from '../constants/ws';
-
-
-const initialState: TOrdersState = {
-  wsConnected: false,
-  data: {
-    orders: [],
-    total: 0,
-    totalToday: 0
-  }
-};
 
 describe('websocket reducer', () => {
   it('websocket connection success', () => {
@@ -55,11 +45,7 @@ describe('websocket reducer', () => {
       payload: {}
     })).toEqual({
       ...initialState,
-      data: {
-        orders: [],
-        total: 0,
-        totalToday: 0
-      }
+      data: {}
     })
   })
 })

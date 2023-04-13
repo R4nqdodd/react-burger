@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import OrderList from "../components/order-list/order-list";
 import { useDispatch, useSelector } from '../services/types/index';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../services/constants/ws";
+import { WS_BASE_URL } from "../components/app/app";
 
 
 export default function ProfileOrdersPage() {
 
   const userData = useSelector(store => store.auth);
-  const orders = useSelector(store => store.orders.data);
+  const ordersData = useSelector(store => store.orders.data);
 
   const dispatch = useDispatch();
 
@@ -16,7 +17,7 @@ export default function ProfileOrdersPage() {
       const token = userData.user.accessToken.split('Bearer ')[1];
       dispatch({ 
         type: WS_CONNECTION_START,
-        payload: `wss://norma.nomoreparties.space/orders?token=${token}`
+        payload: `${WS_BASE_URL}?token=${token}`
       })
       return () => {
         dispatch({ type: WS_CONNECTION_CLOSE })
@@ -26,7 +27,7 @@ export default function ProfileOrdersPage() {
 
   return (
     <>
-      <OrderList orders={orders.orders} status={true}/>
+      <OrderList orders={ordersData.orders} status={true}/>
     </>
   );
 }

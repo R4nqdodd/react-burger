@@ -4,6 +4,7 @@ import OrderList from '../components/order-list/order-list';
 import OrderBoard from '../components/order-board/order-board';
 import { useDispatch, useSelector } from '../services/types/index';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/constants/ws';
+import { WS_BASE_URL } from '../components/app/app';
 
 export default function FeedPage() {
 
@@ -14,8 +15,9 @@ export default function FeedPage() {
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,
-      payload: 'wss://norma.nomoreparties.space/orders/all'
+      payload: `${WS_BASE_URL}/all`
     })
+
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSE })
     }

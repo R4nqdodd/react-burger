@@ -1,13 +1,8 @@
-import { TCurrentIngredientState, currentIngredientReducer } from "./current-ingredient";
+import { TCurrentIngredientState, currentIngredientReducer, currentIngredientInitialState } from "./current-ingredient";
 import {
   SET_CURRENT_INGREDIENT,
   DELETE_CURRENT_INGREDIENT
 } from '../constants/current-ingredient';
-
-
-const currentIngredientInitialState: TCurrentIngredientState = {
-  current: null
-}
 
 describe('current ingredient reducer', () => {
   it('set current ingredient', () => {
@@ -16,7 +11,7 @@ describe('current ingredient reducer', () => {
       current: null
     })).toEqual({
       ...currentIngredientInitialState,
-      current: <div></div>
+      current: null
     })
   })
 

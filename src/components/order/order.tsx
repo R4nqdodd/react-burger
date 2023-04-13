@@ -20,6 +20,8 @@ export default function Order({ currentOrder }: TOrder) {
 
   const ingredientsStore = useSelector(store => store.burgerIngredients.ingredients);
 
+  let sortIngredients: Array<TIngredient> = [];
+
   const ingredients = currentOrder.ingredients.map((item) => {
     return {
       ...ingredientsStore.find((findItem) => {
@@ -29,8 +31,21 @@ export default function Order({ currentOrder }: TOrder) {
   }).map(item => {
     if (item.type === 'bun'){
       item.count = 2;
+      if(!sortIngredients.some((findItem) => findItem.type === 'bun' )) {
+        sortIngredients.unshift(item as TIngredient);
+      }
     } else {
       item.count = 1;
+      if(!sortIngredients.some((findItem) => findItem._id === item._id )) {
+        sortIngredients.push(item as TIngredient);
+      } else {
+        sortIngredients.forEach((findItem) => {
+          if(findItem._id === item._id) {
+            findItem.count++;
+          }
+          return findItem;
+        })
+      }
     }
     return item;
   }) as TIngredient[];
@@ -58,7 +73,7 @@ export default function Order({ currentOrder }: TOrder) {
       <div>
         <ul className={`${styles.order_list_bar} mb-10`}>
           {
-            ingredients.map((item, index) => {
+            sortIngredients.map((item, index) => {
               return (
                 <OrderItem key={index} image={item.image} ingredientName={item.name} count={item.count} price={item.price} />
               );

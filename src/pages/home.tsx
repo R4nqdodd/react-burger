@@ -18,9 +18,6 @@ function HomePage() {
           <BurgerConstructor />
         </main>
       </DndProvider>
-      <Modal>
-        {modal.currentModal}
-      </Modal>
     </>
   );
 

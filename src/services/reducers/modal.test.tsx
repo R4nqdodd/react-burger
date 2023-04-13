@@ -1,4 +1,4 @@
-import { TModalState, modalReducer } from "./modal";
+import { TModalState, modalReducer, modalInitialState } from "./modal";
 import {
   IS_REQUEST,
   IS_SUCCESS,
@@ -6,13 +6,6 @@ import {
   SET_MODAL,
   RESET_MODAL
 } from '../constants/modal';
-
-const modalInitialState: TModalState = {
-  isRequest: false,
-  isFailed: false,
-
-  currentModal: null,
-}
 
 describe('modal reducer', () => {
   it('modal request', () => {
@@ -50,7 +43,7 @@ describe('modal reducer', () => {
       currentModal: null
     })).toEqual({
       ...modalInitialState,
-      currentModal: <div></div>
+      currentModal: null
     })
   })
 

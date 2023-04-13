@@ -1,4 +1,4 @@
-import { authReducer, TUserDataState } from "./auth";
+import { authReducer, TUserDataState, userDataInitialState } from "./auth";
 import {
   IS_AUTH,
   USER_FORGOT_PASSWORD_FAILED,
@@ -17,33 +17,6 @@ import {
   USER_RESET_PASSWORD_REQUEST,
   USER_RESET_PASSWORD_SUCCESS
 } from "../constants/auth";
-
-const userDataInitialState: TUserDataState =
-{
-  isAuth: false,
-  user: {
-    email: 'r4nqdodd@yandex.ru',
-    name: 'Ranqdodd',
-    accessToken: 'fcghjfgy'
-  },
-  isLogin: false,
-  isLoginRequest: false,
-  isLoginFailed: false,
-
-  isLogoutRequest: false,
-  isLogoutFailed: false,
-
-  isProfileEditRequest: false,
-  isProfileEditFailed: false,
-
-  isForgotPasswordRequest: false,
-  isForgotPasswordFailed: false,
-  isForgotPassword: false,
-
-  isResetPasswordRequest: false,
-  isResetPasswordFailed: false,
-  isResetPassword: false
-};
 
 describe('auth reducer', () => {
   it('is auth', () => {
@@ -68,9 +41,9 @@ describe('auth reducer', () => {
   it('user login success', () => {
     expect(authReducer(userDataInitialState, {
       type: USER_LOGIN_SUCCESS,
-      email: 'r4nqdodd@yandex.ru',
-      name: 'Ranqdodd',
-      accessToken: 'fcghjfgy'
+      email: '',
+      name: '',
+      accessToken: ''
     })).toEqual({
       ...userDataInitialState,
       user: {
@@ -79,7 +52,7 @@ describe('auth reducer', () => {
         accessToken: ''
       },
       isLogin: true,
-      isLoginRequest: true
+      isLoginRequest: false
     })
   })
 

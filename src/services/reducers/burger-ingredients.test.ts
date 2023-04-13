@@ -1,4 +1,4 @@
-import { TBurgerIngredientsState, burgerIngredientsReducer } from "./burger-ingredients";
+import { TBurgerIngredientsState, burgerIngredientsReducer, burgerIngredientsInitialState } from "./burger-ingredients";
 import { 
   GET_BURGER_INGREDIENTS_REQUEST,
   GET_BURGER_INGREDIENTS_FAILED,
@@ -26,13 +26,6 @@ const ingredient: TIngredient = {
   uuid: 'eaiourngoiaeriognse923u81hrhdjf834hf8838fh28h23f'
 }
 
-
-const burgerIngredientsInitialState: TBurgerIngredientsState = {
-  ingredients: [ingredient],
-  ingredientsRequest: false,
-  ingredientsFailed: false
-}
-
 describe('burger ingredients reducer', ()=> {
   it('get burger ingredients request', () => {
     expect(burgerIngredientsReducer(burgerIngredientsInitialState, {
@@ -46,7 +39,7 @@ describe('burger ingredients reducer', ()=> {
   it('get burger ingredients success', () => {
     expect(burgerIngredientsReducer(burgerIngredientsInitialState, {
       type: GET_BURGER_INGREDIENTS_SUCCESS,
-      ingredients: [ingredient]
+      ingredients: []
     })).toEqual({
       ...burgerIngredientsInitialState,
       ingredientsRequest: false,

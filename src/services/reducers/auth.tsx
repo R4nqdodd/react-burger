@@ -44,7 +44,7 @@ export type TUserDataState = {
   isResetPassword: boolean;
 }
 
-const userDataInitialState: TUserDataState =
+export const userDataInitialState: TUserDataState =
 {
   isAuth: false,
   user: {

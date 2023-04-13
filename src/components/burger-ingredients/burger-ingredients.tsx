@@ -56,9 +56,7 @@ export default function BurgerIngredients() {
               {ingredients.map((item) => {
                 if (item.type === 'bun') {
                   return (
-                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
-                      <BurgerIngredient ingredient={item} />
-                    </Link>
+                    <BurgerIngredient ingredient={item} key={`${item._id}`} />
                   )
                 }
               }
@@ -73,9 +71,7 @@ export default function BurgerIngredients() {
               {ingredients.map((item) => {
                 if (item.type === 'sauce') {
                   return (
-                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
-                      <BurgerIngredient key={item._id} ingredient={item} />
-                    </Link>
+                    <BurgerIngredient key={item._id} ingredient={item} />
                   )
                 }
               }
@@ -90,9 +86,7 @@ export default function BurgerIngredients() {
               {ingredients.map((item) => {
                 if (item.type === 'main') {
                   return (
-                    <Link to={`/ingredients/${item._id}`} key={`Link_${item._id}`} className={styles.ingredient_link} state={{ background: location, currentIngredient: item }}>
-                      <BurgerIngredient key={item._id} ingredient={item} />
-                    </Link>
+                    <BurgerIngredient key={item._id} ingredient={item} />
                   )
                 }
               }

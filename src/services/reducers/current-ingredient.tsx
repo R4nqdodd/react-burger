@@ -8,7 +8,7 @@ export type TCurrentIngredientState = {
   current: JSX.Element | null
 };
 
-const currentIngredientInitialState: TCurrentIngredientState = {
+export const currentIngredientInitialState: TCurrentIngredientState = {
   current: null
 }
 

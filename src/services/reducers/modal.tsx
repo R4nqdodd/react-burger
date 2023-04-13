@@ -8,7 +8,7 @@ export type TModalState = {
   currentModal: JSX.Element | null;
 };
 
-const modalInitialState: TModalState = {
+export const modalInitialState: TModalState = {
   isRequest: false,
   isFailed: false,
 

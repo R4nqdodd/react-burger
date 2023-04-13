@@ -26,7 +26,7 @@ export type TOrdersState = {
   }
 }
 
-const initialState: TOrdersState = {
+export const initialState: TOrdersState = {
   wsConnected: false,
   data: {
     orders: [],

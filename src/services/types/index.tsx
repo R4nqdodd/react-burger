@@ -27,6 +27,8 @@ export type TAppDispatch = ThunkDispatch<TRootState, never, TApplicationActions>
 export const useDispatch = () => dispatch<TAppDispatch>(); 
 export const useSelector: TypedUseSelectorHook<TRootState> = selector;
 
+
+
 /*Тип "Dispatch<TBurgerConstructorAction | TBurgerIngredientsAction | TCurrentIngredientAction | TOrderAction |
  TModalAction | TAuthAction | TWSAction> | AppThunk<...>" не удовлетворяет ограничению "Dispatch<AnyAction>".
   Тип "AppThunk<void>" не может быть назначен для типа "Dispatch<AnyAction>".

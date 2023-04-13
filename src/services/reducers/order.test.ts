@@ -1,18 +1,10 @@
-import { TOrderState, newOrderReducer } from './order';
+import { TOrderState, newOrderReducer, orderInitialState } from './order';
 import {
   ORDER_REQUEST,
   ORDER_SUCCESS,
   ORDER_FAILED,
   ORDER_RESET
 } from '../constants/order';
-
-const orderInitialState: TOrderState = {
-  name: 'weq',
-  order: { number: 123 },
-
-  orderRequest: false,
-  orderFailed: false
-}
 
 describe('new order reducer', () => {
   it('order request', () => {
@@ -28,8 +20,8 @@ describe('new order reducer', () => {
   it('order success', () => {
     expect(newOrderReducer(orderInitialState, {
       type: ORDER_SUCCESS,
-      name: 'weq',
-      order: { number: 123 }
+      name: '',
+      order: { number: 0 }
     })).toEqual({
       ...orderInitialState,
       orderRequest: false,

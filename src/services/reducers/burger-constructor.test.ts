@@ -1,4 +1,4 @@
-import { ingredientsConstructorReducer, TBurgerConstructorState } from "./burger-constructor";
+import { ingredientsConstructorReducer, TBurgerConstructorState, burgerConstractorInitialState } from "./burger-constructor";
 import { GET_CONSTRUCTOR_BUN, GET_CONSTRUCTOR_INGREDIENT, DELETE_CONSTRUCTOR_ELEMENT, RESET_CONSTRUCTOR } from "../constants/burger-constructor";
 import { TIngredient } from "../../utils/types";
 
@@ -19,16 +19,11 @@ const ingredient: TIngredient = {
   uuid: 'eaiourngoiaeriognse923u81hrhdjf834hf8838fh28h23f'
 }
 
-const burgerConstractorInitialState: TBurgerConstructorState = {
-  bun: ingredient,
-  ingredients: [ingredient]
-}
-
 describe('constructor reducer', () => {
   it('get constructor bun', () => {
     expect(ingredientsConstructorReducer(burgerConstractorInitialState, {
       type: GET_CONSTRUCTOR_BUN,
-      bun: ingredient
+      bun: null
     })).toEqual({
       ...burgerConstractorInitialState,
       bun: null
@@ -38,7 +33,7 @@ describe('constructor reducer', () => {
   it('get constructor ingredient', () => {
     expect(ingredientsConstructorReducer(burgerConstractorInitialState, {
       type: GET_CONSTRUCTOR_INGREDIENT,
-      ingredients: [...burgerConstractorInitialState.ingredients, ingredient]
+      ingredients: []
     })).toEqual({
       ...burgerConstractorInitialState,
       ingredients: []

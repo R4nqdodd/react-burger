@@ -14,7 +14,7 @@ import { ORDER_RESET } from '../../services/constants/order';
 import { sentOrderNumber } from '../../services/actions/order';
 import { SET_MODAL } from '../../services/constants/modal';
 import OrderDetails from '../order-details/order-details';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../utils/types';
 
 export default function BurgerConstructor() {
@@ -22,6 +22,7 @@ export default function BurgerConstructor() {
   const temporaryIngredients = useSelector(store => store.burgerIngredients.ingredients)
 
   const { ingredients, bun } = useSelector(store => store.constructor);
+  const location = useLocation();
 
   const userData = useSelector(store => store.auth);
 
@@ -92,6 +93,7 @@ export default function BurgerConstructor() {
     if (!userData.isLogin) {
       navigate('/login');
     } else {
+      navigate('/', {state: {background: location}})
       const ingredientsId: string[] = [...ingredients].map(item => item._id);
       dispatch({
         type: SET_MODAL,

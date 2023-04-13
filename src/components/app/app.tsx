@@ -23,10 +23,13 @@ import { SET_MODAL } from '../../services/constants/modal';
 import NotFoundPage from '../../pages/NotFound';
 import Order from '../order/order';
 
+export const WS_BASE_URL = 'wss://norma.nomoreparties.space/orders';
+
 function App() {
 
   const { currentModal } = useSelector((store) => store.modal)
   const location = useLocation();
+  console.log(location)
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
 
@@ -73,7 +76,6 @@ function App() {
         </Route>
         <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<OrderPage />} />} />
         <Route path='/feed' element={<FeedPage />} />
-        <Route path='/feed/test' element={<OrderPage />} />
         <Route path='/feed/:id' element={<OrderPage />} />
         <Route path='*' element={<NotFoundPage />} />
         <Route path='/ingredients/:id' element={<IngredientsPage />} />
@@ -93,7 +95,12 @@ function App() {
             <Modal>
               {currentModal}
             </Modal>
-          }/>
+          } />
+        } />
+        <Route path='/' element={
+          <Modal>
+            {currentModal}
+          </Modal>
         } />
       </Routes>}
     </>

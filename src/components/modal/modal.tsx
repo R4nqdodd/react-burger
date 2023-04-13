@@ -24,7 +24,6 @@ export const Modal: FC<TModal> = ({ children }) => {
   const navigate = useNavigate();
 
   function handleStopPropagation(e: MouseEvent<Element, Event>) {
-    console.log(e)
     e.stopPropagation();
   }
 

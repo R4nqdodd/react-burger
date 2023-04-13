@@ -24,10 +24,22 @@ export default function OrderListItem({ order, status }: TOrder) {
 
   const ingredientsStore = useSelector(store => store.burgerIngredients.ingredients);
 
+  console.log(order)
+
   const location = useLocation();
 
-  const ingredients = order.ingredients.map((item) => {
+  const temp = order.ingredients.map(item => {
+    if (item === null) {
+      return "60d3b41abdacab0026a733cd"
+    }
+
+    return item
+  })
+
+  const ingredients = temp.map((item) => {
     return ingredientsStore.find((findItem) => {
+      if (item === null) {
+      }
       return findItem._id === item;
     })
   }) as TIngredient[];

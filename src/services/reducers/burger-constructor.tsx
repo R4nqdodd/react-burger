@@ -12,13 +12,12 @@ export type TBurgerConstructorState = {
   ingredients: ReadonlyArray<TIngredient>;
 };
 
-const burgerConstractorInitialState: TBurgerConstructorState = {
+export const burgerConstractorInitialState: TBurgerConstructorState = {
   bun: null,
   ingredients: []
 }
 
 export const ingredientsConstructorReducer = (state = burgerConstractorInitialState, action: TBurgerConstructorAction) => {
-  console.log(state)
   switch(action.type) {
     case GET_CONSTRUCTOR_BUN: {
       return {

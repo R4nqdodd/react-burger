@@ -15,7 +15,7 @@ export type TOrderState = {
   orderFailed: boolean;
 };
 
-const orderInitialState: TOrderState = {
+export const orderInitialState: TOrderState = {
   name: '',
   order: { number: 0 },
 

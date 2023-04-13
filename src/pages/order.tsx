@@ -4,6 +4,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../services/types/index';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_START } from '../services/constants/ws';
+import { WS_BASE_URL } from '../components/app/app';
 
 export default function OrderPage() {
 
@@ -21,7 +22,7 @@ export default function OrderPage() {
     if (location.pathname === `/feed/${id}`) {
       dispatch({
         type: WS_CONNECTION_START,
-        payload: `wss://norma.nomoreparties.space/orders/all`
+        payload: `${WS_BASE_URL}/all`
       })
       return () => {
         dispatch({ type: WS_CONNECTION_CLOSE })
@@ -31,7 +32,7 @@ export default function OrderPage() {
         const token = userData.user.accessToken.split('Bearer ')[1];
         dispatch({
           type: WS_CONNECTION_START,
-          payload: `wss://norma.nomoreparties.space/orders?token=${token}`
+          payload: `${WS_BASE_URL}?token=${token}`
         })
         return () => {
           dispatch({ type: WS_CONNECTION_CLOSE })
@@ -43,7 +44,6 @@ export default function OrderPage() {
   const content = () => {
     if (orderData.orders.length > 0) {
       const currentOrder = orderData.orders.find((item) => {
-        console.log(item._id)
         return item._id === id;
       });
       if (currentOrder) {
