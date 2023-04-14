@@ -10,7 +10,7 @@ import { wsReducer } from './ws';
 
 export const rootReducer = combineReducers({
   burgerIngredients: burgerIngredientsReducer,
-  constructor: ingredientsConstructorReducer,
+  BurgerConstructor: ingredientsConstructorReducer,
   currentIngredient: currentIngredientReducer,
   order: newOrderReducer,
   modal: modalReducer,

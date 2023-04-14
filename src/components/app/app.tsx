@@ -27,7 +27,6 @@ function App() {
 
   const { currentModal } = useSelector((store) => store.modal)
   const location = useLocation();
-  console.log(location)
   const background = location.state && location.state.background;
   const dispatch = useDispatch();
 

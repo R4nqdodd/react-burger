@@ -21,7 +21,7 @@ export default function BurgerConstructor() {
 
   const temporaryIngredients = useSelector(store => store.burgerIngredients.ingredients)
 
-  const { ingredients, bun } = useSelector(store => store.constructor);
+  const { ingredients, bun } = useSelector(store => store.BurgerConstructor);
   const location = useLocation();
 
   const userData = useSelector(store => store.auth);
@@ -29,10 +29,6 @@ export default function BurgerConstructor() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getConstructorIngredient([]))
-  }, [dispatch])
 
   const [, constructorDrop] = useDrop({
     accept: 'ingredients',

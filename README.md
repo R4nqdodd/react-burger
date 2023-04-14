@@ -16,4 +16,4 @@ Cypress
 Запустить проект можно на локальном сервере с помощью команды : npm start,
 Протестировать с помощью: npm test и npm run cypress
 
-Адрес проекта: https://r4nqdodd.github.io/react-burger/
+Адрес проекта: https://r4nqdodd.github.io/
