@@ -1,3 +1,5 @@
+export const WS_BASE_URL = 'wss://norma.nomoreparties.space/orders';
+
 export function setCookie(name: string, value?: any, props?: any) {
   props = props || {};
   let exp = props.expires;

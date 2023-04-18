@@ -1,7 +1,6 @@
-import React, { useEffect, FC, KeyboardEvent, MouseEvent, SyntheticEvent } from 'react';
+import React, { useEffect, FC, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from '../../services/types/index';
 import styles from './modal.module.css';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 import {
@@ -10,16 +9,14 @@ import {
 import { RESET_MODAL } from '../../services/constants/modal';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { TModalStore } from '../../utils/types';
-
 type TModal = {
-  children: JSX.Element;
+  children: JSX.Element | null;
 }
 
 export const Modal: FC<TModal> = ({ children }) => {
   const modalRoot = document.getElementById("modal-root") as HTMLElement;
 
-  const { isRequest, isFailed, resetActionType } = useSelector((store: TModalStore) => store.modal);
+  const { isRequest, isFailed } = useSelector(store => store.modal);
 
   const location = useLocation();
 
@@ -27,14 +24,10 @@ export const Modal: FC<TModal> = ({ children }) => {
   const navigate = useNavigate();
 
   function handleStopPropagation(e: MouseEvent<Element, Event>) {
-    console.log(e)
     e.stopPropagation();
   }
 
   function handleCloseModal() {
-    dispatch({
-      type: resetActionType
-    })
     dispatch({
       type: RESET_MODAL
     })
@@ -62,7 +55,7 @@ export const Modal: FC<TModal> = ({ children }) => {
 
 
   useEffect(() => {
-    function handleCloseESC(e: any) {
+    function handleCloseESC(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         handleCloseModal();
       }

@@ -12,7 +12,7 @@ import OrderPage from '../../pages/order';
 import ProfileOrdersPage from '../../pages/profile-orders';
 import { useEffect } from 'react';
 import { getCookie } from '../../utils/utils';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/index';
 import { getUser } from '../../services/actions/auth';
 import { ProtectedRouteElement } from '../protected-route';
 import { Modal } from '../modal/modal';
@@ -21,16 +21,26 @@ import IngredientDetails from '../inngredient-details/ingredient-details';
 import { DELETE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/constants/current-ingredient';
 import { SET_MODAL } from '../../services/constants/modal';
 import NotFoundPage from '../../pages/NotFound';
+<<<<<<< HEAD
 import { TModalStore } from '../../utils/types';
 import { AppDispatch } from '../../services/types';
+=======
+>>>>>>> sprint-17
 import Order from '../order/order';
 
 function App() {
 
+<<<<<<< HEAD
   const { currentModal } = useSelector((store: TModalStore) => store.modal)
   const location = useLocation();
   const background = location.state && location.state.background;
   const dispatch: any = useDispatch();
+=======
+  const { currentModal } = useSelector((store) => store.modal)
+  const location = useLocation();
+  const background = location.state && location.state.background;
+  const dispatch = useDispatch();
+>>>>>>> sprint-17
 
   useEffect(() => {
     dispatch(getUser(getCookie('token')));
@@ -75,7 +85,10 @@ function App() {
         </Route>
         <Route path='/profile/orders/:id' element={<ProtectedRouteElement element={<OrderPage />} />} />
         <Route path='/feed' element={<FeedPage />} />
+<<<<<<< HEAD
         <Route path='/feed/test' element={<OrderPage />} />
+=======
+>>>>>>> sprint-17
         <Route path='/feed/:id' element={<OrderPage />} />
         <Route path='*' element={<NotFoundPage />} />
         <Route path='/ingredients/:id' element={<IngredientsPage />} />
@@ -95,7 +108,16 @@ function App() {
             <Modal>
               {currentModal}
             </Modal>
+<<<<<<< HEAD
           }/>
+=======
+          } />
+        } />
+        <Route path='/' element={
+          <Modal>
+            {currentModal}
+          </Modal>
+>>>>>>> sprint-17
         } />
       </Routes>}
     </>

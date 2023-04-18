@@ -46,4 +46,12 @@ export type TWSAction =
   | IWSConnectionClosedAction
   | IWSGetMessageAction
   | IWSSendMessageAction
+<<<<<<< HEAD
   | IWSConnectionCloseAction;
+=======
+  | IWSConnectionCloseAction;
+
+  export type TWSActionNames = {
+    [key in TWSAction['type']] : key
+}
+>>>>>>> sprint-17

@@ -2,15 +2,22 @@ import { FormEvent } from "react";
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from './form.module.css';
+<<<<<<< HEAD
 import { loginRequest } from "../utils/api";
 import { USER_LOGIN } from "../services/constants/auth";
 import { useDispatch } from "react-redux";
 import { setCookie } from '../utils/utils';
+=======
+import { useDispatch, useSelector } from '../services/types/index';
+>>>>>>> sprint-17
 import { useForm } from "../hooks/use-form";
+import { getLogin } from "../services/actions/auth";
 
 export default function LoginPage() {
 
   const location = useLocation();
+
+  const userData = useSelector(store => store.auth);
 
   const { values, handleChange } = useForm({
     email: '',
@@ -32,22 +39,10 @@ export default function LoginPage() {
   const onClickLogin = (e: FormEvent<HTMLFormElement> ) => {
     e.preventDefault();
 
-    loginRequest(values)
-      .then(data => {
-        dispatch({
-          type: USER_LOGIN,
-          email: data.user.email,
-          name: data.user.name,
-          accessToken: data.accessToken
-        });
-        setCookie('token', data.refreshToken);
-      })
-      .then(() => {
-        navigate(pathname);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch(getLogin(values));
+    if (userData.isLogin) {
+      navigate(pathname);
+    }
   }
 
   const regiterButtonHandle = () => {

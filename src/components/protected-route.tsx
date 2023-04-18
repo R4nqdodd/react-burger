@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {  useSelector } from '../services/types/index';
 
 import { TUserData, TUser } from '../utils/types';
 
@@ -11,7 +11,11 @@ type TProtectedRouteElement = {
 
 export const ProtectedRouteElement: FC<TProtectedRouteElement> = ({ element, anonymous = false }) => {
 
+<<<<<<< HEAD
   const userData = useSelector((store: TUserData<TUser>) => store.auth);
+=======
+  const userData = useSelector(store => store.auth);
+>>>>>>> sprint-17
 
   const location = useLocation();
   const from = location.state?.from || '/';
@@ -20,12 +24,12 @@ export const ProtectedRouteElement: FC<TProtectedRouteElement> = ({ element, ano
     return <h1 className="text text_type_main-large">Загрузка...</h1>;
   }
 
-  if (anonymous && userData.user) {
+  if (anonymous && userData.isLogin) {
     return <Navigate to={from} />;
   }
 
 
-  if (!anonymous && !userData.user) {
+  if (!anonymous && !userData.isLogin) {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 

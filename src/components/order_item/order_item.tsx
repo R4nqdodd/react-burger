@@ -1,5 +1,8 @@
 import styles from './order-item.module.css';
+<<<<<<< HEAD
 import Ingrimage from '../../images/test_image.png';
+=======
+>>>>>>> sprint-17
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 type TOrderItem = {

@@ -1,20 +1,29 @@
 import { IS_REQUEST, IS_FAILED, IS_SUCCESS, SET_MODAL, RESET_MODAL } from "../constants/modal";
 import { TModalAction } from "../actions/modal";
 
+<<<<<<< HEAD
 type TModalState = {
+=======
+export type TModalState = {
+>>>>>>> sprint-17
   isRequest: boolean;
   isFailed: boolean;
 
   currentModal: JSX.Element | null;
+<<<<<<< HEAD
   resetActionType: string;
 };
 
 const modalInitialState: TModalState = {
+=======
+};
+
+export const modalInitialState: TModalState = {
+>>>>>>> sprint-17
   isRequest: false,
   isFailed: false,
 
   currentModal: null,
-  resetActionType: ''
 }
 
 export const modalReducer = (state = modalInitialState, action: TModalAction) => {
@@ -42,15 +51,13 @@ export const modalReducer = (state = modalInitialState, action: TModalAction) =>
     case SET_MODAL: {
       return {
         ...state,
-        currentModal: action.currentModal,
-        resetActionType: action.resetActionType
+        currentModal: action.currentModal
       }
     }
     case RESET_MODAL: {
       return {
         ...state,
-        currentModal: null,
-        resetActionType: ''
+        currentModal: null
       }
     }
     default: {

@@ -6,6 +6,7 @@ import {
   ListIcon,
   ProfileIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
 
 import { TUserData, TUser } from '../../utils/types';
@@ -13,6 +14,13 @@ import { TUserData, TUser } from '../../utils/types';
 export default function AppHeader() {
 
   const userData = useSelector((store: TUserData<TUser>) => store.auth);
+=======
+import { useSelector } from '../../services/types/index';
+
+export default function AppHeader() {
+
+  const userData = useSelector(store => store.auth);
+>>>>>>> sprint-17
 
   const navigate = useNavigate();
 

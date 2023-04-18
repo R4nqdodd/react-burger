@@ -6,7 +6,11 @@ import {
 } from '../constants/order';
 import { TOrderAction } from '../actions/order';
 
+<<<<<<< HEAD
 type TOrderState = {
+=======
+export type TOrderState = {
+>>>>>>> sprint-17
   name: string;
   order: {
     number: number;
@@ -15,7 +19,11 @@ type TOrderState = {
   orderFailed: boolean;
 };
 
+<<<<<<< HEAD
 const orderInitialState: TOrderState = {
+=======
+export const orderInitialState: TOrderState = {
+>>>>>>> sprint-17
   name: '',
   order: { number: 0 },
 
@@ -28,14 +36,14 @@ export const newOrderReducer = (state = orderInitialState, action: TOrderAction)
     case ORDER_REQUEST: {
       return {
         ...state,
-        orderRequest: true
+        orderRequest: true,
+        orderFailed: false
       }
     }
     case ORDER_SUCCESS: {
       return {
         ...state,
         orderRequest: false,
-        orderFailed: false,
         name: action.name,
         order: { number: action.order.number }
       }
@@ -49,6 +57,9 @@ export const newOrderReducer = (state = orderInitialState, action: TOrderAction)
     }
     case ORDER_RESET: {
       return {
+        ...state,
+        orderRequest: false,
+        orderFailed: false,
         name: '',
         order: { number: 0 }
       }

@@ -1,8 +1,6 @@
-import React, {FC} from 'react';
+import { FC } from 'react';
 import styles from './modal-overlay.module.css';
-import { useSelector } from 'react-redux';
-
-import { TModalStore } from '../../utils/types';
+import { useSelector } from '../../services/types/index';
 
 type TModalOverlay = {
   children: JSX.Element;
@@ -11,18 +9,12 @@ type TModalOverlay = {
 
 export const ModalOverlay: FC<TModalOverlay> = ({ children, handleCloseModal }) => {
 
-  const { isRequest, currentModal } = useSelector((store: TModalStore) => store.modal);
+  const { isRequest, currentModal } = useSelector(store => store.modal);
 
-  const openModal = () => {
-     if (isRequest || currentModal) {
-      return styles.modal_overlay_open;
-    } else {
-      return '';
-    }
-  }
+  const openModal = isRequest || currentModal ? styles.modal_overlay_open : '';
 
   return (
-    <div className={`${styles.modal_overlay} ${openModal()}`} onClick={handleCloseModal}>
+    <div className={`${styles.modal_overlay} ${openModal}`} onClick={handleCloseModal}>
       {children}
     </div>
   );

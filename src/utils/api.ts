@@ -65,7 +65,7 @@ export const getProfileInfoRequest = async (token: string) => {
   })
 }
 
-export const forgotPasswordReset = async (form: TForm) => {
+export const forgotPasswordRequest = async (form: TForm) => {
   return await request('/password-reset', {
     method: 'POST',
     headers: {

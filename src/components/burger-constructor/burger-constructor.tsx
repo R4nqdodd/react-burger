@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/types/index';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorElement } from '../burger-constructor-element/burger-constructor-element';
 import {
@@ -8,14 +8,13 @@ import {
   Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as uuidv4 } from 'uuid';
-
 import { useDrop } from 'react-dnd';
-
 import { getConstructorIngredient, addIngredientToConstructor } from '../../services/actions/burger-constructor';
 import { ORDER_RESET } from '../../services/constants/order';
 import { sentOrderNumber } from '../../services/actions/order';
 import { SET_MODAL } from '../../services/constants/modal';
 import OrderDetails from '../order-details/order-details';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 
 import { TIngredient, TUserData, TUser } from '../../utils/types';
@@ -32,27 +31,32 @@ type TConstructor<TIngredient> = {
     bun: TIngredient;
   };
 };
+=======
+import { useLocation, useNavigate } from 'react-router-dom';
+import { TIngredient } from '../../utils/types';
+>>>>>>> sprint-17
 
 export default function BurgerConstructor() {
 
-  const temporaryIngredients = useSelector((store: TTemporaryIngredients<TIngredient>) => store.burgerIngredients.ingredients)
+  const temporaryIngredients = useSelector(store => store.burgerIngredients.ingredients)
 
-  const { ingredients, bun } = useSelector((store: TConstructor<TIngredient>) => store.constructor);
+  const { ingredients, bun } = useSelector(store => store.BurgerConstructor);
+  const location = useLocation();
 
+<<<<<<< HEAD
   const userData = useSelector((store: TUserData<TUser>) => store.auth);
+=======
+  const userData = useSelector(store => store.auth);
+>>>>>>> sprint-17
 
   const navigate = useNavigate();
 
-  const dispatch: any = useDispatch();
-
-  useEffect(() => {
-    dispatch(getConstructorIngredient([]))
-  }, [dispatch])
+  const dispatch = useDispatch();
 
   const [, constructorDrop] = useDrop({
     accept: 'ingredients',
     drop(DragItem: TIngredient) {
-      const newIngredient = { ...temporaryIngredients.find((item: TIngredient) => item._id === DragItem._id) } as TIngredient;
+      const newIngredient = { ...temporaryIngredients.find(item => item._id === DragItem._id) } as TIngredient;
       newIngredient.uuid = uuidv4();
 
       const newIngredients: TIngredient[] = [...ingredients, newIngredient];
@@ -95,7 +99,7 @@ export default function BurgerConstructor() {
     if (bun) {
       const bunsTotal: number = bun.price * 2;
       if (ingredients && ingredients.length > 0) {
-        const ingredientsTotal = ingredients.reduce((prev: number, item: TIngredient) => {
+        const ingredientsTotal = ingredients.reduce((prev, item) => {
           return prev + item.price
         }, 0);
         return ingredientsTotal + bunsTotal;
@@ -105,16 +109,19 @@ export default function BurgerConstructor() {
   }, [ingredients, bun]);
 
   const handleOrder = () => {
-    if (!userData.user) {
+    if (!userData.isLogin) {
       navigate('/login');
     } else {
+      navigate('/', {state: {background: location}})
       const ingredientsId: string[] = [...ingredients].map(item => item._id);
       dispatch({
         type: SET_MODAL,
         currentModal: <OrderDetails />,
         resetActionType: ORDER_RESET
       })
-      dispatch(sentOrderNumber([bun._id, ...ingredientsId]));
+      if (bun) {
+        dispatch(sentOrderNumber([bun._id, ...ingredientsId], userData.user.accessToken));
+      }
     }
   }
 
@@ -125,7 +132,7 @@ export default function BurgerConstructor() {
         <li>
           <ul className={styles.changeable_items} ref={sortDropRef}>
             {ingredients &&
-              ingredients.map((item: TIngredient, index: number) => {
+              ingredients.map((item, index) => {
                 if (!(item.type === 'bun')) {
                   return <BurgerConstructorElement key={item.uuid} {...item} moveIngredient={moveIngredient} index={index} />
                 }

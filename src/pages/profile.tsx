@@ -1,4 +1,5 @@
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+<<<<<<< HEAD
 import { useEffect, useRef, useState, FormEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -9,13 +10,26 @@ import styles from './profile.module.css';
 import { useForm } from "../hooks/use-form";
 
 import { TUserData, TUser } from "../utils/types";
+=======
+import { useRef, useState, FormEvent } from "react";
+import { useDispatch, useSelector } from '../services/types/index';
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { getCookie } from "../utils/utils";
+import styles from './profile.module.css';
+import { useForm } from "../hooks/use-form";
+import { getEditProfile, getLogout } from "../services/actions/auth";
+>>>>>>> sprint-17
 
 export default function ProfilePage() {
   const inputNameRef = useRef<any>();
 
   const { pathname } = useLocation();
 
+<<<<<<< HEAD
   const userData = useSelector((store: TUserData<TUser>) => store.auth.user);
+=======
+  const userData = useSelector(store => store.auth);
+>>>>>>> sprint-17
 
   const dispatch = useDispatch();
 
@@ -24,8 +38,8 @@ export default function ProfilePage() {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { values, handleChange, setValues } = useForm({
-    name: userData.name,
-    email: userData.email,
+    name: userData.user.name,
+    email: userData.user.email,
     password: ''
   });
 
@@ -39,6 +53,7 @@ export default function ProfilePage() {
   }
 
   const onClickLogoutButton = () => {
+<<<<<<< HEAD
     logoutRequest(getCookie('token'))
       .then(() => {
         deleteCookie('token');
@@ -50,11 +65,18 @@ export default function ProfilePage() {
       .catch((err) => {
         console.log(err);
       });
+=======
+    dispatch(getLogout(getCookie('token')));
+    if (!userData.isLogin) {
+      navigate('/login');
+    }
+>>>>>>> sprint-17
   }
 
   const onClickSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     editProfileInfoRequest(userData.accessToken, values)
       .then(data => {
         dispatch({
@@ -66,12 +88,15 @@ export default function ProfilePage() {
           }
         });
       });
+=======
+    dispatch(getEditProfile(userData.user.accessToken, values));
+>>>>>>> sprint-17
   };
 
   const onReset = () => {
     setValues({
-      email: userData.email,
-      name: userData.name,
+      email: userData.user.email,
+      name: userData.user.name,
       password: ''
     });
   };
