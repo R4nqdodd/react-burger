@@ -4,19 +4,11 @@ import {
 } from '../constants/current-ingredient';
 import { TCurrentIngredientAction } from '../actions/current-ingredient';
 
-<<<<<<< HEAD
-type TCurrentIngredientState = {
-  current: JSX.Element | null
-};
-
-const currentIngredientInitialState: TCurrentIngredientState = {
-=======
 export type TCurrentIngredientState = {
   current: JSX.Element | null
 };
 
 export const currentIngredientInitialState: TCurrentIngredientState = {
->>>>>>> sprint-17
   current: null
 }
 

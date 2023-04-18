@@ -9,21 +9,13 @@ import {
 import { TIngredient } from '../../utils/types';
 import { TBurgerIngredientsAction } from '../actions/burger-ingredients';
 
-<<<<<<< HEAD
-type TBurgerIngredientsState = {
-=======
 export type TBurgerIngredientsState = {
->>>>>>> sprint-17
   ingredients: ReadonlyArray<TIngredient>;
   ingredientsRequest: boolean;
   ingredientsFailed: boolean;
 }
 
-<<<<<<< HEAD
-const burgerIngredientsInitialState: TBurgerIngredientsState = {
-=======
 export const burgerIngredientsInitialState: TBurgerIngredientsState = {
->>>>>>> sprint-17
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false

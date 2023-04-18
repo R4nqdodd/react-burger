@@ -7,20 +7,12 @@ import {
 import { TIngredient } from '../../utils/types';
 import { TBurgerConstructorAction } from '../actions/burger-constructor';
 
-<<<<<<< HEAD
-type TBurgerConstructorState = {
-=======
 export type TBurgerConstructorState = {
->>>>>>> sprint-17
   bun: TIngredient | null;
   ingredients: ReadonlyArray<TIngredient>;
 };
 
-<<<<<<< HEAD
-const burgerConstractorInitialState: TBurgerConstructorState = {
-=======
 export const burgerConstractorInitialState: TBurgerConstructorState = {
->>>>>>> sprint-17
   bun: null,
   ingredients: []
 }
