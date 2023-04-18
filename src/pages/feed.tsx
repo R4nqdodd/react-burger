@@ -2,37 +2,22 @@ import styles from './feed.module.css';
 import { useEffect } from 'react';
 import OrderList from '../components/order-list/order-list';
 import OrderBoard from '../components/order-board/order-board';
-<<<<<<< HEAD
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/constants/ws';
-=======
 import { useDispatch, useSelector } from '../services/types/index';
 import { WS_CONNECTION_CLOSE, WS_CONNECTION_CLOSED, WS_CONNECTION_START } from '../services/constants/ws';
 import { WS_BASE_URL } from '../utils/utils';
->>>>>>> sprint-17
 
 export default function FeedPage() {
 
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
-  const feedData = useSelector((store: any) => store.orders.data);
-=======
   const feedData = useSelector(store => store.orders.data);
->>>>>>> sprint-17
 
   useEffect(() => {
     dispatch({
       type: WS_CONNECTION_START,
-<<<<<<< HEAD
-      payload: 'wss://norma.nomoreparties.space/orders/all'
-    })
-=======
       payload: `${WS_BASE_URL}/all`
     })
 
->>>>>>> sprint-17
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSE })
     }

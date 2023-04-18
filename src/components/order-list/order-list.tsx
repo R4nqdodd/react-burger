@@ -1,13 +1,5 @@
 import styles from './order-list.module.css';
 import OrderListItem from '../order-list-item/order-list-item';
-<<<<<<< HEAD
-import { Link } from 'react-router-dom';
-
-export default function OrderList({ orders, status }: any) {
-
-  console.log(orders)
-
-=======
 
 type TWSOrder = {
   _id: string;
@@ -26,7 +18,6 @@ type TOrderList = {
 
 export default function OrderList({ orders, status }: TOrderList) {
  
->>>>>>> sprint-17
   const getOrders = () => {
     if (orders.length > 0) {
       return orders.map((item: any) => {

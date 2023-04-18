@@ -11,11 +11,7 @@ type TProtectedRouteElement = {
 
 export const ProtectedRouteElement: FC<TProtectedRouteElement> = ({ element, anonymous = false }) => {
 
-<<<<<<< HEAD
-  const userData = useSelector((store: TUserData<TUser>) => store.auth);
-=======
   const userData = useSelector(store => store.auth);
->>>>>>> sprint-17
 
   const location = useLocation();
   const from = location.state?.from || '/';

@@ -1,27 +1,5 @@
 import styles from './order-list-item.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-<<<<<<< HEAD
-import { useSelector } from 'react-redux';
-import { TIngredient } from '../../utils/types';
-import { Link, useLocation } from 'react-router-dom';
-
-type TBurgerIngredients<TIngredient> = {
-  burgerIngredients: {
-    ingredients: ReadonlyArray<TIngredient>;
-    ingredientsRequest: boolean;
-    ingredientsFailed: boolean;
-  };
-};
-
-export default function OrderListItem({ order, status }: any) {
-
-  const ingredientsStore = useSelector((store: TBurgerIngredients<TIngredient>) => store.burgerIngredients.ingredients);
-
-  const location = useLocation();
-
-  const ingredients = order.ingredients.map((item: string) => {
-    return ingredientsStore.find((findItem: TIngredient) => {
-=======
 import { useSelector } from '../../services/types/index';
 import { TIngredient } from '../../utils/types';
 import { Link, useLocation } from 'react-router-dom';
@@ -62,7 +40,6 @@ export default function OrderListItem({ order, status }: TOrder) {
     return ingredientsStore.find((findItem) => {
       if (item === null) {
       }
->>>>>>> sprint-17
       return findItem._id === item;
     })
   }) as TIngredient[];
@@ -72,11 +49,7 @@ export default function OrderListItem({ order, status }: TOrder) {
     return item.price;
   })
 
-<<<<<<< HEAD
-  const orderPrice = ingredientsPrice.reduce((prev: number, item: number) => {
-=======
   const orderPrice = ingredientsPrice.reduce((prev, item) => {
->>>>>>> sprint-17
     return prev + item;
   }, 0)
 
@@ -85,11 +58,7 @@ export default function OrderListItem({ order, status }: TOrder) {
 
   const ingredientIcons = () => {
     if (typeof visibleIngredients !== 'undefined') {
-<<<<<<< HEAD
-      return visibleIngredients.map((item: TIngredient, index: number) => {
-=======
       return visibleIngredients.map((item, index) => {
->>>>>>> sprint-17
         if (index === 5 && invisibleIngredients.length > 0) {
           return (
             <li key={index} className={styles.order_icon} style={{ left: -20 * index, zIndex: 5 - index }}>

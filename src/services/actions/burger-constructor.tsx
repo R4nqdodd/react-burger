@@ -1,10 +1,6 @@
 import { DECREASE_COUNTER, INCREASE_COUNTER } from "../constants/burger-ingredients";
 import { TIngredient } from "../../utils/types";
-<<<<<<< HEAD
-import { AppDispatch } from "../types";
-=======
 import { TAppDispatch } from "../types";
->>>>>>> sprint-17
 
 import {
   GET_CONSTRUCTOR_INGREDIENT,
@@ -20,20 +16,12 @@ export interface IGetConstructorIngredientAction {
 
 export interface IDeleteConstructorElementAction {
   readonly type: typeof DELETE_CONSTRUCTOR_ELEMENT;
-<<<<<<< HEAD
-  readonly uuid: string;
-=======
   readonly uuid: string | undefined;
->>>>>>> sprint-17
 }
 
 export interface IGetConstructorBunAction {
   readonly type: typeof GET_CONSTRUCTOR_BUN;
-<<<<<<< HEAD
-  readonly bun: TIngredient;
-=======
   readonly bun: TIngredient | null;
->>>>>>> sprint-17
 }
 
 export interface IResetConstructorAction {
@@ -46,13 +34,8 @@ export type TBurgerConstructorAction =
   | IGetConstructorBunAction
   | IResetConstructorAction;
 
-<<<<<<< HEAD
-export const addIngredientToConstructor = (newIngredient: TIngredient, bun: TIngredient, newItem: TIngredient, newIngredients: ReadonlyArray<TIngredient>) => {
-  return function (dispatch: AppDispatch) {
-=======
 export const addIngredientToConstructor = (newIngredient: TIngredient, bun: TIngredient | null, newItem: TIngredient, newIngredients: ReadonlyArray<TIngredient>) => {
   return function (dispatch: TAppDispatch) {
->>>>>>> sprint-17
     if (newIngredient.type === 'bun' && bun) {
       dispatch(decreaseCounter(bun._id, 2))
       dispatch(increaseCounter(newItem._id, 2))

@@ -6,11 +6,7 @@ import {
 } from '../constants/order';
 import { TOrderAction } from '../actions/order';
 
-<<<<<<< HEAD
-type TOrderState = {
-=======
 export type TOrderState = {
->>>>>>> sprint-17
   name: string;
   order: {
     number: number;
@@ -19,11 +15,7 @@ export type TOrderState = {
   orderFailed: boolean;
 };
 
-<<<<<<< HEAD
-const orderInitialState: TOrderState = {
-=======
 export const orderInitialState: TOrderState = {
->>>>>>> sprint-17
   name: '',
   order: { number: 0 },
 

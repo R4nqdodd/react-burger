@@ -2,44 +2,6 @@ import { request, getProfileInfoRequest, updateTokenRequest, loginRequest, regis
 import { TForm } from "../../utils/types";
 import { setCookie, deleteCookie, getCookie } from "../../utils/utils";
 import {
-<<<<<<< HEAD
-  USER_LOGIN,
-  USER_LOGOUT,
-  UPDATE_TOKEN,
-  IS_AUTH
-} from "../constants/auth";
-import { TUser } from "../../utils/types";
-import { AppDispatch } from "../types";
-
-export interface IUserLoginAction {
-  readonly type: typeof USER_LOGIN;
-  readonly email: string;
-  readonly name: string;
-  readonly accessToken: string;
-}
-
-export interface IUserLogoutAction {
-  readonly type: typeof USER_LOGOUT;
-}
-
-export interface ITokenUpdateAction {
-  readonly type: typeof UPDATE_TOKEN;
-  readonly accessToken: string;
-}
-
-export interface IIsAuthAction {
-  readonly type: typeof IS_AUTH;
-}
-
-export type TAuthAction =
-  | IUserLoginAction
-  | IUserLogoutAction
-  | ITokenUpdateAction
-  | IIsAuthAction;
-
-export const getUser = (token: string | undefined) => {
-  return function (dispatch: AppDispatch) {
-=======
   USER_LOGIN_FAILED,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -295,7 +257,6 @@ export const getResetPassword = (form: TForm): TAppThunk => (dispatch) => {
 
 export const getUser = (token: string | undefined): TAppThunk => {
   return function (dispatch) {
->>>>>>> sprint-17
     updateTokenRequest(token)
       .then(data => {
         deleteCookie('token');
@@ -303,11 +264,7 @@ export const getUser = (token: string | undefined): TAppThunk => {
         getProfileInfoRequest(data.accessToken)
           .then(user => {
             dispatch({
-<<<<<<< HEAD
-              type: USER_LOGIN,
-=======
               type: USER_LOGIN_SUCCESS,
->>>>>>> sprint-17
               email: user.user.email,
               name: user.user.name,
               accessToken: data.accessToken

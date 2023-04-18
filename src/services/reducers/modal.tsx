@@ -1,25 +1,14 @@
 import { IS_REQUEST, IS_FAILED, IS_SUCCESS, SET_MODAL, RESET_MODAL } from "../constants/modal";
 import { TModalAction } from "../actions/modal";
 
-<<<<<<< HEAD
-type TModalState = {
-=======
 export type TModalState = {
->>>>>>> sprint-17
   isRequest: boolean;
   isFailed: boolean;
 
   currentModal: JSX.Element | null;
-<<<<<<< HEAD
-  resetActionType: string;
-};
-
-const modalInitialState: TModalState = {
-=======
 };
 
 export const modalInitialState: TModalState = {
->>>>>>> sprint-17
   isRequest: false,
   isFailed: false,
 

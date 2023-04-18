@@ -1,26 +1,9 @@
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-<<<<<<< HEAD
-import ingr from '../../images/ingredient preview.png';
-import styles from './order.module.css';
-import OrderItem from "../order_item/order_item";
-import { useSelector } from "react-redux";
-import { TIngredient } from "../../utils/types";
-
-type TBurgerIngredients<TIngredient> = {
-  burgerIngredients: {
-    ingredients: ReadonlyArray<TIngredient>;
-    ingredientsRequest: boolean;
-    ingredientsFailed: boolean;
-  };
-};
-
-=======
 import styles from './order.module.css';
 import OrderItem from "../order_item/order_item";
 import { useSelector } from '../../services/types/index';
 import { TIngredient } from "../../utils/types";
 
->>>>>>> sprint-17
 type TOrder = {
   currentOrder: {
     _id: string;
@@ -35,13 +18,6 @@ type TOrder = {
 
 export default function Order({ currentOrder }: TOrder) {
 
-<<<<<<< HEAD
-  const ingredientsStore = useSelector((store: TBurgerIngredients<TIngredient>) => store.burgerIngredients.ingredients);
-
-  const ingredients = currentOrder.ingredients.map((item: string) => {
-    return {
-      ...ingredientsStore.find((findItem: TIngredient) => {
-=======
   const ingredientsStore = useSelector(store => store.burgerIngredients.ingredients);
 
   let sortIngredients: Array<TIngredient> = [];
@@ -49,17 +25,12 @@ export default function Order({ currentOrder }: TOrder) {
   const ingredients = currentOrder.ingredients.map((item) => {
     return {
       ...ingredientsStore.find((findItem) => {
->>>>>>> sprint-17
         return findItem._id === item;
       })
     }
   }).map(item => {
     if (item.type === 'bun'){
       item.count = 2;
-<<<<<<< HEAD
-    } else {
-      item.count = 1;
-=======
       if(!sortIngredients.some((findItem) => findItem.type === 'bun' )) {
         sortIngredients.unshift(item as TIngredient);
       }
@@ -75,7 +46,6 @@ export default function Order({ currentOrder }: TOrder) {
           return findItem;
         })
       }
->>>>>>> sprint-17
     }
     return item;
   }) as TIngredient[];
@@ -103,11 +73,7 @@ export default function Order({ currentOrder }: TOrder) {
       <div>
         <ul className={`${styles.order_list_bar} mb-10`}>
           {
-<<<<<<< HEAD
-            ingredients.map((item, index) => {
-=======
             sortIngredients.map((item, index) => {
->>>>>>> sprint-17
               return (
                 <OrderItem key={index} image={item.image} ingredientName={item.name} count={item.count} price={item.price} />
               );

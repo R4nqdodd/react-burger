@@ -14,27 +14,8 @@ import { ORDER_RESET } from '../../services/constants/order';
 import { sentOrderNumber } from '../../services/actions/order';
 import { SET_MODAL } from '../../services/constants/modal';
 import OrderDetails from '../order-details/order-details';
-<<<<<<< HEAD
-import { useNavigate } from 'react-router-dom';
-
-import { TIngredient, TUserData, TUser } from '../../utils/types';
-
-type TTemporaryIngredients<TIngredient> = {
-  burgerIngredients: {
-    ingredients: ReadonlyArray<TIngredient>;
-  };
-};
-
-type TConstructor<TIngredient> = {
-  constructor: {
-    ingredients: ReadonlyArray<TIngredient>;
-    bun: TIngredient;
-  };
-};
-=======
 import { useLocation, useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../utils/types';
->>>>>>> sprint-17
 
 export default function BurgerConstructor() {
 
@@ -43,11 +24,7 @@ export default function BurgerConstructor() {
   const { ingredients, bun } = useSelector(store => store.BurgerConstructor);
   const location = useLocation();
 
-<<<<<<< HEAD
-  const userData = useSelector((store: TUserData<TUser>) => store.auth);
-=======
   const userData = useSelector(store => store.auth);
->>>>>>> sprint-17
 
   const navigate = useNavigate();
 

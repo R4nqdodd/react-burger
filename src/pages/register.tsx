@@ -2,13 +2,6 @@ import { FormEvent } from 'react';
 import { EmailInput, PasswordInput, Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from './form.module.css';
-<<<<<<< HEAD
-import { registrationRequest } from '../utils/api';
-import { useDispatch } from 'react-redux';
-import { USER_LOGIN } from '../services/constants/auth';
-import { setCookie } from '../utils/utils';
-=======
->>>>>>> sprint-17
 import { useForm } from '../hooks/use-form';
 import { getRegister } from '../services/actions/auth';
 import { useDispatch, useSelector } from '../services/types';

@@ -18,27 +18,14 @@ export interface IIsFailedAction {
 export interface ISetModalAction {
   readonly type: typeof SET_MODAL;
   readonly currentModal: JSX.Element | null;
-<<<<<<< HEAD
-  readonly resetActionType: string;
-=======
->>>>>>> sprint-17
 }
 export interface IResetModalAction {
   readonly type: typeof RESET_MODAL;
 }
 
-<<<<<<< HEAD
-export type TModalAction = 
-| IIsRequestAction
-|IIsSuccessAction
-|IIsFailedAction
-|ISetModalAction
-|IResetModalAction;
-=======
 export type TModalAction =
   | IIsRequestAction
   | IIsSuccessAction
   | IIsFailedAction
   | ISetModalAction
   | IResetModalAction;
->>>>>>> sprint-17
