@@ -39,6 +39,7 @@ export default function OrderListItem({ order, status }: TOrder) {
   const ingredients = temp.map((item) => {
     return ingredientsStore.find((findItem) => {
       if (item === null) {
+        return "60d3b41abdacab0026a733cd"
       }
       return findItem._id === item;
     })
