@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation} from 'react-router-dom';
 import HomePage from '../../pages/home';
 import AppHeader from '../app-header/app-header';
 import IngredientsPage from '../../pages/ingredients';
@@ -76,7 +76,6 @@ function App() {
         <Route path='/feed/:id' element={<OrderPage />} />
         <Route path='*' element={<NotFoundPage />} />
         <Route path='/ingredients/:id' element={<IngredientsPage />} />
-        <Route path='/react-burger' element={<Navigate to={'/'}/>} />
       </Routes>
       {background && <Routes>
         <Route path='/ingredients/:id' element={
